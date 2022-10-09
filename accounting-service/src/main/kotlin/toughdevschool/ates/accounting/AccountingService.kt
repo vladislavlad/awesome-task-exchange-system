@@ -1,11 +1,11 @@
-package software.darkmatter.async.template
+package toughdevschool.ates.accounting
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class TemplateApplication
+class AccountingService
 
 fun main(args: Array<String>) {
-	runApplication<TemplateApplication>(*args)
+	runApplication<AccountingService>(*args)
 }

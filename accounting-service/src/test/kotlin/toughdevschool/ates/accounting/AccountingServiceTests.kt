@@ -1,10 +1,10 @@
-package software.darkmatter.async.template
+package toughdevschool.ates.accounting
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class TemplateApplicationTests {
+class AccountingServiceTests {
 
 	@Test
 	fun contextLoads() {
