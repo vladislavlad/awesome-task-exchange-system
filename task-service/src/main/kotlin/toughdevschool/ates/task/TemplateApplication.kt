@@ -1,4 +1,4 @@
-package software.darkmatter.async.template
+package toughdevschool.ates.task
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
