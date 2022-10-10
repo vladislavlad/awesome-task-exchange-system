@@ -48,6 +48,5 @@ class CudEventsExtension(
             )
         )
 
-    override suspend fun onDelete(id: Long) =
-        TODO("AA-13")
+    override suspend fun onDelete(id: Long) = TODO()
 }
