@@ -9,15 +9,31 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./init.db:/docker-entrypoint-initdb.d/
+      - ./init/postgres:/docker-entrypoint-initdb.d/
 
   scylla:
     image: scylladb/scylla:4.6.3
+    entrypoint: /docker-entrypoint.d/init-keyspace.sh
+    # Note: --skip-wait-for-gossip-to-settle for DEV mode only !!!
+    command: ["--skip-wait-for-gossip-to-settle", "0"]
+    environment:
+      CASSANDRA_KEYSPACE: accounts
     ports:
       - "9042:9042"
+    volumes:
+      - ./init/scylla/keyspace:/docker-entrypoint.d/
+
+  scylla-migration:
+    image: migrate/migrate
+    command: ["-database", "cassandra://scylla:9042/accounts?x-multi-statement=true", "-path", "/migrations", "up"]
+    restart: on-failure
+    depends_on:
+      - scylla
+    volumes:
+      - ./init/scylla/migrations:/migrations/
 
   kafka0:
-    image: confluentinc/cp-kafka:7.0.5.arm64
+    image: confluentinc/cp-kafka:7.0.5 # .arm64
     hostname: kafka0
     container_name: kafka0
     ports:
@@ -51,26 +67,25 @@ services:
       - "8090:8080"
     depends_on:
       - kafka0
-    #      - schemaregistry0
-    #      - kafka-connect0
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092
       KAFKA_CLUSTERS_0_JMXPORT: 9997
-#      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry0:8085
-#      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: first
-#      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect0:8083
 
-#  accounts:
-#    image: vladislavlad/accounts:latest-aarch64
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      spring.profiles.active: "$ACCOUNTS_SPRING_PROFILES"
-#      spring.data.cassandra.contact-points: scylla:9042
-#      spring.r2dbc.url: r2dbc:postgresql://postgres:5432/accounts
-#      spring.flyway.url: jdbc:postgresql://postgres:5432/accounts
-#    depends_on:
-#      - postgres
-#      - scylla
-
+  accounts:
+    image: vladislavlad/accounts:latest # -aarch64
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      spring.profiles.active: "$ACCOUNTS_SPRING_PROFILES"
+      spring.data.cassandra.contact-points: scylla:9042
+      spring.r2dbc.url: r2dbc:postgresql://postgres:5432/accounts
+      spring.flyway.url: jdbc:postgresql://postgres:5432/accounts
+      spring.cloud.stream.kafka.binder.brokers: kafka0:29092
+      spring.kafka.bootstrap-servers: kafka0:9092
+    depends_on:
+      - postgres
+      - scylla
+      - scylla-migration
+      - kafka0
