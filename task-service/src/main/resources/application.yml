@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: tasks-service
+  data:
+    cassandra:
+      keyspace-name: accounts
+      local-datacenter: datacenter1
+      contact-points: 127.0.0.1:9042
+      port: 9042
+      schema-action: none
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/tasks
+    username: tasks
+    password: tasks
+  flyway:
+    url: jdbc:postgresql://localhost:5432/tasks
+    user: ${spring.r2dbc.username}
+    password: ${spring.r2dbc.password}
+    locations: classpath:db/migration
+  kafka:
+    bootstrap-servers: localhost:9092
+  cloud:
+    function:
+      definition: accountsStream;tasksStream
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: localhost:9092
+          healthTimeout: 10
+          requiredAcks: 1
+          minPartitionCount: 1
+          replicationFactor: 1
+      bindings:
+        accountsStream-in-0:
+          group: tasks-service
+          destination: accounts-stream
+          binder: kafka
+        tasksStream-out-0:
+          producer:
+            partition-key-extractor-name: toughdevschool.ates.task.stream.EventPartitionKeyExtractorStrategy
+          destination: tasks-stream
+          binder: kafka
+
+management:
+  health:
+    db:
+      enabled: true
+    defaults:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health, mappings

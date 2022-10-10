@@ -6,11 +6,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
     CREATE DATABASE accounts;
     GRANT ALL PRIVILEGES ON DATABASE accounts TO accounts;
 
-    CREATE USER munes WITH PASSWORD 'munes';
-    CREATE DATABASE munes;
-    GRANT ALL PRIVILEGES ON DATABASE munes TO munes;
+    CREATE USER tasks WITH PASSWORD 'tasks';
+    CREATE DATABASE tasks;
+    GRANT ALL PRIVILEGES ON DATABASE tasks TO tasks;
 
-    CREATE USER trading WITH PASSWORD 'trading';
-    CREATE DATABASE trading;
-    GRANT ALL PRIVILEGES ON DATABASE trading TO trading;
+    CREATE USER accounting WITH PASSWORD 'accounting';
+    CREATE DATABASE accounting;
+    GRANT ALL PRIVILEGES ON DATABASE accounting TO accounting;
 EOSQL
