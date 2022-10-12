@@ -6,7 +6,7 @@ import software.darkmatter.platform.service.CrudServiceExtension
 import toughdevschool.ates.task.domain.task.data.Task
 import toughdevschool.ates.task.event.producer.CudEventProducer
 import toughdevschool.ates.task.event.producer.cud.TaskCudEvent
-import toughdevschool.ates.task.event.producer.cud.TaskCudEvent.TaskInfo
+import toughdevschool.ates.task.event.producer.cud.TaskCudEvent.TaskData
 import java.util.UUID
 
 @Component
@@ -22,7 +22,7 @@ class CudEventsExtension(
         cudEventProducer.sendEvent(
             TaskCudEvent(
                 id = UUID.randomUUID(),
-                payload = TaskInfo(
+                data = TaskData(
                     uuid = business.uuid,
                     title = business.title,
                     description = business.description,
@@ -37,7 +37,7 @@ class CudEventsExtension(
         cudEventProducer.sendEvent(
             TaskCudEvent(
                 id = UUID.randomUUID(),
-                payload = TaskInfo(
+                data = TaskData(
                     uuid = business.uuid,
                     title = business.title,
                     description = business.description,

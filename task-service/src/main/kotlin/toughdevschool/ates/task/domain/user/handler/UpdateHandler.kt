@@ -4,22 +4,22 @@ import arrow.core.flatMap
 import org.springframework.stereotype.Component
 import toughdevschool.ates.task.domain.user.business.UserService
 import toughdevschool.ates.task.domain.user.business.UserUpdate
-import toughdevschool.ates.task.event.consumer.cud.model.UserInfo
+import toughdevschool.ates.task.event.consumer.cud.model.UserData
 
 @Component
 class UpdateHandler(
     private val userService: UserService
 ) {
 
-    suspend fun handle(userInfo: UserInfo) =
-        userService.getByUsername(userInfo.username)
+    suspend fun handle(userData: UserData) =
+        userService.getByUsername(userData.username)
             .flatMap {
                 userService.update(
                     UserUpdate(
                         user = it,
-                        firstName = userInfo.firstName,
-                        lastName = userInfo.lastName,
-                        middleName = userInfo.middleName
+                        firstName = userData.firstName,
+                        lastName = userData.lastName,
+                        middleName = userData.middleName
                     )
                 )
             }

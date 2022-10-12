@@ -9,12 +9,12 @@ private const val TASK_ENTITY = "Task"
 data class TaskCudEvent(
     override val id: UUID,
     override val type: CudEvent.Type,
-    override val payload: TaskInfo,
-) : TaskStreamEvent<TaskCudEvent.TaskInfo>() {
+    override val data: TaskData,
+) : TaskStreamEvent<TaskCudEvent.TaskData>() {
 
     override val entity = TASK_ENTITY
 
-    data class TaskInfo(
+    data class TaskData(
         val uuid: UUID,
         var title: String,
         var description: String,

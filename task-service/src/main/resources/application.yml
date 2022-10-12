@@ -32,10 +32,12 @@ spring:
           minPartitionCount: 1
           replicationFactor: 1
       bindings:
+        # consumers
         accountsStream-in-0:
           group: tasks-service
           destination: accounts-stream
           binder: kafka
+        # producers
         tasksStream-out-0:
           producer:
             partition-key-extractor-name: toughdevschool.ates.task.stream.EventPartitionKeyExtractorStrategy

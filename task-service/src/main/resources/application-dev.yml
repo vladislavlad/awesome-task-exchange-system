@@ -1,8 +1,6 @@
 logging:
   level:
-    org:
-      springframework:
-        r2dbc: debug
+    org.springframework.r2dbc: debug
 
 server:
   port: 8081

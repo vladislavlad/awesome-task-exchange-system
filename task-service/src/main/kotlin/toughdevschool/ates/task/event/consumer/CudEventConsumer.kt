@@ -12,7 +12,7 @@ import toughdevschool.ates.task.domain.user.handler.CreateHandler
 import toughdevschool.ates.task.domain.user.handler.UpdateHandler
 import toughdevschool.ates.task.event.consumer.cud.CudEvent
 import toughdevschool.ates.task.event.consumer.cud.model.ConsumerEntities
-import toughdevschool.ates.task.event.consumer.cud.model.UserInfo
+import toughdevschool.ates.task.event.consumer.cud.model.UserData
 import java.util.function.Function
 
 @Configuration
@@ -27,16 +27,16 @@ class CudEventConsumer(
         Function { eventFlux ->
             eventFlux.flatMap {
                 when (it.entity) {
-                    ConsumerEntities.User.name -> mono { handleUserCud(it, objectMapper.convertValue(it.payload)) }
+                    ConsumerEntities.User.name -> mono { handleUserCud(it, objectMapper.convertValue(it.data)) }
                     else -> Mono.empty()
                 }
             }.then()
         }
 
-    private suspend fun handleUserCud(cudEvent: CudEvent, payload: UserInfo) {
+    private suspend fun handleUserCud(cudEvent: CudEvent, data: UserData) {
         when (cudEvent.type) {
-            Type.Create -> userCreateHandler.handle(payload)
-            Type.Update -> userUpdateHandler.handle(payload)
+            Type.Create -> userCreateHandler.handle(data)
+            Type.Update -> userUpdateHandler.handle(data)
             Type.Delete -> TODO()
         }
     }
