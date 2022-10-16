@@ -1,4 +1,4 @@
-package toughdevschool.ates.task.domain.task.reassign.assembler
+package toughdevschool.ates.task.domain.task.reassign.api
 
 import arrow.core.right
 import org.springframework.stereotype.Component

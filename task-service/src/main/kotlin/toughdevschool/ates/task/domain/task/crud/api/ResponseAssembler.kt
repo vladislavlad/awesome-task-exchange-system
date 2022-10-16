@@ -1,4 +1,4 @@
-package toughdevschool.ates.task.domain.task.crud.assembler
+package toughdevschool.ates.task.domain.task.crud.api
 
 import arrow.core.right
 import org.springframework.stereotype.Component

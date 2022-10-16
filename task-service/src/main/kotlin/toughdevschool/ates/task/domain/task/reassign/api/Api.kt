@@ -1,4 +1,4 @@
-package toughdevschool.ates.task.domain.task.reassign.assembler
+package toughdevschool.ates.task.domain.task.reassign.api
 
 import org.springframework.stereotype.Component
 import software.darkmatter.platform.assembler.RequestAssembler

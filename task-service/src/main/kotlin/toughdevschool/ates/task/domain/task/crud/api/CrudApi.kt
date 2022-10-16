@@ -1,4 +1,4 @@
-package toughdevschool.ates.task.domain.task.crud.assembler
+package toughdevschool.ates.task.domain.task.crud.api
 
 import org.springframework.stereotype.Component
 import software.darkmatter.platform.assembler.RequestAssembler
