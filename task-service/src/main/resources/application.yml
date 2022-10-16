@@ -19,12 +19,22 @@ spring:
     locations: classpath:db/migration
   kafka:
     bootstrap-servers: localhost:9092
+    # check and note
+    consumer:
+      auto-offset-reset: earliest
   cloud:
     function:
       definition: accountsStream;tasksStream
     stream:
       default-binder: kafka
       kafka:
+        # check and note
+        default:
+          consumer:
+            startOffset: latest
+            useNativeDecoding: true
+            enable-dlq: true
+            dlq-name: dlq.tasks-service
         binder:
           brokers: localhost:9092
           healthTimeout: 10
@@ -32,13 +42,15 @@ spring:
           minPartitionCount: 1
           replicationFactor: 1
       bindings:
+        # consumers
         accountsStream-in-0:
           group: tasks-service
           destination: accounts-stream
           binder: kafka
+        # producers
         tasksStream-out-0:
           producer:
-            partition-key-extractor-name: toughdevschool.ates.task.stream.EventPartitionKeyExtractorStrategy
+            partition-key-extractor-name: toughdevschool.ates.task.event.EventPartitionKeyExtractorStrategy
           destination: tasks-stream
           binder: kafka
 

@@ -10,7 +10,7 @@ class EventPartitionKeyExtractorStrategy : PartitionKeyExtractorStrategy {
 
     override fun extractKey(message: Message<*>?) =
         when (message?.payload) {
-            is Event -> (message.payload as Event).id
+            is Event<*> -> (message.payload as Event<*>).key
             else -> null
         }
 }

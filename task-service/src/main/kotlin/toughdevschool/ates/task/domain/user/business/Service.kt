@@ -1,5 +1,6 @@
 package toughdevschool.ates.task.domain.user.business
 
+import arrow.core.right
 import org.springframework.stereotype.Service
 import software.darkmatter.platform.business.BusinessCheck
 import software.darkmatter.platform.business.businessChecks
@@ -19,11 +20,11 @@ class Service(
 ) : AbstractCrudService<User, Long, UserCreate, UserUpdate>(repository, pagingRepository),
     UserService {
 
-    override suspend fun getByUsername(username: String) =
-        repository.findByUsername(username).leftIfNull { notFound }
+    override suspend fun getByUsername(username: String) = repository.findByUsername(username).leftIfNull { notFound }
 
-    override suspend fun getByUuid(uuid: UUID) =
-        repository.findByUuid(uuid).leftIfNull { notFound }
+    override suspend fun getByUuid(uuid: UUID) = repository.findByUuid(uuid).leftIfNull { notFound }
+
+    override suspend fun getFlowWithRoleNotIn(roles: List<String>) = repository.findAllWithRoleNotIn(roles).right()
 
     override suspend fun createEntity(businessCreate: UserCreate) =
         User(

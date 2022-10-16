@@ -1,5 +1,6 @@
-package toughdevschool.ates.task.domain.task.business
+package toughdevschool.ates.task.domain.task.crud.business
 
+import arrow.core.right
 import org.springframework.stereotype.Service
 import software.darkmatter.platform.business.BusinessCheck
 import software.darkmatter.platform.data.PagingRepository
@@ -17,8 +18,9 @@ class Service(
 ) : AbstractCrudService<Task, Long, TaskCreate, TaskUpdate>(repository, pagingRepository, cudEventsExtension),
     TaskService {
 
-    override suspend fun getByUuid(uuid: UUID) =
-        repository.findByUuid(uuid).leftIfNull { notFound }
+    override suspend fun getByUuid(uuid: UUID) = repository.findByUuid(uuid).leftIfNull { notFound }
+
+    override suspend fun getFlowWithStatus(status: Task.Status) = repository.findAllByStatus(status).right()
 
     override suspend fun createEntity(businessCreate: TaskCreate) =
         Task(
@@ -31,9 +33,9 @@ class Service(
 
     override suspend fun updateEntity(businessUpdate: TaskUpdate): Task =
         with(businessUpdate.task) {
-            title = businessUpdate.title
-            description = businessUpdate.description
-            status = businessUpdate.status
+            businessUpdate.title?.also { title = it }
+            businessUpdate.description?.also { description = it }
+            businessUpdate.status?.also { status = it }
             businessUpdate.userId?.also { userId = it }
             this
         }

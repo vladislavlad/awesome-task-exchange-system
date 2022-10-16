@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "toughdevschool.ates"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
@@ -47,6 +47,7 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
 	implementation("org.springframework.kafka:spring-kafka")
 	implementation("org.flywaydb:flyway-core:9.4.0")
+	implementation("io.github.microutils:kotlin-logging:3.0.0")
 	runtimeOnly("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
 	runtimeOnly("org.postgresql:postgresql:42.5.0")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

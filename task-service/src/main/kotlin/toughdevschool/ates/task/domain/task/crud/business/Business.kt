@@ -1,4 +1,4 @@
-package toughdevschool.ates.task.domain.task.business
+package toughdevschool.ates.task.domain.task.crud.business
 
 import software.darkmatter.platform.api.http.ServiceCrudApi
 import toughdevschool.ates.task.api.TaskDto
@@ -16,8 +16,8 @@ data class TaskCreate(
 
 data class TaskUpdate(
     val task: Task,
-    val title: String,
-    val description: String,
-    val status: Task.Status,
-    val userId: Long?,
+    val title: String? = null,
+    val description: String? = null,
+    val status: Task.Status? = null,
+    val userId: Long? = null,
 )

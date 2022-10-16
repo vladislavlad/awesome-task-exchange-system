@@ -8,9 +8,10 @@
 
 ## This repo include 
 ### Microservices:
-* Task service
-* Accounting service 
-* Analytics service
+#### Task service
+#### Accounting service 
+#### Analytics service
+
 
 ## Other microservices in Env:
 #### Auth service
@@ -18,13 +19,9 @@
 * Dockerhub image: [vladislavlad/accounts](https://hub.docker.com/repository/docker/vladislavlad/accounts)
 * [Swagger UI](http://localhost:8080/swagger-ui.html)
 
-
 ## Stack:
 * Kotlin
 * Spring Boot 2.7 (WebFlux)
 * Kafka
 * PostgreSQL
-
-## Auth service
-* JWT auth
-* dockerhub vladislavlad/accounts
+* ScyllaDB

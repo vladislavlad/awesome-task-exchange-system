@@ -3,21 +3,21 @@ package toughdevschool.ates.task.domain.user.handler
 import org.springframework.stereotype.Component
 import toughdevschool.ates.task.domain.user.business.UserCreate
 import toughdevschool.ates.task.domain.user.business.UserService
-import toughdevschool.ates.task.event.consumer.cud.model.UserInfo
+import toughdevschool.ates.task.event.consumer.cud.model.UserData
 
 @Component
-class CreateHandler(
+class UserCreateHandler(
     private val userService: UserService,
 ) {
 
-    suspend fun handle(userInfo: UserInfo) =
+    suspend fun handle(data: UserData) =
         userService.create(
             UserCreate(
-                uuid = userInfo.uuid,
-                username = userInfo.username,
-                firstName = userInfo.firstName,
-                lastName = userInfo.lastName,
-                middleName = userInfo.middleName
+                uuid = data.uuid,
+                username = data.username,
+                firstName = data.firstName,
+                lastName = data.lastName,
+                middleName = data.middleName
             )
         )
 }

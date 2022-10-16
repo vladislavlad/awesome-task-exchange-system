@@ -1,10 +1,10 @@
-package toughdevschool.ates.task.domain.task.assembler
+package toughdevschool.ates.task.domain.task.crud.assembler
 
 import org.springframework.stereotype.Component
 import software.darkmatter.platform.assembler.RequestAssembler
 import toughdevschool.ates.task.api.TaskDto
-import toughdevschool.ates.task.domain.task.business.TaskService
-import toughdevschool.ates.task.domain.task.business.TaskUpdate
+import toughdevschool.ates.task.domain.task.crud.business.TaskService
+import toughdevschool.ates.task.domain.task.crud.business.TaskUpdate
 
 @Component
 class UpdateRequestAssembler(
