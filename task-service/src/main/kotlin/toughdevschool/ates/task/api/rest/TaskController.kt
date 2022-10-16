@@ -10,14 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import toughdevschool.ates.task.api.TaskDto
-import toughdevschool.ates.task.domain.task.business.TaskCrudApi
+import toughdevschool.ates.task.config.Constants.RoleNames
+import toughdevschool.ates.task.domain.task.crud.business.TaskCrudApi
+import toughdevschool.ates.task.domain.task.reassign.business.TaskReassignApi
+import javax.annotation.security.RolesAllowed
 import javax.validation.Valid
 
 @RestController
 @RequestMapping("/tasks")
 class TaskController(
-    private val crudApi: TaskCrudApi
+    private val crudApi: TaskCrudApi,
+    private val reassignApi: TaskReassignApi,
 ) {
+
+    @RolesAllowed(RoleNames.ADMIN, RoleNames.MANAGER)
+    @PostMapping(path = ["/reassign"])
+    suspend fun reassign() = reassignApi.handle(Unit)
 
     @GetMapping
     suspend fun list(

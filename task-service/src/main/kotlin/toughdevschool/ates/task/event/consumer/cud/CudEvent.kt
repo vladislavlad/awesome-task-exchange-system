@@ -5,8 +5,9 @@ import java.util.UUID
 
 data class CudEvent(
     override val id: UUID,
+    override val key: UUID,
     override val type: CudEvent.Type,
     override val data: Any,
     override val entity: String,
     override val source: String,
-) : CudEvent<Any>
+) : CudEvent<Any, UUID>

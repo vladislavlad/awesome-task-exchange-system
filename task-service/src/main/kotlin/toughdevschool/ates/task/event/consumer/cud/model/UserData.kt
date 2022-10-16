@@ -5,7 +5,7 @@ import java.util.UUID
 data class UserData(
     val uuid: UUID,
     val username: String,
-    var firstName: String?,
-    var lastName: String?,
-    var middleName: String?,
+    val firstName: String?,
+    val lastName: String?,
+    val middleName: String?,
 )

@@ -6,18 +6,18 @@ import toughdevschool.ates.task.domain.user.business.UserService
 import toughdevschool.ates.task.event.consumer.cud.model.UserData
 
 @Component
-class CreateHandler(
+class UserCreateHandler(
     private val userService: UserService,
 ) {
 
-    suspend fun handle(userData: UserData) =
+    suspend fun handle(data: UserData) =
         userService.create(
             UserCreate(
-                uuid = userData.uuid,
-                username = userData.username,
-                firstName = userData.firstName,
-                lastName = userData.lastName,
-                middleName = userData.middleName
+                uuid = data.uuid,
+                username = data.username,
+                firstName = data.firstName,
+                lastName = data.lastName,
+                middleName = data.middleName
             )
         )
 }

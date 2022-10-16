@@ -10,7 +10,9 @@ data class TaskCudEvent(
     override val id: UUID,
     override val type: CudEvent.Type,
     override val data: TaskData,
-) : TaskStreamEvent<TaskCudEvent.TaskData>() {
+) : TaskStreamEvent<TaskCudEvent.TaskData, UUID>() {
+
+    override val key = data.uuid
 
     override val entity = TASK_ENTITY
 

@@ -36,4 +36,8 @@ object TaskDto {
             var status: Task.Status,
         )
     }
+
+    data class TasksReassignedResponse(
+        val reassignedTasksCount: Int
+    )
 }

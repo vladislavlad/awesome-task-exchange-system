@@ -7,19 +7,19 @@ import toughdevschool.ates.task.domain.user.business.UserUpdate
 import toughdevschool.ates.task.event.consumer.cud.model.UserData
 
 @Component
-class UpdateHandler(
-    private val userService: UserService
+class UserUpdateHandler(
+    private val userService: UserService,
 ) {
 
-    suspend fun handle(userData: UserData) =
-        userService.getByUsername(userData.username)
+    suspend fun handle(data: UserData) =
+        userService.getByUsername(data.username)
             .flatMap {
                 userService.update(
                     UserUpdate(
                         user = it,
-                        firstName = userData.firstName,
-                        lastName = userData.lastName,
-                        middleName = userData.middleName
+                        firstName = data.firstName,
+                        lastName = data.lastName,
+                        middleName = data.middleName
                     )
                 )
             }

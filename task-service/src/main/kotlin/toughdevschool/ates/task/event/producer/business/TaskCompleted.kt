@@ -10,5 +10,7 @@ data class TaskCompleted(
     val userUuid: UUID,
 ) : BusinessEvent {
 
+    override val key = id
+
     override val type = "TaskCompleted"
 }

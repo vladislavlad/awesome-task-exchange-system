@@ -33,7 +33,7 @@ services:
       - ./init/scylla/migrations:/migrations/
 
   kafka0:
-    image: confluentinc/cp-kafka:7.0.5 # .arm64
+    image: confluentinc/cp-kafka:7.0.5.arm64
     hostname: kafka0
     container_name: kafka0
     ports:
@@ -73,7 +73,7 @@ services:
       KAFKA_CLUSTERS_0_JMXPORT: 9997
 
   accounts:
-    image: vladislavlad/accounts:latest # -aarch64
+    image: vladislavlad/accounts:latest-aarch64
     restart: on-failure
     ports:
       - "8080:8080"

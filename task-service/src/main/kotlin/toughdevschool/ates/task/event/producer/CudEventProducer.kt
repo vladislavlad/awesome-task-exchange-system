@@ -13,13 +13,13 @@ import java.util.function.Supplier
 @Configuration
 class CudEventProducer {
 
-    private val unicastProcessor = Sinks.many().unicast().onBackpressureBuffer<Message<out TaskStreamEvent<*>>>()
+    private val unicastProcessor = Sinks.many().unicast().onBackpressureBuffer<Message<out TaskStreamEvent<*, *>>>()
 
     @Bean
-    fun tasksStream(): Supplier<Flux<Message<out TaskStreamEvent<*>>>> =
+    fun tasksStream(): Supplier<Flux<Message<out TaskStreamEvent<*, *>>>> =
         Supplier { unicastProcessor.asFlux() }
 
-    suspend fun sendEvent(event: TaskStreamEvent<*>) {
+    suspend fun sendEvent(event: TaskStreamEvent<*, *>) {
         val messageEvent = MessageBuilder
             .withPayload(event)
             .setHeader(KafkaHeaders.MESSAGE_KEY, event.id.toString().toByteArray())

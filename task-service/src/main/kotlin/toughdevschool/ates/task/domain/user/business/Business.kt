@@ -4,11 +4,11 @@ import toughdevschool.ates.task.domain.user.data.User
 import java.util.UUID
 
 data class UserCreate(
-    var uuid: UUID,
-    var username: String,
-    var firstName: String? = null,
-    var lastName: String? = null,
-    var middleName: String? = null,
+    val uuid: UUID,
+    val username: String,
+    val firstName: String? = null,
+    val lastName: String? = null,
+    val middleName: String? = null,
 )
 
 data class UserUpdate(

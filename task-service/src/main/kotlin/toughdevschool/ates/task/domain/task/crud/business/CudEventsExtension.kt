@@ -1,4 +1,4 @@
-package toughdevschool.ates.task.domain.task.business
+package toughdevschool.ates.task.domain.task.crud.business
 
 import org.springframework.stereotype.Component
 import software.darkmatter.event.cud.CudEvent.Type

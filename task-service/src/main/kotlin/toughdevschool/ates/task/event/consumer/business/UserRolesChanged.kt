@@ -10,5 +10,7 @@ data class UserRolesChanged(
     val roles: List<String>,
 ) : BusinessEvent {
 
+    override val key = id
+
     override val type = "UserRolesChanged"
 }
