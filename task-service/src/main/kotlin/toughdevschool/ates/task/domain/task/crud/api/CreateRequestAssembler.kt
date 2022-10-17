@@ -21,11 +21,10 @@ class CreateRequestAssembler(
     @Transactional(isolation = Isolation.READ_COMMITTED)
     override suspend fun assemble(request: TaskDto.CreateRequest): Either<BusinessError, TaskCreate> =
         either {
-            val randomUser = getRandomUser().bind()
             TaskCreate(
                 title = request.title!!,
                 description = request.description!!,
-                userId = randomUser.id!!
+                user = getRandomUser().bind()
             )
         }
 

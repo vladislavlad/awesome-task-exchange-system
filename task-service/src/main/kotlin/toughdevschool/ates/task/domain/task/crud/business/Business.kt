@@ -3,6 +3,7 @@ package toughdevschool.ates.task.domain.task.crud.business
 import software.darkmatter.platform.api.http.ServiceCrudApi
 import toughdevschool.ates.task.api.TaskDto
 import toughdevschool.ates.task.domain.task.data.Task
+import toughdevschool.ates.task.domain.user.data.User
 
 typealias TaskCrudApi = ServiceCrudApi<Long,
     TaskDto.Response, TaskDto.CreateRequest, TaskDto.UpdateRequest,
@@ -11,7 +12,7 @@ typealias TaskCrudApi = ServiceCrudApi<Long,
 data class TaskCreate(
     val title: String,
     val description: String,
-    val userId: Long,
+    val user: User,
 )
 
 data class TaskUpdate(
@@ -19,5 +20,5 @@ data class TaskUpdate(
     val title: String? = null,
     val description: String? = null,
     val status: Task.Status? = null,
-    val userId: Long? = null,
+    val user: User? = null,
 )

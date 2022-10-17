@@ -18,7 +18,7 @@ import javax.annotation.security.RolesAllowed
 import kotlin.random.Random
 
 @Service
-class TaskReassignServiceImpl(
+class Service(
     private val taskService: TaskService,
     private val userService: UserService,
 ) : TaskReassignService {
@@ -36,7 +36,7 @@ class TaskReassignServiceImpl(
             val taskFlow = taskService.getFlowWithStatus(Task.Status.New).bind()
 
             val taskListSize = taskFlow.buffer(100)
-                .map { TaskUpdate(task = it, userId = userList.takeRandomUser().id) }
+                .map { TaskUpdate(task = it, user = userList.takeRandomUser()) }
                 .let { taskService.updateBatch(it.toList()).bind().size }
 
             return@either TasksReassigned(taskListSize)

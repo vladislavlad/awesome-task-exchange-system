@@ -28,7 +28,7 @@ class Service(
             title = businessCreate.title,
             description = businessCreate.description,
             status = Task.Status.New,
-            userId = businessCreate.userId,
+            userId = businessCreate.user.id!!,
         )
 
     override suspend fun updateEntity(businessUpdate: TaskUpdate): Task =
@@ -36,7 +36,7 @@ class Service(
             businessUpdate.title?.also { title = it }
             businessUpdate.description?.also { description = it }
             businessUpdate.status?.also { status = it }
-            businessUpdate.userId?.also { userId = it }
+            businessUpdate.user?.also { userId = it.id!! }
             this
         }
 
