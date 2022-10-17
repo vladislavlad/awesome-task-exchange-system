@@ -26,6 +26,7 @@ class Service(
         Task(
             uuid = UUID.randomUUID(),
             title = businessCreate.title,
+            jiraId = businessCreate.jiraId,
             description = businessCreate.description,
             status = Task.Status.New,
             userId = businessCreate.user.id!!,
@@ -34,6 +35,7 @@ class Service(
     override suspend fun updateEntity(businessUpdate: TaskUpdate): Task =
         with(businessUpdate.task) {
             businessUpdate.title?.also { title = it }
+            businessUpdate.jiraId?.also { jiraId = it }
             businessUpdate.description?.also { description = it }
             businessUpdate.status?.also { status = it }
             businessUpdate.user?.also { userId = it.id!! }

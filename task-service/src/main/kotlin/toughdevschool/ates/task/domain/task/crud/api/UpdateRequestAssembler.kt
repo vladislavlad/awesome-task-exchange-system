@@ -17,6 +17,7 @@ class UpdateRequestAssembler(
                 TaskUpdate(
                     task = it,
                     title = request.body.title!!,
+                    jiraId = request.body.jiraId,
                     description = request.body.description!!,
                     user = null,
                 )

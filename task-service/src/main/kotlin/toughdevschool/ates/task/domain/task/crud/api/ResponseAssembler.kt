@@ -16,6 +16,7 @@ class ResponseAssembler : ResponseAssembler<Task, TaskDto.Response> {
                 uuid = uuid,
                 title = title,
                 description = description,
+                jiraId = jiraId,
                 status = status,
                 userId = userId,
             )

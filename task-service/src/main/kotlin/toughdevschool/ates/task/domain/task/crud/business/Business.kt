@@ -12,6 +12,7 @@ typealias TaskCrudApi = ServiceCrudApi<Long,
 data class TaskCreate(
     val title: String,
     val description: String,
+    val jiraId: String?,
     val user: User,
 )
 
@@ -19,6 +20,7 @@ data class TaskUpdate(
     val task: Task,
     val title: String? = null,
     val description: String? = null,
+    val jiraId: String? = null,
     val status: Task.Status? = null,
     val user: User? = null,
 )

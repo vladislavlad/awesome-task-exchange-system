@@ -18,9 +18,10 @@ data class TaskCudEvent(
 
     data class TaskData(
         val uuid: UUID,
-        var title: String,
-        var description: String,
-        var status: Task.Status,
-        var userId: Long,
+        val title: String,
+        val description: String,
+        val jiraId: String?,
+        val status: Task.Status,
+        val userId: Long,
     )
 }

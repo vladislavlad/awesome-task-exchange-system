@@ -12,6 +12,7 @@ data class Task(
     val uuid: UUID,
     var title: String,
     var description: String,
+    var jiraId: String?,
     var status: Status,
     var userId: Long,
 ) : Model<Long> {
