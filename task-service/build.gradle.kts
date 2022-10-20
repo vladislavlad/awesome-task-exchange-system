@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.7.4"
-	id("io.spring.dependency-management") version "1.0.14.RELEASE"
+	id("org.springframework.boot") version "2.7.5"
+	id("io.spring.dependency-management") version "1.0.15.RELEASE"
 	kotlin("jvm") version "1.6.21"
 	kotlin("plugin.spring") version "1.6.21"
 }
@@ -47,7 +47,7 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
 	implementation("org.springframework.kafka:spring-kafka")
 	implementation("org.flywaydb:flyway-core:9.4.0")
-	implementation("io.github.microutils:kotlin-logging:3.0.0")
+	implementation("io.github.microutils:kotlin-logging:3.0.2")
 	runtimeOnly("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
 	runtimeOnly("org.postgresql:postgresql:42.5.0")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

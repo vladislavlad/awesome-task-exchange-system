@@ -3,7 +3,7 @@
 ## This project is being implemented as part of the course ["Asynchronous architecture"](https://education.borshev.com/architecture).
 
 ## Project Architecture
-### Architecture model at [Miro Dashboard](https://miro.com/app/board/uXjVPMJI1FE=/?share_link_id=487431509477)
+### Domain model and Event Storming result at [Miro Dashboard](https://miro.com/app/board/uXjVPMJI1FE=/?share_link_id=487431509477)
 
 
 ## This repo include 
@@ -11,7 +11,6 @@
 #### Task service
 #### Accounting service 
 #### Analytics service
-
 
 ## Other microservices in Env:
 #### Auth service
