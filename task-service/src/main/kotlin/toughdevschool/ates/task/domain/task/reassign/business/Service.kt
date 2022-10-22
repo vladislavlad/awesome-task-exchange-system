@@ -8,13 +8,12 @@ import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import software.darkmatter.platform.error.BusinessError
-import toughdevschool.ates.task.config.Constants.RoleNames
 import toughdevschool.ates.task.domain.task.crud.business.TaskService
 import toughdevschool.ates.task.domain.task.crud.business.TaskUpdate
 import toughdevschool.ates.task.domain.task.data.Task
 import toughdevschool.ates.task.domain.user.business.UserService
 import toughdevschool.ates.task.domain.user.data.User
-import javax.annotation.security.RolesAllowed
+import toughdevschool.ates.task.domain.userRole.business.RoleNames
 import kotlin.random.Random
 
 @Service
@@ -23,12 +22,11 @@ class Service(
     private val userService: UserService,
 ) : TaskReassignService {
 
-    private val rolesForTaskAssign = listOf(RoleNames.ADMIN, RoleNames.MANAGER)
+    private val rolesForTaskAssign = listOf(RoleNames.WORKER)
 
-    @RolesAllowed(RoleNames.ADMIN, RoleNames.MANAGER)
     @Transactional
     override suspend fun perform(request: Unit): Either<BusinessError, TasksReassigned> = either {
-        val userList = userService.getFlowWithRoleNotIn(rolesForTaskAssign).bind()
+        val userList = userService.getFlowWithRoleIn(rolesForTaskAssign).bind()
             .buffer(100)
             .toList()
 

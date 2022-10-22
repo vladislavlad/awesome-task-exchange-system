@@ -24,7 +24,7 @@ spring:
       auto-offset-reset: earliest
   cloud:
     function:
-      definition: accountsStream;tasksStream
+      definition: accountsStream;tasksStream;tasks
     stream:
       default-binder: kafka
       kafka:
@@ -52,6 +52,11 @@ spring:
           producer:
             partition-key-extractor-name: toughdevschool.ates.task.event.EventPartitionKeyExtractorStrategy
           destination: tasks-stream
+          binder: kafka
+        tasks-out-0:
+          producer:
+            partition-key-extractor-name: toughdevschool.ates.task.event.EventPartitionKeyExtractorStrategy
+          destination: tasks
           binder: kafka
 
 management:

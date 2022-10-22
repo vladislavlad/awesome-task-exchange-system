@@ -15,8 +15,8 @@ interface UserRepository : CoroutineSortingRepository<User, Long> {
         """
             select u.*
             from users u 
-                left join user_roles ur on ur.user_id = u.id where ur.role not in (:roles) or ur.role is null
+                left join user_roles ur on ur.user_id = u.id where ur.role in (:roles) or ur.role is null
         """
     )
-    fun findAllWithRoleNotIn(roles: List<String>): Flow<User>
+    fun findAllWithRoleIn(roles: List<String>): Flow<User>
 }

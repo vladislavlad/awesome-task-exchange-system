@@ -13,5 +13,5 @@ interface UserService : CrudService<User, Long, UserCreate, UserUpdate> {
 
     suspend fun getByUuid(uuid: UUID): Either<BusinessError, User>
 
-    suspend fun getFlowWithRoleNotIn(roles: List<String>): Either<BusinessError, Flow<User>>
+    suspend fun getFlowWithRoleIn(roles: List<String>): Either<BusinessError, Flow<User>>
 }

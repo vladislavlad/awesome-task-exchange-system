@@ -24,7 +24,7 @@ class Service(
 
     override suspend fun getByUuid(uuid: UUID) = repository.findByUuid(uuid).leftIfNull { notFound }
 
-    override suspend fun getFlowWithRoleNotIn(roles: List<String>) = repository.findAllWithRoleNotIn(roles).right()
+    override suspend fun getFlowWithRoleIn(roles: List<String>) = repository.findAllWithRoleIn(roles).right()
 
     override suspend fun createEntity(businessCreate: UserCreate) =
         User(

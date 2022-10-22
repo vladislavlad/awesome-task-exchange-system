@@ -18,7 +18,6 @@ class UpdateRequestAssembler(
                     task = it,
                     title = request.body.title!!,
                     description = request.body.description!!,
-                    status = request.body.status,
                     user = null,
                 )
             }

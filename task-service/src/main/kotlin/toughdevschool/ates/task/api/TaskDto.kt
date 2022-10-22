@@ -33,11 +33,15 @@ object TaskDto {
             var title: String?,
             @field:NotNull
             var description: String?,
-            var status: Task.Status,
+            var jiraId: String?,
         )
     }
 
     data class TasksReassignedResponse(
         val reassignedTasksCount: Int
+    )
+
+    data class TaskCompleteRequest(
+        var taskId: Long,
     )
 }
