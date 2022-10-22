@@ -30,9 +30,7 @@ class TaskController(
     suspend fun complete(@PathVariable id: Long) = completeApi.handle(TaskDto.TaskCompleteRequest(id))
 
     @GetMapping
-    suspend fun list(
-        @PageableDefault(size = 20, page = 0) pageable: Pageable
-    ) = crudApi.list(pageable)
+    suspend fun list(@PageableDefault(size = 20, page = 0) pageable: Pageable) = crudApi.list(pageable)
 
     @GetMapping(path = ["/{id}"])
     suspend fun get(@PathVariable id: Long) = crudApi.get(id)

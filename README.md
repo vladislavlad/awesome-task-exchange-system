@@ -19,8 +19,15 @@
 * [Swagger UI](http://localhost:8080/swagger-ui.html)
 
 ## Stack:
-* Kotlin
-* Spring Boot 2.7 (WebFlux)
+* Kotlin 1.7
+* Spring Boot 2.7.x (WebFlux, R2DBC, Cloud Stream)
 * Kafka
 * PostgreSQL
 * ScyllaDB
+
+### Stack is fully reactive.
+Spring WebFlux is base for reactive Spring RestAPI apps. Its core is [project Reactor](https://github.com/reactor/reactor-core) and async non-blocking [netty server](https://github.com/netty/netty). 
+[Spring Data R2DBC](https://github.com/spring-projects/spring-data-r2dbc) is reactive connection to relational databases. In this project I use PostgreSQL DB and [R2DBC driver](https://github.com/pgjdbc/r2dbc-postgresql).
+Next part is Spring Cloud Stream with Kafka Binder. Spring Cloud Stream allows to define [reactive functions](https://cloud.spring.io/spring-cloud-stream/spring-cloud-stream.html#_reactive_functions_support) connected with Kafka consumers and producers. 
+[Spring Reactive Cassandra](https://github.com/spring-projects/spring-data-cassandra/blob/main/src/main/asciidoc/reference/reactive-cassandra.adoc) is using for iteraction with ScyllaDB. 
+[Kotlin coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/reactive/kotlinx-coroutines-reactor/README.md) allows us to perfectly connect everything together.
