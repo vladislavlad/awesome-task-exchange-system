@@ -24,6 +24,7 @@
 * Dockerhub image: [vladislavlad/accounts](https://hub.docker.com/repository/docker/vladislavlad/accounts)
 * [Swagger UI](http://localhost:8080/swagger-ui.html)
 #### Kafka
+* Schema regestry 
 #### [Kafka UI](http://localhost:8090)
 #### PostgreSQL
 #### ScyllaDB

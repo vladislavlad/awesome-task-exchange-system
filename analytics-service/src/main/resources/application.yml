@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: analytics-service
+  data:
+    cassandra:
+      keyspace-name: accounts
+      local-datacenter: datacenter1
+      contact-points: 127.0.0.1:9042
+      port: 9042
+      schema-action: none
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/analytics
+    username: analytics
+    password: analytics
+  flyway:
+    url: jdbc:postgresql://localhost:5432/analytics
+    user: ${spring.r2dbc.username}
+    password: ${spring.r2dbc.password}
+    locations: classpath:db/migration
+  kafka:
+    bootstrap-servers: localhost:9092
+    # check and note
+    consumer:
+      auto-offset-reset: earliest
+  cloud:
+    function:
+      definition: accountsStream;tasksStream;tasks
+    stream:
+      default-binder: kafka
+      kafka:
+        # check and note
+        default:
+          consumer:
+            startOffset: latest
+            useNativeDecoding: true
+            enable-dlq: true
+            dlq-name: dlq.accounting-service
+        binder:
+          brokers: localhost:9092
+          healthTimeout: 10
+          requiredAcks: 1
+          minPartitionCount: 1
+          replicationFactor: 1
+      bindings:
+        # consumers
+        accountsStream-in-0:
+          group: accounting-service
+          destination: accounts-stream
+          binder: kafka
+        tasksStream-in-0:
+          group: accounting-service
+          destination: tasks-stream
+          binder: kafka
+        tasks-in-0:
+          group: accounting-service
+          destination: tasks
+          binder: kafka
+        # producers
+
+management:
+  health:
+    db:
+      enabled: true
+    defaults:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health, mappings
