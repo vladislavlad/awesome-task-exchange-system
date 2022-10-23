@@ -7,22 +7,43 @@ import org.springframework.messaging.Message
 import org.springframework.messaging.support.MessageBuilder
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Sinks
-import software.darkmatter.event.business.BusinessEvent
+import toughdevschool.ates.event.Event
+import toughdevschool.ates.event.KeyAware
+import toughdevschool.ates.event.business.BusinessEvent
+import toughdevschool.ates.event.business.Type
+import toughdevschool.ates.event.business.task.v1.TaskAssigned
+import toughdevschool.ates.event.business.task.v1.TaskCompleted
+import toughdevschool.ates.task.Constants
+import java.time.OffsetDateTime
+import java.util.UUID
 import java.util.function.Supplier
 
 @Configuration
 class BusinessEventProducer {
 
-    private val unicastProcessor = Sinks.many().unicast().onBackpressureBuffer<Message<out BusinessEvent>>()
+    private val unicastProcessor = Sinks.many().unicast().onBackpressureBuffer<Message<out BusinessEvent<*>>>()
 
     @Bean
-    fun tasks(): Supplier<Flux<Message<out BusinessEvent>>> =
+    fun tasks(): Supplier<Flux<Message<out BusinessEvent<*>>>> =
         Supplier { unicastProcessor.asFlux() }
 
-    suspend fun sendEvent(event: BusinessEvent) {
+    suspend fun sendTaskAssignedV1(taskCompleted: TaskAssigned) =
+        sendEvent(Event.Type(Type.TaskCompleted, 1), taskCompleted)
+
+    suspend fun sendTaskCompletedV1(taskCompleted: TaskCompleted) =
+        sendEvent(Event.Type(Type.TaskCompleted, 1), taskCompleted)
+
+    private suspend fun <T : KeyAware> sendEvent(type: Event.Type<Type>, data: T) {
+        val businessEvent = BusinessEvent(
+            id = UUID.randomUUID(),
+            producer = Constants.SERVICE_NAME,
+            producedAt = OffsetDateTime.now(),
+            type = type,
+            data = data
+        )
         val messageEvent = MessageBuilder
-            .withPayload(event)
-            .setHeader(KafkaHeaders.MESSAGE_KEY, event.id.toString().toByteArray())
+            .withPayload(businessEvent)
+            .setHeader(KafkaHeaders.MESSAGE_KEY, businessEvent.key.toByteArray())
             .build()
         unicastProcessor.emitNext(messageEvent, Sinks.EmitFailureHandler.FAIL_FAST)
     }

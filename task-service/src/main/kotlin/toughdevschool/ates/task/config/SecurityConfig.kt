@@ -27,7 +27,6 @@ class SecurityConfig(
         return http {
             addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
             authorizeExchange {
-                authorize("/authentication/**", permitAll)
                 authorize("/tasks/*/complete", hasAuthority(RoleNames.WORKER))
                 authorize("/tasks/reassign", hasAnyAuthority(RoleNames.MANAGER, RoleNames.ADMIN))
                 authorize(anyExchange, authenticated)

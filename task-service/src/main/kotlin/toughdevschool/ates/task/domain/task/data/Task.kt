@@ -12,9 +12,9 @@ data class Task(
     val uuid: UUID,
     var title: String,
     var description: String,
-    var jiraId: String?,
     var status: Status,
-    var userId: Long,
+    var jiraId: String?,
+    var userUuid: UUID,
 ) : Model<Long> {
 
     enum class Status {

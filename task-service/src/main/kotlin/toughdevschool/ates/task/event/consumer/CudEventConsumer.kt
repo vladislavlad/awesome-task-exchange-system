@@ -11,16 +11,17 @@ import org.springframework.messaging.Message
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.util.retry.Retry
-import software.darkmatter.event.cud.CudEvent.Type
 import software.darkmatter.platform.error.BusinessError
+import toughdevschool.ates.event.Event
+import toughdevschool.ates.event.cud.CudEvent
+import toughdevschool.ates.event.cud.Operation
+import toughdevschool.ates.event.cud.Type
+import toughdevschool.ates.event.cud.user.v1.UserData
+import toughdevschool.ates.event.cud.userRole.v1.UserRoleData
 import toughdevschool.ates.task.domain.user.handler.UserCreateHandler
 import toughdevschool.ates.task.domain.user.handler.UserUpdateHandler
 import toughdevschool.ates.task.domain.userRole.handler.UserRoleCreateHandler
 import toughdevschool.ates.task.domain.userRole.handler.UserRoleDeleteHandler
-import toughdevschool.ates.task.event.consumer.cud.CudEvent
-import toughdevschool.ates.task.event.consumer.cud.model.ConsumerEntities
-import toughdevschool.ates.task.event.consumer.cud.model.UserData
-import toughdevschool.ates.task.event.consumer.cud.model.UserRoleData
 import java.time.Duration
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicInteger
@@ -35,18 +36,14 @@ class CudEventConsumer(
     private val objectMapper: ObjectMapper,
 ) {
 
-    private val logger = KotlinLogging.logger { }
-
-    private val mapOfAtomics: MutableMap<UUID, AtomicInteger> = mutableMapOf() // for tests
-
     @Bean
-    fun accountsStream(): Function<Flux<Message<CudEvent>>, Mono<Void>> =
+    fun accountsStream(): Function<Flux<Message<CudEvent<*>>>, Mono<Void>> =
         Function { eventFlux ->
             eventFlux.flatMap { message ->
                 val event = message.payload
-                when (event.entity) {
-                    ConsumerEntities.User.name -> handleUser(event, objectMapper.convertValue(event.data))
-                    ConsumerEntities.UserRole.name -> handleUserRole(event, objectMapper.convertValue(event.data))
+                when (event.type) {
+                    Event.Type(Type.User, 1) -> handleUser(event, objectMapper.convertValue(event.data))
+                    Event.Type(Type.UserRole, 1) -> handleUserRole(event, objectMapper.convertValue(event.data))
                     else -> Mono.empty()
                 }.retryWhen(Retry.backoff(5, Duration.ofMillis(500))) // move to config?
                     .doOnError { logger.error { "Retry failed" } } // move to platform
@@ -54,23 +51,28 @@ class CudEventConsumer(
             }.then()
         }
 
-    private fun handleUser(cudEvent: CudEvent, data: UserData): Mono<Void> =
+    private fun handleUser(cudEvent: CudEvent<*>, data: UserData): Mono<Void> =
         mono {
-            when (cudEvent.type) {
-                Type.Create -> userCreateHandler.handle(data)
-                Type.Update -> userUpdateHandler.handle(data)
-                Type.Delete -> TODO()
+            when (cudEvent.operation) {
+                Operation.Create -> userCreateHandler.handle(data)
+                Operation.Update -> userUpdateHandler.handle(data)
+                Operation.Delete -> TODO()
             }
         }.unpack(cudEvent.id)
 
-    private fun handleUserRole(cudEvent: CudEvent, data: UserRoleData) =
+    private fun handleUserRole(cudEvent: CudEvent<*>, data: UserRoleData) =
         mono {
-            when (cudEvent.type) {
-                Type.Create -> userRoleCreateHandler.handle(data)
-                Type.Update -> TODO()
-                Type.Delete -> userRoleDeleteHandler.handle(data)
+            when (cudEvent.operation) {
+                Operation.Create -> userRoleCreateHandler.handle(data)
+                Operation.Update -> TODO()
+                Operation.Delete -> userRoleDeleteHandler.handle(data)
             }
         }.unpack(cudEvent.id)
+
+    // move to platform
+    private val logger = KotlinLogging.logger { }
+
+    private val mapOfAtomics: MutableMap<UUID, AtomicInteger> = mutableMapOf() // for tests
 
     private fun <B : Any> Mono<Either<BusinessError, B>>.unpack(eventId: UUID): Mono<Void> =
         this.flatMap { either ->

@@ -24,5 +24,5 @@ create table tasks
     title       varchar               not null,
     description varchar               not null,
     status      varchar               not null,
-    user_id     bigint                not null references users (id)
+    user_uuid   uuid                  not null references users (uuid)
 );

@@ -8,18 +8,21 @@ import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import software.darkmatter.platform.error.BusinessError
+import toughdevschool.ates.event.business.task.v1.TaskAssigned
 import toughdevschool.ates.task.domain.task.crud.business.TaskService
 import toughdevschool.ates.task.domain.task.crud.business.TaskUpdate
 import toughdevschool.ates.task.domain.task.data.Task
 import toughdevschool.ates.task.domain.user.business.UserService
 import toughdevschool.ates.task.domain.user.data.User
 import toughdevschool.ates.task.domain.userRole.business.RoleNames
+import toughdevschool.ates.task.event.producer.BusinessEventProducer
 import kotlin.random.Random
 
 @Service
 class Service(
     private val taskService: TaskService,
     private val userService: UserService,
+    private val businessEventProducer: BusinessEventProducer,
 ) : TaskReassignService {
 
     private val rolesForTaskAssign = listOf(RoleNames.WORKER)
@@ -35,13 +38,24 @@ class Service(
 
             val taskListSize = taskFlow.buffer(100)
                 .map { TaskUpdate(task = it, user = userList.takeRandomUser()) }
-                .let { taskService.updateBatch(it.toList()).bind().size }
+                .let { flow ->
+                    taskService.updateBatch(flow.toList()).bind()
+                        .onEach { sendTaskReassigned(it) }
+                        .size
+                }
 
             return@either TasksReassigned(taskListSize)
         }
         TasksReassigned(0)
     }
 
-    private fun List<User>.takeRandomUser(): User =
-        this[Random.nextInt(0, this.size)]
+    private suspend fun sendTaskReassigned(task: Task) =
+        businessEventProducer.sendTaskAssignedV1(
+            TaskAssigned(
+                taskUuid = task.uuid,
+                userUuid = task.userUuid,
+            )
+        )
+
+    private fun List<User>.takeRandomUser(): User = this[Random.nextInt(0, this.size)]
 }

@@ -18,7 +18,7 @@ class ResponseAssembler : ResponseAssembler<Task, TaskDto.Response> {
                 description = description,
                 jiraId = jiraId,
                 status = status,
-                userId = userId,
+                userUuid = userUuid,
             )
         }.right()
 }

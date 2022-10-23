@@ -15,7 +15,7 @@ object TaskDto {
         val description: String,
         val jiraId: String?,
         val status: Task.Status,
-        val userId: Long,
+        val userUuid: UUID,
     )
 
     data class CreateRequest(

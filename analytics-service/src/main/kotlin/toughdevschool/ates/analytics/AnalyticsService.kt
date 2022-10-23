@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class AnalyticsService
 
 fun main(args: Array<String>) {
-	runApplication<AnalyticsService>(*args)
+    runApplication<AnalyticsService>(*args)
 }

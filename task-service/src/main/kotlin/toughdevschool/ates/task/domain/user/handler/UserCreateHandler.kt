@@ -1,9 +1,9 @@
 package toughdevschool.ates.task.domain.user.handler
 
 import org.springframework.stereotype.Component
+import toughdevschool.ates.event.cud.user.v1.UserData
 import toughdevschool.ates.task.domain.user.business.UserCreate
 import toughdevschool.ates.task.domain.user.business.UserService
-import toughdevschool.ates.task.event.consumer.cud.model.UserData
 
 @Component
 class UserCreateHandler(

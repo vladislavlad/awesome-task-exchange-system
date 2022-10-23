@@ -7,14 +7,12 @@ import org.springframework.stereotype.Service
 import software.darkmatter.platform.error.BusinessError
 import software.darkmatter.platform.error.ErrorType
 import software.darkmatter.platform.syntax.UnitRight
-import toughdevschool.ates.task.Constants.SERVICE_NAME
+import toughdevschool.ates.event.business.task.v1.TaskCompleted
 import toughdevschool.ates.task.domain.task.crud.business.TaskService
 import toughdevschool.ates.task.domain.task.crud.business.TaskUpdate
 import toughdevschool.ates.task.domain.task.data.Task
 import toughdevschool.ates.task.domain.user.data.User
 import toughdevschool.ates.task.event.producer.BusinessEventProducer
-import toughdevschool.ates.task.event.producer.business.TaskCompleted
-import java.util.UUID
 
 @Service
 class Service(
@@ -31,10 +29,8 @@ class Service(
                 status = Task.Status.Completed
             )
         ).bind()
-        businessEventProducer.sendEvent(
+        businessEventProducer.sendTaskCompletedV1(
             TaskCompleted(
-                id = UUID.randomUUID(),
-                source = SERVICE_NAME,
                 taskUuid = request.task.uuid,
                 userUuid = request.user.uuid,
             )
@@ -42,7 +38,7 @@ class Service(
     }
 
     private fun checkUserAssignment(task: Task, user: User): Either<BusinessError, Unit> =
-        if (task.userId != user.id)
+        if (task.userUuid != user.uuid)
             BusinessError.FlowConflict(
                 "Task assigned to another user",
                 ErrorType.BusinessRequirement
