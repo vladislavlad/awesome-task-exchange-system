@@ -24,7 +24,7 @@ repositories {
 
 extra["springCloudVersion"] = "2021.0.4"
 
-val platformVersion = "0.0.4"
+val platformVersion = "0.0.5"
 
 dependencies {
     implementation("toughdevschool.ates:schema-registry:0.0.1")
