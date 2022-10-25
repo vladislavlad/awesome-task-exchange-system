@@ -10,4 +10,3 @@ data class TaskCompleted(
 
     override val key = taskUuid.toString()
 }
-

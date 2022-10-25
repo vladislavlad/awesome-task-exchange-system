@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController
 import software.darkmatter.platform.api.handle
 import toughdevschool.ates.accounting.domain.transaction.balance.BalanceApi
 
-
 @RestController
 @RequestMapping("/worker")
 class WorkerController(

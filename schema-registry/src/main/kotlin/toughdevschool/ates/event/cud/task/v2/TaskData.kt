@@ -14,4 +14,3 @@ data class TaskData(
 
     override val key = uuid.toString()
 }
-
