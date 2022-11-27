@@ -1,6 +1,6 @@
 package toughdevschool.ates.event.cud
 
-enum class Type {
+enum class CudEventType {
     Task,
     User,
     UserRole,

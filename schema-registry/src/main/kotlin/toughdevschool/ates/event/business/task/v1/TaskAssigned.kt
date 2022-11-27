@@ -1,6 +1,6 @@
 package toughdevschool.ates.event.business.task.v1
 
-import toughdevschool.ates.event.KeyAware
+import software.darkmatter.event.KeyAware
 import java.util.UUID
 
 data class TaskAssigned(

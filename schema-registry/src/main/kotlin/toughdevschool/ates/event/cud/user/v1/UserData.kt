@@ -1,6 +1,6 @@
 package toughdevschool.ates.event.cud.user.v1
 
-import toughdevschool.ates.event.KeyAware
+import software.darkmatter.event.KeyAware
 import java.util.UUID
 
 data class UserData(

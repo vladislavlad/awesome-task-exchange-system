@@ -2,7 +2,7 @@ package toughdevschool.ates.task.event.consumer
 
 import arrow.core.Either
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.convertValue
+import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.reactor.mono
 import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
@@ -11,11 +11,12 @@ import org.springframework.messaging.Message
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.util.retry.Retry
+import software.darkmatter.event.Event
+import software.darkmatter.event.cud.CudEvent
+import software.darkmatter.event.cud.Operation
 import software.darkmatter.platform.error.BusinessError
-import toughdevschool.ates.event.Event
-import toughdevschool.ates.event.cud.CudEvent
-import toughdevschool.ates.event.cud.Operation
-import toughdevschool.ates.event.cud.Type
+import toughdevschool.ates.event.cud.AnyCudEvent
+import toughdevschool.ates.event.cud.CudEventType
 import toughdevschool.ates.event.cud.user.v1.UserData
 import toughdevschool.ates.event.cud.userRole.v1.UserRoleData
 import toughdevschool.ates.task.domain.user.handler.UserCreateHandler
@@ -37,13 +38,13 @@ class CudEventConsumer(
 ) {
 
     @Bean
-    fun accountsStream(): Function<Flux<Message<CudEvent<*>>>, Mono<Void>> =
+    fun accountsStream(): Function<Flux<Message<ByteArray>>, Mono<Void>> =
         Function { eventFlux ->
             eventFlux.flatMap { message ->
-                val event = message.payload
-                when (event.type) {
-                    Event.Type(Type.User, 1) -> handleUser(event, objectMapper.convertValue(event.data))
-                    Event.Type(Type.UserRole, 1) -> handleUserRole(event, objectMapper.convertValue(event.data))
+                val any = objectMapper.readValue(message.payload, AnyCudEvent::class.java)  // move to platform
+                when (any!!.type) {
+                    Event.Type(CudEventType.User, 1) -> handleUser(objectMapper.readValue(message.payload))
+                    Event.Type(CudEventType.UserRole, 1) -> handleUserRole(objectMapper.readValue(message.payload))
                     else -> Mono.empty()
                 }.retryWhen(Retry.backoff(5, Duration.ofMillis(500))) // move to config?
                     .doOnError { logger.error { "Retry failed" } } // move to platform
@@ -51,23 +52,23 @@ class CudEventConsumer(
             }.then()
         }
 
-    private fun handleUser(cudEvent: CudEvent<*>, data: UserData): Mono<Void> =
+    private fun handleUser(event: CudEvent<CudEventType, UserData>): Mono<Void> =
         mono {
-            when (cudEvent.operation) {
-                Operation.Create -> userCreateHandler.handle(data)
-                Operation.Update -> userUpdateHandler.handle(data)
+            when (event.operation) {
+                Operation.Create -> userCreateHandler.handle(event.data)
+                Operation.Update -> userUpdateHandler.handle(event.data)
                 Operation.Delete -> TODO()
             }
-        }.unpack(cudEvent.id)
+        }.unpack(event.id)
 
-    private fun handleUserRole(cudEvent: CudEvent<*>, data: UserRoleData) =
+    private fun handleUserRole(event: CudEvent<CudEventType, UserRoleData>) =
         mono {
-            when (cudEvent.operation) {
-                Operation.Create -> userRoleCreateHandler.handle(data)
+            when (event.operation) {
+                Operation.Create -> userRoleCreateHandler.handle(event.data)
                 Operation.Update -> TODO()
-                Operation.Delete -> userRoleDeleteHandler.handle(data)
+                Operation.Delete -> userRoleDeleteHandler.handle(event.data)
             }
-        }.unpack(cudEvent.id)
+        }.unpack(event.id)
 
     // move to platform
     private val logger = KotlinLogging.logger { }

@@ -1,9 +1,9 @@
 package toughdevschool.ates.task.domain.task.crud.business
 
 import org.springframework.stereotype.Component
+import software.darkmatter.event.cud.Operation
 import software.darkmatter.platform.service.CrudServiceExtension
 import toughdevschool.ates.event.business.task.v1.TaskAssigned
-import toughdevschool.ates.event.cud.Operation
 import toughdevschool.ates.event.cud.task.v2.TaskData
 import toughdevschool.ates.task.domain.task.data.Task
 import toughdevschool.ates.task.event.producer.BusinessEventProducer

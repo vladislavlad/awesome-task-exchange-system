@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 
-val platformVersion = "0.0.4"
+val platformVersion = "0.0.5"
 val kotestVersion = "5.5.1"
 
 dependencies {

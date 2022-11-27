@@ -1,6 +1,6 @@
 package toughdevschool.ates.event.business
 
-enum class Type {
+enum class BusinessEventType {
     TaskAssigned,
     TaskCompleted,
     UserRolesChanged,
