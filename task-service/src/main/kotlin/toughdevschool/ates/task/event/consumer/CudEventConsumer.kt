@@ -1,8 +1,6 @@
 package toughdevschool.ates.task.event.consumer
 
 import arrow.core.Either
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.reactor.mono
 import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
@@ -10,12 +8,13 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.Message
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import reactor.util.retry.Retry
 import software.darkmatter.platform.error.BusinessError
 import software.darkmatter.platform.event.Event
+import software.darkmatter.platform.event.KeyAware
+import software.darkmatter.platform.event.consumer.ConsumerFunction
 import software.darkmatter.platform.event.cud.CudEvent
 import software.darkmatter.platform.event.cud.Operation
-import toughdevschool.ates.event.cud.AnyCudEvent
+import toughdevschool.ates.event.cud.CudEventRegistry
 import toughdevschool.ates.event.cud.CudEventType
 import toughdevschool.ates.event.cud.user.v1.UserData
 import toughdevschool.ates.event.cud.userRole.v1.UserRoleData
@@ -23,7 +22,6 @@ import toughdevschool.ates.task.domain.user.handler.UserCreateHandler
 import toughdevschool.ates.task.domain.user.handler.UserUpdateHandler
 import toughdevschool.ates.task.domain.userRole.handler.UserRoleCreateHandler
 import toughdevschool.ates.task.domain.userRole.handler.UserRoleDeleteHandler
-import java.time.Duration
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Function
@@ -34,22 +32,22 @@ class CudEventConsumer(
     private val userUpdateHandler: UserUpdateHandler,
     private val userRoleCreateHandler: UserRoleCreateHandler,
     private val userRoleDeleteHandler: UserRoleDeleteHandler,
-    private val objectMapper: ObjectMapper,
+    private val consumerFunction: ConsumerFunction,
 ) {
 
     @Bean
     fun accountsStream(): Function<Flux<Message<ByteArray>>, Mono<Void>> =
-        Function { eventFlux ->
-            eventFlux.flatMap { message ->
-                val any = objectMapper.readValue(message.payload, AnyCudEvent::class.java)  // move to platform
-                when (any!!.type) {
-                    Event.Type(CudEventType.User, 1) -> handleUser(objectMapper.readValue(message.payload))
-                    Event.Type(CudEventType.UserRole, 1) -> handleUserRole(objectMapper.readValue(message.payload))
-                    else -> Mono.empty()
-                }.retryWhen(Retry.backoff(5, Duration.ofMillis(500))) // move to config?
-                    .doOnError { logger.error { "Retry failed" } } // move to platform
-                    .onErrorComplete()
-            }.then()
+        consumerFunction.f(
+            CudEventType::class,
+            CudEventRegistry.cudEvents,
+            ::mapp
+        )
+
+    fun <D : KeyAware> mapp(event: CudEvent<CudEventType, D>): Mono<Void> =
+        when (event.type) {
+            Event.Type(CudEventType.User, 1) -> handleUser(event as CudEvent<CudEventType, UserData>)
+            Event.Type(CudEventType.UserRole, 1) -> handleUserRole(event as CudEvent<CudEventType, UserRoleData>)
+            else -> Mono.empty()
         }
 
     private fun handleUser(event: CudEvent<CudEventType, UserData>): Mono<Void> =
