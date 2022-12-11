@@ -19,5 +19,5 @@ class UserCreateHandler(
                 lastName = data.lastName,
                 middleName = data.middleName
             )
-        )
+        ).map { }
 }

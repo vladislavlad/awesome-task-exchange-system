@@ -1,8 +1,6 @@
 package toughdevschool.ates.task.event.consumer
 
 import arrow.core.Either
-import kotlinx.coroutines.reactor.mono
-import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.Message
@@ -22,8 +20,6 @@ import toughdevschool.ates.task.domain.user.handler.UserCreateHandler
 import toughdevschool.ates.task.domain.user.handler.UserUpdateHandler
 import toughdevschool.ates.task.domain.userRole.handler.UserRoleCreateHandler
 import toughdevschool.ates.task.domain.userRole.handler.UserRoleDeleteHandler
-import java.util.UUID
-import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Function
 
 @Configuration
@@ -43,47 +39,25 @@ class CudEventConsumer(
             ::mapp
         )
 
-    fun <D : KeyAware> mapp(event: CudEvent<CudEventType, D>): Mono<Void> =
+    @Suppress("UNCHECKED_CAST")
+    suspend fun <D : KeyAware> mapp(event: CudEvent<CudEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {
             Event.Type(CudEventType.User, 1) -> handleUser(event as CudEvent<CudEventType, UserData>)
             Event.Type(CudEventType.UserRole, 1) -> handleUserRole(event as CudEvent<CudEventType, UserRoleData>)
-            else -> Mono.empty()
+            else -> Either.Right(Unit)
         }
 
-    private fun handleUser(event: CudEvent<CudEventType, UserData>): Mono<Void> =
-        mono {
-            when (event.operation) {
-                Operation.Create -> userCreateHandler.handle(event.data)
-                Operation.Update -> userUpdateHandler.handle(event.data)
-                Operation.Delete -> TODO()
-            }
-        }.unpack(event.id)
-
-    private fun handleUserRole(event: CudEvent<CudEventType, UserRoleData>) =
-        mono {
-            when (event.operation) {
-                Operation.Create -> userRoleCreateHandler.handle(event.data)
-                Operation.Update -> TODO()
-                Operation.Delete -> userRoleDeleteHandler.handle(event.data)
-            }
-        }.unpack(event.id)
-
-    // move to platform
-    private val logger = KotlinLogging.logger { }
-
-    private val mapOfAtomics: MutableMap<UUID, AtomicInteger> = mutableMapOf() // for tests
-
-    private fun <B : Any> Mono<Either<BusinessError, B>>.unpack(eventId: UUID): Mono<Void> =
-        this.flatMap { either ->
-            either.fold(
-                {
-                    val atomicInteger = mapOfAtomics.computeIfAbsent(eventId) { AtomicInteger() }
-                    logger.warn { "Retry #${atomicInteger.getAndIncrement()} for Event id $eventId" }
-                    Mono.error(MessageHandlingException(it))
-                },
-                { Mono.empty() }
-            )
+    private suspend fun handleUser(event: CudEvent<CudEventType, UserData>) =
+        when (event.operation) {
+            Operation.Create -> userCreateHandler.handle(event.data)
+            Operation.Update -> userUpdateHandler.handle(event.data)
+            Operation.Delete -> TODO()
         }
 
-    class MessageHandlingException(error: BusinessError) : RuntimeException("MessageHandlingException. Error: $error") // move to platform
+    private suspend fun handleUserRole(event: CudEvent<CudEventType, UserRoleData>) =
+        when (event.operation) {
+            Operation.Create -> userRoleCreateHandler.handle(event.data)
+            Operation.Update -> TODO()
+            Operation.Delete -> userRoleDeleteHandler.handle(event.data)
+        }
 }
