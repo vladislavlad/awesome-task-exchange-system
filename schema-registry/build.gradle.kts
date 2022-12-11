@@ -14,8 +14,8 @@ repositories {
     mavenCentral()
 }
 
-val platformVersion = "0.0.5"
-val kotestVersion = "5.5.1"
+val platformVersion = "0.0.7"
+val kotestVersion = "5.5.4"
 
 dependencies {
     implementation("software.darkmatter:interaction-protocol:$platformVersion")

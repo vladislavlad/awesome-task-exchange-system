@@ -1,6 +1,6 @@
 package toughdevschool.ates.event.cud
 
-import software.darkmatter.event.Event
+import software.darkmatter.platform.event.Event
 import java.util.UUID
 
 data class AnyCudEvent(

@@ -1,7 +1,7 @@
 package toughdevschool.ates.event.business
 
-import software.darkmatter.event.Event
-import software.darkmatter.event.KeyAware
+import software.darkmatter.platform.event.Event
+import software.darkmatter.platform.event.KeyAware
 import java.util.UUID
 
 data class BusinessEvent<Data : KeyAware>(

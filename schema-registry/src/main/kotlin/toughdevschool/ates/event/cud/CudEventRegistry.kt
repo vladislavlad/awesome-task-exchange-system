@@ -1,7 +1,7 @@
 package toughdevschool.ates.event.cud
 
-import software.darkmatter.event.Event
-import software.darkmatter.event.KeyAware
+import software.darkmatter.platform.event.Event
+import software.darkmatter.platform.event.KeyAware
 import toughdevschool.ates.event.cud.user.v1.UserData
 import toughdevschool.ates.event.cud.userRole.v1.UserRoleData
 import kotlin.reflect.KClass

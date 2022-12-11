@@ -12,11 +12,11 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.util.retry.Retry
 import software.darkmatter.platform.error.BusinessError
+import software.darkmatter.platform.event.Event
 import toughdevschool.ates.accounting.domain.task.assign.TaskAssignedHandler
 import toughdevschool.ates.accounting.domain.task.complete.TaskCompletedHandler
-import toughdevschool.ates.event.Event
 import toughdevschool.ates.event.business.BusinessEvent
-import toughdevschool.ates.event.business.Type
+import toughdevschool.ates.event.business.BusinessEventType
 import toughdevschool.ates.event.business.task.v1.TaskAssigned
 import toughdevschool.ates.event.business.task.v1.TaskCompleted
 import java.time.Duration
@@ -37,8 +37,8 @@ class BusinessEventConsumer(
             eventFlux.flatMap { message ->
                 val event = message.payload
                 when (event.type) {
-                    Event.Type(Type.TaskAssigned, 1) -> handleTaskAssigned(event, objectMapper.convertValue(event))
-                    Event.Type(Type.TaskCompleted, 1) -> handleTaskCompleted(event, objectMapper.convertValue(event))
+                    Event.Type(BusinessEventType.TaskAssigned, 1) -> handleTaskAssigned(event, objectMapper.convertValue(event))
+                    Event.Type(BusinessEventType.TaskCompleted, 1) -> handleTaskCompleted(event, objectMapper.convertValue(event))
                     else -> Mono.empty()
                 }.retryWhen(Retry.backoff(5, Duration.ofMillis(500))) // move to config?
                     .doOnError { logger.error { "Retry failed" } } // move to platform

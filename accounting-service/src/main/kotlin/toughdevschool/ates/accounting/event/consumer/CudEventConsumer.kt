@@ -12,16 +12,16 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.util.retry.Retry
 import software.darkmatter.platform.error.BusinessError
+import software.darkmatter.platform.event.Event
+import software.darkmatter.platform.event.cud.CudEvent
+import software.darkmatter.platform.event.cud.Operation
 import toughdevschool.ates.accounting.domain.task.crud.handler.TaskCreateHandler
 import toughdevschool.ates.accounting.domain.task.crud.handler.TaskUpdateHandler
 import toughdevschool.ates.accounting.domain.user.handler.UserCreateHandler
 import toughdevschool.ates.accounting.domain.user.handler.UserUpdateHandler
 import toughdevschool.ates.accounting.domain.userRole.handler.UserRoleCreateHandler
 import toughdevschool.ates.accounting.domain.userRole.handler.UserRoleDeleteHandler
-import toughdevschool.ates.event.Event
-import toughdevschool.ates.event.cud.CudEvent
-import toughdevschool.ates.event.cud.Operation
-import toughdevschool.ates.event.cud.Type
+import toughdevschool.ates.event.cud.CudEventType
 import toughdevschool.ates.event.cud.user.v1.UserData
 import toughdevschool.ates.event.cud.userRole.v1.UserRoleData
 import java.time.Duration
@@ -42,13 +42,13 @@ class CudEventConsumer(
 ) {
 
     @Bean
-    fun accountsStream(): Function<Flux<Message<CudEvent<*>>>, Mono<Void>> =
+    fun accountsStream(): Function<Flux<Message<CudEvent<*, *>>>, Mono<Void>> =
         Function { eventFlux ->
             eventFlux.flatMap { message ->
                 val event = message.payload
                 when (event.type) {
-                    Event.Type(Type.User, 1) -> handleUser(event, objectMapper.convertValue(event.data))
-                    Event.Type(Type.UserRole, 1) -> handleUserRole(event, objectMapper.convertValue(event.data))
+                    Event.Type(CudEventType.User, 1) -> handleUser(event, objectMapper.convertValue(event.data))
+                    Event.Type(CudEventType.UserRole, 1) -> handleUserRole(event, objectMapper.convertValue(event.data))
                     else -> Mono.empty()
                 }.retryWhen(Retry.backoff(5, Duration.ofMillis(500))) // move to config?
                     .doOnError { logger.error { "Retry failed" } } // move to platform
@@ -57,12 +57,12 @@ class CudEventConsumer(
         }
 
     @Bean
-    fun tasksStream(): Function<Flux<Message<CudEvent<*>>>, Mono<Void>> =
+    fun tasksStream(): Function<Flux<Message<CudEvent<*, *>>>, Mono<Void>> =
         Function { eventFlux ->
             eventFlux.flatMap { message ->
                 val event = message.payload
                 when (event.type) {
-                    Event.Type(Type.Task, 2) -> handleTask(event, objectMapper.convertValue(event.data))
+                    Event.Type(CudEventType.Task, 2) -> handleTask(event, objectMapper.convertValue(event.data))
                     else -> Mono.empty()
                 }.retryWhen(Retry.backoff(5, Duration.ofMillis(500))) // move to config?
                     .doOnError { logger.error { "Retry failed" } } // move to platform
@@ -70,7 +70,7 @@ class CudEventConsumer(
             }.then()
         }
 
-    private fun handleUser(cudEvent: CudEvent<*>, data: UserData): Mono<Void> =
+    private fun handleUser(cudEvent: CudEvent<*, *>, data: UserData): Mono<Void> =
         mono {
             when (cudEvent.operation) {
                 Operation.Create -> userCreateHandler.handle(data)
@@ -79,7 +79,7 @@ class CudEventConsumer(
             }
         }.unpack(cudEvent.id)
 
-    private fun handleUserRole(cudEvent: CudEvent<*>, data: UserRoleData) =
+    private fun handleUserRole(cudEvent: CudEvent<*, *>, data: UserRoleData) =
         mono {
             when (cudEvent.operation) {
                 Operation.Create -> userRoleCreateHandler.handle(data)
@@ -88,7 +88,7 @@ class CudEventConsumer(
             }
         }.unpack(cudEvent.id)
 
-    private fun handleTask(cudEvent: CudEvent<*>, data: TaskDataV2): Mono<Void> =
+    private fun handleTask(cudEvent: CudEvent<*, *>, data: TaskDataV2): Mono<Void> =
         mono {
             when (cudEvent.operation) {
                 Operation.Create -> taskCreateHandler.handle(data)

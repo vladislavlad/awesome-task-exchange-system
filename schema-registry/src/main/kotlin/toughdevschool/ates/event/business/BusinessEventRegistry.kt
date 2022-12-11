@@ -1,7 +1,7 @@
 package toughdevschool.ates.event.business
 
-import software.darkmatter.event.Event
-import software.darkmatter.event.KeyAware
+import software.darkmatter.platform.event.Event
+import software.darkmatter.platform.event.KeyAware
 import toughdevschool.ates.event.business.task.v1.TaskAssigned
 import toughdevschool.ates.event.business.task.v1.TaskCompleted
 import toughdevschool.ates.event.business.user.v1.UserRolesChanged

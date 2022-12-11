@@ -1,6 +1,6 @@
 package toughdevschool.ates.event.cud.task.v2
 
-import software.darkmatter.event.KeyAware
+import software.darkmatter.platform.event.KeyAware
 import java.util.UUID
 
 data class TaskData(

@@ -50,12 +50,12 @@ spring:
         # producers
         tasksStream-out-0:
           producer:
-            partition-key-extractor-name: toughdevschool.ates.task.event.EventPartitionKeyExtractorStrategy
+            partition-key-extractor-name: software.darkmatter.platform.event.EventPartitionKeyExtractorStrategy
           destination: tasks-stream
           binder: kafka
         tasks-out-0:
           producer:
-            partition-key-extractor-name: toughdevschool.ates.task.event.EventPartitionKeyExtractorStrategy
+            partition-key-extractor-name: software.darkmatter.platform.event.EventPartitionKeyExtractorStrategy
           destination: tasks
           binder: kafka
 

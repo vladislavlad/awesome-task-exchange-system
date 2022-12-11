@@ -12,7 +12,7 @@ services:
       - ./init/postgres:/docker-entrypoint-initdb.d/
 
   scylla:
-    image: scylladb/scylla:4.6.3
+    image: scylladb/scylla:4.6.10
     entrypoint: /docker-entrypoint.d/init-keyspace.sh
     # Note: --skip-wait-for-gossip-to-settle for DEV mode only !!!
     command: ["--skip-wait-for-gossip-to-settle", "0"]
@@ -35,7 +35,6 @@ services:
   kafka0:
     image: confluentinc/cp-kafka:7.0.5.arm64
     hostname: kafka0
-    container_name: kafka0
     ports:
       - "9092:9092"
       - "9997:9997"
@@ -61,7 +60,6 @@ services:
     command: "bash -c 'if [ ! -f /tmp/update_run.sh ]; then echo \"ERROR: Did you forget the update_run.sh file that came with this docker-compose.yml file?\" && exit 1 ; else /tmp/update_run.sh && /etc/confluent/docker/run ; fi'"
 
   kafka-ui:
-    container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
     ports:
       - "8090:8080"
@@ -72,20 +70,20 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092
       KAFKA_CLUSTERS_0_JMXPORT: 9997
 
-  accounts:
-    image: vladislavlad/accounts:latest-aarch64
-    restart: on-failure
-    ports:
-      - "8080:8080"
-    environment:
-      spring.profiles.active: "$ACCOUNTS_SPRING_PROFILES"
-      spring.data.cassandra.contact-points: scylla:9042
-      spring.r2dbc.url: r2dbc:postgresql://postgres:5432/accounts
-      spring.flyway.url: jdbc:postgresql://postgres:5432/accounts
-      spring.cloud.stream.kafka.binder.brokers: kafka0:29092
-      spring.kafka.bootstrap-servers: kafka0:9092
-    depends_on:
-      - postgres
-      - scylla
-      - scylla-migration
-      - kafka0
+#  accounts:
+#    image: vladislavlad/accounts:latest-aarch64
+#    restart: on-failure
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      spring.profiles.active: "$ACCOUNTS_SPRING_PROFILES"
+#      spring.data.cassandra.contact-points: scylla:9042
+#      spring.r2dbc.url: r2dbc:postgresql://postgres:5432/accounts
+#      spring.flyway.url: jdbc:postgresql://postgres:5432/accounts
+#      spring.cloud.stream.kafka.binder.brokers: kafka0:29092
+#      spring.kafka.bootstrap-servers: kafka0:9092
+#    depends_on:
+#      - postgres
+#      - scylla
+#      - scylla-migration
+#      - kafka0

@@ -11,10 +11,10 @@ import org.springframework.messaging.Message
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.util.retry.Retry
-import software.darkmatter.event.Event
-import software.darkmatter.event.cud.CudEvent
-import software.darkmatter.event.cud.Operation
 import software.darkmatter.platform.error.BusinessError
+import software.darkmatter.platform.event.Event
+import software.darkmatter.platform.event.cud.CudEvent
+import software.darkmatter.platform.event.cud.Operation
 import toughdevschool.ates.event.cud.AnyCudEvent
 import toughdevschool.ates.event.cud.CudEventType
 import toughdevschool.ates.event.cud.user.v1.UserData
