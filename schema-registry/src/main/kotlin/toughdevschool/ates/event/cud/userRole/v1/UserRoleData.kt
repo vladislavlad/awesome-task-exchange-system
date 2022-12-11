@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class UserRoleData(
     val userUuid: UUID,
-    val roles: List<String> = emptyList(),
+    val role: String,
 ) : KeyAware {
 
     override val key = userUuid.toString()

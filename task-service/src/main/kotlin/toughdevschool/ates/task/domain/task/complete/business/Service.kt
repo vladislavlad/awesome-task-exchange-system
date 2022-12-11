@@ -12,12 +12,12 @@ import toughdevschool.ates.task.domain.task.crud.business.TaskService
 import toughdevschool.ates.task.domain.task.crud.business.TaskUpdate
 import toughdevschool.ates.task.domain.task.data.Task
 import toughdevschool.ates.task.domain.user.data.User
-import toughdevschool.ates.task.event.producer.BusinessEventProducer
+import toughdevschool.ates.task.event.producer.TaskBusinessEventProducer
 
 @Service
 class Service(
     private val taskService: TaskService,
-    private val businessEventProducer: BusinessEventProducer,
+    private val businessEventProducer: TaskBusinessEventProducer,
 ) : TaskCompleteService {
 
     override suspend fun perform(request: TaskComplete) = either<BusinessError, Unit> {

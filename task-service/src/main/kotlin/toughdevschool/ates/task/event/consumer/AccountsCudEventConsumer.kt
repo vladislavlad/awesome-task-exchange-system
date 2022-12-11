@@ -1,6 +1,8 @@
 package toughdevschool.ates.task.event.consumer
 
 import arrow.core.Either
+import com.fasterxml.jackson.databind.ObjectMapper
+import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.Message
@@ -9,10 +11,11 @@ import reactor.core.publisher.Mono
 import software.darkmatter.platform.error.BusinessError
 import software.darkmatter.platform.event.Event
 import software.darkmatter.platform.event.KeyAware
-import software.darkmatter.platform.event.consumer.ConsumerFunction
+import software.darkmatter.platform.event.config.ConsumerProperties
+import software.darkmatter.platform.event.consumer.CudEventConsumer
 import software.darkmatter.platform.event.cud.CudEvent
 import software.darkmatter.platform.event.cud.Operation
-import toughdevschool.ates.event.cud.CudEventRegistry
+import toughdevschool.ates.event.cud.CudEventSchemaRegistry
 import toughdevschool.ates.event.cud.CudEventType
 import toughdevschool.ates.event.cud.user.v1.UserData
 import toughdevschool.ates.event.cud.userRole.v1.UserRoleData
@@ -23,24 +26,24 @@ import toughdevschool.ates.task.domain.userRole.handler.UserRoleDeleteHandler
 import java.util.function.Function
 
 @Configuration
-class CudEventConsumer(
+class AccountsCudEventConsumer(
     private val userCreateHandler: UserCreateHandler,
     private val userUpdateHandler: UserUpdateHandler,
     private val userRoleCreateHandler: UserRoleCreateHandler,
     private val userRoleDeleteHandler: UserRoleDeleteHandler,
-    private val consumerFunction: ConsumerFunction,
-) {
+    consumerProperties: ConsumerProperties,
+    objectMapper: ObjectMapper,
+) : CudEventConsumer<CudEventType>(consumerProperties, objectMapper) {
+
+    override val logger = KotlinLogging.logger { }
+
+    override val schemaRegistry = CudEventSchemaRegistry
 
     @Bean
-    fun accountsStream(): Function<Flux<Message<ByteArray>>, Mono<Void>> =
-        consumerFunction.f(
-            CudEventType::class,
-            CudEventRegistry.cudEvents,
-            ::mapp
-        )
+    fun accountsStream(): Function<Flux<Message<ByteArray>>, Mono<Void>> = consumerFunction(::handlingStrategy)
 
     @Suppress("UNCHECKED_CAST")
-    suspend fun <D : KeyAware> mapp(event: CudEvent<CudEventType, D>): Either<BusinessError, Unit> =
+    suspend fun <D : KeyAware> handlingStrategy(event: CudEvent<CudEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {
             Event.Type(CudEventType.User, 1) -> handleUser(event as CudEvent<CudEventType, UserData>)
             Event.Type(CudEventType.UserRole, 1) -> handleUserRole(event as CudEvent<CudEventType, UserRoleData>)

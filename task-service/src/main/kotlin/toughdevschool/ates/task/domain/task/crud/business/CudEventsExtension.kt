@@ -6,13 +6,13 @@ import software.darkmatter.platform.service.CrudServiceExtension
 import toughdevschool.ates.event.business.task.v1.TaskAssigned
 import toughdevschool.ates.event.cud.task.v2.TaskData
 import toughdevschool.ates.task.domain.task.data.Task
-import toughdevschool.ates.task.event.producer.BusinessEventProducer
-import toughdevschool.ates.task.event.producer.CudEventProducer
+import toughdevschool.ates.task.event.producer.TaskBusinessEventProducer
+import toughdevschool.ates.task.event.producer.TaskCudEventProducer
 
 @Component
 class CudEventsExtension(
-    private val cudEventProducer: CudEventProducer,
-    private val businessEventProducer: BusinessEventProducer,
+    private val cudEventProducer: TaskCudEventProducer,
+    private val businessEventProducer: TaskBusinessEventProducer,
 ) : CrudServiceExtension<Long, Task> {
 
     override suspend fun onGet(business: Task) = Unit

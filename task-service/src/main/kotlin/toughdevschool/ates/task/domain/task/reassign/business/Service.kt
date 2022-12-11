@@ -15,14 +15,14 @@ import toughdevschool.ates.task.domain.task.data.Task
 import toughdevschool.ates.task.domain.user.business.UserService
 import toughdevschool.ates.task.domain.user.data.User
 import toughdevschool.ates.task.domain.userRole.business.RoleNames
-import toughdevschool.ates.task.event.producer.BusinessEventProducer
+import toughdevschool.ates.task.event.producer.TaskBusinessEventProducer
 import kotlin.random.Random
 
 @Service
 class Service(
     private val taskService: TaskService,
     private val userService: UserService,
-    private val businessEventProducer: BusinessEventProducer,
+    private val businessEventProducer: TaskBusinessEventProducer,
 ) : TaskReassignService {
 
     private val rolesForTaskAssign = listOf(RoleNames.WORKER)
