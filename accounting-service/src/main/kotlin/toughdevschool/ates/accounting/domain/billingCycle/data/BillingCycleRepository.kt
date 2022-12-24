@@ -10,7 +10,8 @@ interface BillingCycleRepository : CoroutineSortingRepository<BillingCycle, Long
             select bc.*
             from billing_cycles bc
             where bc.status = 'Active'
-                and bc.end_datetime > now()
+                and (bc.end_datetime > now() or bc.end_datetime is null)
+            limit 1
         """
     )
     suspend fun findActive(): BillingCycle?

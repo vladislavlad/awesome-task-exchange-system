@@ -25,8 +25,8 @@ class TaskBusinessEventProducer(
     @Bean
     fun tasks(): Supplier<Flux<Message<out Event<BusinessEventType, *>>>> = producerSupplier()
 
-    suspend fun sendTaskAssignedV1(taskCompleted: TaskAssigned) =
-        sendEvent(Event.Type(BusinessEventType.TaskCompleted, 1), taskCompleted)
+    suspend fun sendTaskAssignedV1(taskAssigned: TaskAssigned) =
+        sendEvent(Event.Type(BusinessEventType.TaskAssigned, 1), taskAssigned)
 
     suspend fun sendTaskCompletedV1(taskCompleted: TaskCompleted) =
         sendEvent(Event.Type(BusinessEventType.TaskCompleted, 1), taskCompleted)

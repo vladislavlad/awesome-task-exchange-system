@@ -22,5 +22,5 @@ class UserUpdateHandler(
                         middleName = data.middleName
                     )
                 )
-            }
+            }.map { }
 }

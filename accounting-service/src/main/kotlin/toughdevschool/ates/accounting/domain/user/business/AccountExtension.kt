@@ -18,7 +18,7 @@ class AccountExtension(
 
     override suspend fun onUpdate(business: User) = Unit
 
-    override suspend fun onDelete(id: Long) = TODO()
+    override suspend fun onDelete(business: User) = Unit
 
     override suspend fun onGet(business: User) = Unit
 

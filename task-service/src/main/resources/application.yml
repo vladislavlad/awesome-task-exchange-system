@@ -31,7 +31,7 @@ spring:
         # check and note
         default:
           consumer:
-            startOffset: latest
+            startOffset: earliest
             useNativeDecoding: true
             enable-dlq: true
             dlq-name: dlq.tasks-service

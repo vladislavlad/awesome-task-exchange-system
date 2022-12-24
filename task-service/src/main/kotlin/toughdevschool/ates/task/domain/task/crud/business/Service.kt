@@ -4,7 +4,7 @@ import arrow.core.right
 import org.springframework.stereotype.Service
 import software.darkmatter.platform.business.BusinessCheck
 import software.darkmatter.platform.data.PagingRepository
-import software.darkmatter.platform.service.AbstractCrudService
+import software.darkmatter.platform.security.service.AuthCrudService
 import software.darkmatter.platform.syntax.leftIfNull
 import toughdevschool.ates.task.domain.task.data.Task
 import toughdevschool.ates.task.domain.task.data.TaskRepository
@@ -15,7 +15,7 @@ class Service(
     private val repository: TaskRepository,
     pagingRepository: PagingRepository<Task, Long>,
     cudEventsExtension: CudEventsExtension,
-) : AbstractCrudService<Task, Long, TaskCreate, TaskUpdate>(repository, pagingRepository, cudEventsExtension),
+) : AuthCrudService<Task, Long, TaskCreate, TaskUpdate>(repository, pagingRepository, cudEventsExtension),
     TaskService {
 
     override suspend fun getByUuid(uuid: UUID) = repository.findByUuid(uuid).leftIfNull { notFound }

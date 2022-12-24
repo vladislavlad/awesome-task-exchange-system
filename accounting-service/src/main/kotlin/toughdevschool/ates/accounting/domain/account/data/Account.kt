@@ -13,7 +13,7 @@ data class Account(
     val type: Type,
     var description: String?,
     var status: Status,
-    val userId: Long,
+    val userId: Long?,
 ) : Model<Long> {
 
     enum class Type {

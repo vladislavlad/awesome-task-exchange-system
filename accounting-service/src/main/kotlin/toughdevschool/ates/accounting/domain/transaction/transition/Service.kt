@@ -32,7 +32,7 @@ class Service(
         ).let { transactionRepository.save(it) }
         val debitTx = Transaction(
             type = Transaction.Type.Transition,
-            accountId = request.source.id!!,
+            accountId = request.destination.id!!,
             billingCycleId = billingCycle.id!!,
             description = request.description,
             debit = request.amount,

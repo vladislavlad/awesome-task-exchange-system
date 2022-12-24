@@ -6,7 +6,7 @@ import software.darkmatter.platform.business.businessChecks
 import software.darkmatter.platform.business.onRight
 import software.darkmatter.platform.data.PagingRepository
 import software.darkmatter.platform.error.uniqueConstraintConflict
-import software.darkmatter.platform.service.AbstractCrudService
+import software.darkmatter.platform.security.service.AuthCrudService
 import software.darkmatter.platform.syntax.leftIfNull
 import toughdevschool.ates.accounting.domain.user.data.User
 import toughdevschool.ates.accounting.domain.user.data.UserRepository
@@ -17,7 +17,7 @@ class Service(
     private val repository: UserRepository,
     pagingRepository: PagingRepository<User, Long>,
     accountExtension: AccountExtension,
-) : AbstractCrudService<User, Long, UserCreate, UserUpdate>(repository, pagingRepository, accountExtension),
+) : AuthCrudService<User, Long, UserCreate, UserUpdate>(repository, pagingRepository, accountExtension),
     UserService {
 
     override suspend fun getByUsername(username: String) = repository.findByUsername(username).leftIfNull { notFound }

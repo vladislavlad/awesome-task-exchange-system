@@ -53,5 +53,5 @@ class CudEventsExtension(
             )
         )
 
-    override suspend fun onDelete(id: Long) = TODO()
+    override suspend fun onDelete(business: Task) = TODO()
 }

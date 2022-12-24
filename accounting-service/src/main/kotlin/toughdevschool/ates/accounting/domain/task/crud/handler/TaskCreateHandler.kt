@@ -16,5 +16,5 @@ class TaskCreateHandler(
                 uuid = data.uuid,
                 title = data.title,
             )
-        )
+        ).map { }
 }

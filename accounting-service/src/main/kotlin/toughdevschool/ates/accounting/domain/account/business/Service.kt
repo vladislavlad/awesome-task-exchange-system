@@ -7,7 +7,7 @@ import software.darkmatter.platform.business.businessChecks
 import software.darkmatter.platform.business.onRight
 import software.darkmatter.platform.data.PagingRepository
 import software.darkmatter.platform.error.uniqueConstraintConflict
-import software.darkmatter.platform.service.AbstractCrudService
+import software.darkmatter.platform.security.service.AuthCrudService
 import software.darkmatter.platform.syntax.leftIfNull
 import toughdevschool.ates.accounting.domain.account.data.Account
 import toughdevschool.ates.accounting.domain.account.data.AccountRepository
@@ -18,7 +18,7 @@ import java.util.UUID
 class Service(
     private val repository: AccountRepository,
     pagingRepository: PagingRepository<Account, Long>,
-) : AbstractCrudService<Account, Long, AccountCreate, AccountUpdate>(repository, pagingRepository),
+) : AuthCrudService<Account, Long, AccountCreate, AccountUpdate>(repository, pagingRepository),
     AccountService {
 
     override suspend fun getByUuid(uuid: UUID) = repository.findByUuid(uuid).leftIfNull { notFound }
