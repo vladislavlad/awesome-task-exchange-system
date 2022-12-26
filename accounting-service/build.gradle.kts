@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
-    id("org.springframework.boot") version "2.7.7"
-    id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    kotlin("jvm") version "1.7.22"
+    kotlin("plugin.spring") version "1.7.22"
+    id("org.springframework.boot") version "3.0.1"
+    id("io.spring.dependency-management") version "1.1.0"
 }
 
 group = "toughdevschool.ates"
@@ -22,8 +22,8 @@ repositories {
     mavenCentral()
 }
 
-val springCloudVersion = "2021.0.5"
-val platformVersion = "0.0.9"
+val springCloudVersion = "2022.0.0"
+val platformVersion = "0.1.0"
 
 dependencies {
     implementation("toughdevschool.ates:schema-registry:0.0.1")

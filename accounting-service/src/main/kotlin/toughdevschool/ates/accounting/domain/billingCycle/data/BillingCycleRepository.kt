@@ -1,9 +1,9 @@
 package toughdevschool.ates.accounting.domain.billingCycle.data
 
 import org.springframework.data.r2dbc.repository.Query
-import org.springframework.data.repository.kotlin.CoroutineSortingRepository
+import software.darkmatter.platform.data.CoroutineCrudSortingRepository
 
-interface BillingCycleRepository : CoroutineSortingRepository<BillingCycle, Long> {
+interface BillingCycleRepository : CoroutineCrudSortingRepository<BillingCycle, Long> {
 
     @Query(
         """

@@ -1,10 +1,10 @@
 package toughdevschool.ates.task.domain.task.data
 
 import kotlinx.coroutines.flow.Flow
-import org.springframework.data.repository.kotlin.CoroutineSortingRepository
+import software.darkmatter.platform.data.CoroutineCrudSortingRepository
 import java.util.UUID
 
-interface TaskRepository : CoroutineSortingRepository<Task, Long> {
+interface TaskRepository : CoroutineCrudSortingRepository<Task, Long> {
 
     suspend fun findByUuid(uuid: UUID): Task?
 

@@ -1,9 +1,9 @@
 package toughdevschool.ates.accounting.domain.task.crud.data
 
-import org.springframework.data.repository.kotlin.CoroutineSortingRepository
+import software.darkmatter.platform.data.CoroutineCrudSortingRepository
 import java.util.UUID
 
-interface TaskRepository : CoroutineSortingRepository<Task, Long> {
+interface TaskRepository : CoroutineCrudSortingRepository<Task, Long> {
 
     suspend fun findByUuid(uuid: UUID): Task?
 }

@@ -1,9 +1,9 @@
 package toughdevschool.ates.accounting.domain.transaction.data
 
 import kotlinx.coroutines.flow.Flow
-import org.springframework.data.repository.kotlin.CoroutineSortingRepository
+import software.darkmatter.platform.data.CoroutineCrudSortingRepository
 
-interface TransactionRepository : CoroutineSortingRepository<Transaction, Long> {
+interface TransactionRepository : CoroutineCrudSortingRepository<Transaction, Long> {
 
     fun findAllByAccountId(accountId: Long): Flow<Transaction>
 }

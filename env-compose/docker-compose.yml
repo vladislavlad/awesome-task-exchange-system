@@ -12,7 +12,7 @@ services:
       - ./init/postgres:/docker-entrypoint-initdb.d/
 
   scylla:
-    image: scylladb/scylla:4.6.10
+    image: scylladb/scylla:5.1.1
     entrypoint: /docker-entrypoint.d/init-keyspace.sh
     # Note: --skip-wait-for-gossip-to-settle for DEV mode only !!!
     command: ["--skip-wait-for-gossip-to-settle", "0"]
@@ -33,7 +33,7 @@ services:
       - ./init/scylla/migrations:/migrations/
 
   kafka0:
-    image: confluentinc/cp-kafka:7.0.5.arm64
+    image: confluentinc/cp-kafka:7.3.1.arm64
     hostname: kafka0
     ports:
       - "9092:9092"
@@ -70,20 +70,20 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092
       KAFKA_CLUSTERS_0_JMXPORT: 9997
 
-#  accounts:
-#    image: vladislavlad/accounts:latest-aarch64
-#    restart: on-failure
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      spring.profiles.active: "$ACCOUNTS_SPRING_PROFILES"
-#      spring.data.cassandra.contact-points: scylla:9042
-#      spring.r2dbc.url: r2dbc:postgresql://postgres:5432/accounts
-#      spring.flyway.url: jdbc:postgresql://postgres:5432/accounts
-#      spring.cloud.stream.kafka.binder.brokers: kafka0:29092
-#      spring.kafka.bootstrap-servers: kafka0:9092
-#    depends_on:
-#      - postgres
-#      - scylla
-#      - scylla-migration
-#      - kafka0
+  accounts:
+    image: vladislavlad/accounts:0.1.0-aarch64
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      spring.profiles.active: "$ACCOUNTS_SPRING_PROFILES"
+      spring.cassandra.contact-points: scylla:9042
+      spring.r2dbc.url: r2dbc:postgresql://postgres:5432/accounts
+      spring.flyway.url: jdbc:postgresql://postgres:5432/accounts
+      spring.cloud.stream.kafka.binder.brokers: kafka0:29092
+      spring.kafka.bootstrap-servers: kafka0:9092
+    depends_on:
+      - postgres
+      - scylla
+      - scylla-migration
+      - kafka0

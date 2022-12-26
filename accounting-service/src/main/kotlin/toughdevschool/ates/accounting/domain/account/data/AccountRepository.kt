@@ -1,9 +1,9 @@
 package toughdevschool.ates.accounting.domain.account.data
 
-import org.springframework.data.repository.kotlin.CoroutineSortingRepository
+import software.darkmatter.platform.data.CoroutineCrudSortingRepository
 import java.util.UUID
 
-interface AccountRepository : CoroutineSortingRepository<Account, Long> {
+interface AccountRepository : CoroutineCrudSortingRepository<Account, Long> {
 
     suspend fun findByUuid(uuid: UUID): Account?
 

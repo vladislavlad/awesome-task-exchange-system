@@ -1,5 +1,6 @@
 package toughdevschool.ates.task.event.producer
 
+import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.info.BuildProperties
 import org.springframework.context.annotation.Bean
@@ -19,6 +20,8 @@ class TaskBusinessEventProducer(
     @Value("\${spring.application.name}") applicationName: String,
     buildProperties: BuildProperties,
 ) : BusinessEventProducer<BusinessEventType>(applicationName, buildProperties) {
+
+    override val logger = KotlinLogging.logger { }
 
     override val schemaRegistry = BusinessEventSchemaRegistry
 
