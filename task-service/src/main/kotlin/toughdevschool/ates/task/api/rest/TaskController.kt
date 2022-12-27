@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import toughdevschool.ates.task.api.TaskDto
+import toughdevschool.ates.task.domain.task.assigned.business.TaskAssignedListApi
 import toughdevschool.ates.task.domain.task.complete.business.TaskCompleteApi
 import toughdevschool.ates.task.domain.task.crud.business.TaskCrudApi
 import toughdevschool.ates.task.domain.task.reassign.business.TaskReassignApi
@@ -21,6 +22,7 @@ class TaskController(
     private val crudApi: TaskCrudApi,
     private val reassignApi: TaskReassignApi,
     private val completeApi: TaskCompleteApi,
+    private val assignedListApi: TaskAssignedListApi,
 ) {
 
     @PostMapping(path = ["/reassign"])
@@ -28,6 +30,10 @@ class TaskController(
 
     @PostMapping(path = ["/{id}/complete"])
     suspend fun complete(@PathVariable id: Long) = completeApi.handle(TaskDto.TaskCompleteRequest(id))
+
+    @GetMapping(path = ["/assigned"])
+    suspend fun assignedList(@PageableDefault(size = 20, page = 0) pageable: Pageable) =
+        assignedListApi.handle(TaskDto.TaskAssignedList(pageable))
 
     @GetMapping
     suspend fun list(@PageableDefault(size = 20, page = 0) pageable: Pageable) = crudApi.list(pageable)

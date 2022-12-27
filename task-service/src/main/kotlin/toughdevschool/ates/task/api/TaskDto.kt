@@ -1,5 +1,6 @@
 package toughdevschool.ates.task.api
 
+import org.springframework.data.domain.Pageable
 import toughdevschool.ates.task.domain.task.data.Task
 import java.util.UUID
 import javax.validation.constraints.NotEmpty
@@ -21,15 +22,15 @@ object TaskDto {
     data class CreateRequest(
         @field:NotEmpty
         @field:Pattern(regexp = "^(((?!\\[|\\])).)+\$", message = "Use jiraId field")
-        var title: String?,
+        val title: String?,
         @field:NotNull
-        var description: String?,
-        var jiraId: String?,
+        val description: String?,
+        val jiraId: String?,
     )
 
     data class UpdateRequest(
-        var taskId: Long,
-        var body: Body,
+        val taskId: Long,
+        val body: Body,
     ) {
 
         data class Body(
@@ -47,6 +48,10 @@ object TaskDto {
     )
 
     data class TaskCompleteRequest(
-        var taskId: Long,
+        val taskId: Long,
+    )
+
+    data class TaskAssignedList(
+        val pageable: Pageable,
     )
 }

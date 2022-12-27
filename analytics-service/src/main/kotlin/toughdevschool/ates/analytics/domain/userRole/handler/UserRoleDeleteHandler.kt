@@ -16,6 +16,6 @@ class UserRoleDeleteHandler(
     suspend fun handle(data: UserRoleData) =
         userService.getByUuid(data.userUuid)
             .flatMap {
-                deleteUserRolesService.perform(UserRoleDelete(it, data.roles))
+                deleteUserRolesService.perform(UserRoleDelete(it, listOf(data.role)))
             }
 }

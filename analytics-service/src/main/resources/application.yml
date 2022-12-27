@@ -1,13 +1,12 @@
 spring:
   application:
     name: analytics-service
-  data:
-    cassandra:
-      keyspace-name: accounts
-      local-datacenter: datacenter1
-      contact-points: 127.0.0.1:9042
-      port: 9042
-      schema-action: none
+  cassandra:
+    keyspace-name: accounts
+    local-datacenter: datacenter1
+    contact-points: 127.0.0.1:9042
+    port: 9042
+    schema-action: none
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/analytics
     username: analytics
@@ -31,7 +30,7 @@ spring:
         # check and note
         default:
           consumer:
-            startOffset: latest
+            startOffset: earliest
             useNativeDecoding: true
             enable-dlq: true
             dlq-name: dlq.accounting-service

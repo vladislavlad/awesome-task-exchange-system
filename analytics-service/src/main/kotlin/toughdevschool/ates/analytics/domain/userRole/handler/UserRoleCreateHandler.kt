@@ -16,6 +16,6 @@ class UserRoleCreateHandler(
     suspend fun handle(data: UserRoleData) =
         userService.getByUuid(data.userUuid)
             .flatMap {
-                addUserRolesService.perform(UserRoleAdd(it, data.roles))
+                addUserRolesService.perform(UserRoleAdd(it, listOf(data.role)))
             }
 }

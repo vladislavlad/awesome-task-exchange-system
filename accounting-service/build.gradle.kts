@@ -23,7 +23,7 @@ repositories {
 }
 
 val springCloudVersion = "2022.0.0"
-val platformVersion = "0.1.0"
+val platformVersion = "0.1.1"
 
 dependencies {
     implementation("toughdevschool.ates:schema-registry:0.0.1")
@@ -38,8 +38,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
     implementation("org.springframework.kafka:spring-kafka")
-    implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.14")
-    implementation("org.springdoc:springdoc-openapi-kotlin:1.6.14")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("org.hibernate:hibernate-validator:8.0.0.Final")

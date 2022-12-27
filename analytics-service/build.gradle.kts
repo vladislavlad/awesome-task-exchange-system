@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
-    id("org.springframework.boot") version "2.7.6"
-    id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    kotlin("jvm") version "1.7.22"
+    kotlin("plugin.spring") version "1.7.22"
+    id("org.springframework.boot") version "3.0.1"
+    id("io.spring.dependency-management") version "1.1.0"
 }
 
 group = "toughdevschool.ates"
@@ -22,11 +22,12 @@ repositories {
     mavenCentral()
 }
 
-val springCloudVersion = "2021.0.5"
-val platformVersion = "0.0.6"
+val springCloudVersion = "2022.0.0"
+val platformVersion = "0.1.1"
 
 dependencies {
     implementation("toughdevschool.ates:schema-registry:0.0.1")
+    implementation("software.darkmatter:interaction-messaging:$platformVersion")
     implementation("software.darkmatter:interaction-protocol:$platformVersion")
     implementation("software.darkmatter:platform-core:$platformVersion")
     implementation("software.darkmatter:security-core:$platformVersion")
@@ -36,9 +37,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
-    implementation("org.springframework.kafka:spring-kafka")
-    implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.13")
-    implementation("org.springdoc:springdoc-openapi-kotlin:1.6.13")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("org.hibernate:hibernate-validator:8.0.0.Final")
@@ -48,7 +47,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.flywaydb:flyway-core:9.8.3")
+    implementation("org.flywaydb:flyway-core:9.10.1")
     runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

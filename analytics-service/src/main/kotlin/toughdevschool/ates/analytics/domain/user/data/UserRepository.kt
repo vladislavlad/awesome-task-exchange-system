@@ -2,10 +2,10 @@ package toughdevschool.ates.analytics.domain.user.data
 
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.repository.Query
-import org.springframework.data.repository.kotlin.CoroutineSortingRepository
+import software.darkmatter.platform.data.CoroutineCrudSortingRepository
 import java.util.UUID
 
-interface UserRepository : CoroutineSortingRepository<User, Long> {
+interface UserRepository : CoroutineCrudSortingRepository<User, Long> {
 
     suspend fun findByUsername(username: String): User?
 
