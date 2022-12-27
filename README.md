@@ -4,7 +4,7 @@
 ## This project is being implemented as part of the course ["Asynchronous architecture"](https://education.borshev.com/architecture).
 
 ## Project Architecture
-### Domain model and Event Storming result at [Miro Dashboard](https://miro.com/app/board/uXjVPMJI1FE=/?share_link_id=487431509477)
+### Domain model and Event Storming result at [Miro Dashboard](https://miro.com/app/board/uXjVPMJI1FE=)
 
 
 ## This repo includes 
@@ -12,11 +12,13 @@
 ### Microservices:
 #### Task service
 * Auth: Bearer JWT
+* [Swagger UI](http://localhost:8081/swagger-ui.html)
 #### Accounting service 
 * Auth: Bearer JWT
 * [Swagger UI](http://localhost:8082/swagger-ui.html)
 #### Analytics service
 * Auth: Bearer JWT
+* [Swagger UI](http://localhost:8083/swagger-ui.html)
 
 ### Env Docker Compose:
 #### Auth service
@@ -24,6 +26,7 @@
 * Dockerhub image: [vladislavlad/accounts](https://hub.docker.com/repository/docker/vladislavlad/accounts)
 * [Swagger UI](http://localhost:8080/swagger-ui.html)
 #### Kafka
+* version 3.3.1 without Zookeeper 
 * Schema regestry 
 #### [Kafka UI](http://localhost:8090)
 #### PostgreSQL
@@ -32,10 +35,10 @@
 
 ## Stack
 * Kotlin 1.7
-* Spring Boot 2.7.x (WebFlux, R2DBC, Cloud Stream)
+* Spring Boot 3.0.x (WebFlux, R2DBC, Cloud Stream)
 * Kafka
-* PostgreSQL
-* ScyllaDB
+* PostgreSQL 15
+* ScyllaDB 5
 
 ### Stack is fully reactive
 Spring WebFlux is base for reactive Spring RestAPI apps. WebFlux core is [project Reactor](https://github.com/reactor/reactor-core) and async non-blocking [netty server](https://github.com/netty/netty).<br> 
