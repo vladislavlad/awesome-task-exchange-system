@@ -1,4 +1,0 @@
-Kafka
-Serialization format: JSON
-Schema Registry: 
-Kotlin library

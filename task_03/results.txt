@@ -1,0 +1,25 @@
+1. Выбрать формат серелизации данных и схемы. На выбор: avro, protobuf или json/xml schema.
+Serialization format: JSON
+
+2. Выбрать реализацию schema registry и эволюции данных.
+Kotlin library Schema Registry: ../schema-registry
+
+3. Мы отдали часть системы из авторизации и таск трекера бизнесу. Спустя 15 минут бизнес попросил внести необходимые доработки после фидбэка.
+Во время работы с таск трекером, мы поняли, что попуги часто в title задачи пишут конструкцию [jira-id] - Title (Пример: "UBERPOP-42 — Поменять оттенок зелёного на кнопке"). В результате чего поэтому нам необходимо разделить title на два поля: title (string) + jira_id (string). При этом, для всех новых событий, необходимо убедиться что jira-id не присутствует в title.
+- Added new CUD event version to schema-registry: task/v2.
+- Added task v2 Consumers to all dependend services.
+- Added new field using DB migration, Added new Producer v2. Removed Producer v1.
+- Test messaging.
+- Removed task v1 Consumers from all services.
+
+Task events in schema registry:
+schema-registry/src/main/kotlin/toughdevschool/ates/event/cud/task
+
+4. Имплементация системы аккаунтинга/биллинга + всех событий необходимых для работы системы
+accounting-service 
+
+5. Имплементация системы аналитики + всех событий необходимых для работы системы
+analytics-service
+
+6. Выбрать стратегию обработки ошибок в событиях связанных с системой аккаунтинга, что бы быть уверенным, что все события превратятся в деньги и расписать как именно должна выглядеть эти стратегии.
+

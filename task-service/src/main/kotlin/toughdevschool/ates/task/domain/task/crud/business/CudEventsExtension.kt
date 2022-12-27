@@ -19,7 +19,6 @@ class CudEventsExtension(
 
     override suspend fun onList(list: List<Task>) = Unit
 
-
     override suspend fun onCreate(business: Task) {
         cudEventProducer.sendTaskV2(
             Operation.Create,
@@ -53,5 +52,16 @@ class CudEventsExtension(
             )
         )
 
-    override suspend fun onDelete(business: Task) = TODO()
+    override suspend fun onDelete(business: Task) =
+        cudEventProducer.sendTaskV2(
+            Operation.Delete,
+            TaskData(
+                uuid = business.uuid,
+                title = business.title,
+                description = business.description,
+                status = business.status.name,
+                jiraId = business.jiraId,
+                userUuid = business.userUuid,
+            )
+        )
 }

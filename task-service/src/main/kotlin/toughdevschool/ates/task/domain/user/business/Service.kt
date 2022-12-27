@@ -1,6 +1,7 @@
 package toughdevschool.ates.task.domain.user.business
 
 import arrow.core.right
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import software.darkmatter.platform.business.BusinessCheck
 import software.darkmatter.platform.business.businessChecks
@@ -24,7 +25,11 @@ class Service(
 
     override suspend fun getByUuid(uuid: UUID) = repository.findByUuid(uuid).leftIfNull { notFound }
 
-    override suspend fun getFlowWithRoleIn(roles: List<String>) = repository.findAllWithRoleIn(roles).right()
+    override suspend fun getFlowWithRoleIn(roles: List<String>, pageable: Pageable) =
+        repository.findAllWithRoleIn(roles, pageable.pageSize, pageable.offset).right()
+
+    override suspend fun countWithRoleIn(roles: List<String>) =
+        repository.countWithRoleIn(roles).right()
 
     override suspend fun createEntity(businessCreate: UserCreate) =
         User(

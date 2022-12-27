@@ -16,7 +16,4 @@ class CrudApi(
     override val responseAssembler: ResponseAssembler<Task, TaskDto.Response>,
     override val createRequestAssembler: RequestAssembler<TaskDto.CreateRequest, TaskCreate>,
     override val updateRequestAssembler: RequestAssembler<TaskDto.UpdateRequest, TaskUpdate>,
-) : TaskCrudApi() {
-
-    override suspend fun delete(id: Long) = TODO()
-}
+) : TaskCrudApi()

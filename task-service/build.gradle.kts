@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "toughdevschool.ates"
-version = "0.0.1"
+version = "0.0.2"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
@@ -70,7 +70,7 @@ dependencyManagement {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
+        freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=enable")
         jvmTarget = "17"
     }
 }
