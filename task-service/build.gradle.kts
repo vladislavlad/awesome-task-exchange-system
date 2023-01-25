@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
-    id("org.springframework.boot") version "3.0.1"
+    id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
 }
 
@@ -23,7 +23,7 @@ repositories {
 }
 
 val springCloudVersion = "2022.0.0"
-val platformVersion = "0.1.1"
+val platformVersion = "0.1.2"
 
 dependencies {
     implementation("toughdevschool.ates:schema-registry:0.0.1")
@@ -69,13 +69,19 @@ dependencyManagement {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=enable")
+        freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=all")
         jvmTarget = "17"
     }
 }
 
 springBoot {
     buildInfo()
+}
+
+tasks.jar { enabled = false }
+
+tasks.bootJar {
+    layered { enabled.set(true) }
 }
 
 tasks.withType<Test> {
