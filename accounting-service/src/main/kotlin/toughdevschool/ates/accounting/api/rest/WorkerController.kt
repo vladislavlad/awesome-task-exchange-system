@@ -1,6 +1,5 @@
 package toughdevschool.ates.accounting.api.rest
 
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -17,8 +16,8 @@ class WorkerController(
 ) {
 
     @GetMapping(path = ["/balance"])
-    suspend fun balance(): ResponseEntity<*> = balanceApi.handle()
+    suspend fun balance() = balanceApi.handle()
 
     @GetMapping(path = ["/audit/log"])
-    suspend fun auditLog(): ResponseEntity<*> = auditLogApi.handle(AuditLogDto.Request)
+    suspend fun auditLog() = auditLogApi.handle(AuditLogDto.Request)
 }

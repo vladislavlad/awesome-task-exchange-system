@@ -21,7 +21,7 @@ data class Transaction(
 ) : Model<Long> {
 
     enum class Type {
-        Transition,
+        Transfer,
         Enrollment,
         Withdrawal,
     }

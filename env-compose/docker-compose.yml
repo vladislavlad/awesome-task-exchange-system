@@ -71,7 +71,7 @@ services:
       KAFKA_CLUSTERS_0_JMXPORT: 9997
 
   accounts:
-    image: vladislavlad/accounts:0.1.0-aarch64
+    image: vladislavlad/accounts:0.1.2-aarch64
     restart: on-failure
     ports:
       - "8080:8080"
