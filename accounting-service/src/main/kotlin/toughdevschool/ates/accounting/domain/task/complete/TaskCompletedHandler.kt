@@ -7,6 +7,7 @@ import software.darkmatter.platform.error.BusinessError
 import toughdevschool.ates.accounting.domain.account.CompanyAccountUuid
 import toughdevschool.ates.accounting.domain.account.business.AccountService
 import toughdevschool.ates.accounting.domain.task.crud.business.TaskService
+import toughdevschool.ates.accounting.domain.transaction.data.Transaction
 import toughdevschool.ates.accounting.domain.transaction.transfer.TransferRequest
 import toughdevschool.ates.accounting.domain.transaction.transfer.TransferService
 import toughdevschool.ates.accounting.domain.user.business.UserService
@@ -29,6 +30,7 @@ class TaskCompletedHandler(
 
         transferService.perform(
             TransferRequest(
+                type = Transaction.Type.Transfer,
                 source = companyAccount,
                 destination = userAccount,
                 amount = task.reward.toBigDecimal(),

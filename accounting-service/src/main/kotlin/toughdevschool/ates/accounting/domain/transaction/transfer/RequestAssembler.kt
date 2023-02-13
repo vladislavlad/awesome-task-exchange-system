@@ -6,6 +6,7 @@ import software.darkmatter.platform.assembler.RequestAssembler
 import software.darkmatter.platform.security.context.jwtAuthenticationFromSecurityContext
 import toughdevschool.ates.accounting.api.TransferDto
 import toughdevschool.ates.accounting.domain.account.business.AccountService
+import toughdevschool.ates.accounting.domain.transaction.data.Transaction
 import toughdevschool.ates.accounting.domain.user.business.UserService
 
 @Component
@@ -21,6 +22,6 @@ class RequestAssembler(
 
         val destinationAccount = accountService.getByUuid(request.body.destination).bind()
 
-        TransferRequest(account, destinationAccount, request.body.amount, request.body.description)
+        TransferRequest(Transaction.Type.Transfer, account, destinationAccount, request.body.amount, request.body.description)
     }
 }

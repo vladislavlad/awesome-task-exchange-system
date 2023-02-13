@@ -4,6 +4,7 @@ import arrow.core.continuations.either
 import org.springframework.stereotype.Service
 import toughdevschool.ates.accounting.domain.account.CashOperationsAccountUuid
 import toughdevschool.ates.accounting.domain.account.business.AccountService
+import toughdevschool.ates.accounting.domain.transaction.data.Transaction
 import toughdevschool.ates.accounting.domain.transaction.transfer.TransferRequest
 import toughdevschool.ates.accounting.domain.transaction.transfer.TransferService
 
@@ -17,7 +18,7 @@ class Service(
         val cashOperationAccounts = accountService.getByUuid(CashOperationsAccountUuid).bind()
 
         val transferResult = transferService.perform(
-            TransferRequest(request.source, cashOperationAccounts, request.amount, request.description)
+            TransferRequest(Transaction.Type.Withdrawal, request.source, cashOperationAccounts, request.amount, request.description)
         ).bind()
 
         WithdrawalResponse(

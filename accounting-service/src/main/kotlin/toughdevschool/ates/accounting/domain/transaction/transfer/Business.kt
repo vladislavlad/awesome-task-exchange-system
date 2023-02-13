@@ -12,6 +12,7 @@ typealias TransferApi = HttpApi<TransferDto.Request>
 typealias TransferService = Service<TransferRequest, TransferResponse>
 
 data class TransferRequest(
+    val type: Transaction.Type,
     val source: Account,
     val destination: Account,
     val amount: BigDecimal,
