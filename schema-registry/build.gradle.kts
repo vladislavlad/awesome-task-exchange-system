@@ -1,20 +1,20 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.22"
     `java-library`
     `maven-publish`
 }
 
 group = "toughdevschool.ates"
-version = "0.0.1"
+version = "0.0.2"
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-val platformVersion = "0.0.9"
+val platformVersion = "0.1.2"
 val kotestVersion = "5.5.4"
 
 dependencies {
@@ -37,7 +37,7 @@ tasks.jar {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=enable")
+        freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=all")
         jvmTarget = "17"
     }
 }

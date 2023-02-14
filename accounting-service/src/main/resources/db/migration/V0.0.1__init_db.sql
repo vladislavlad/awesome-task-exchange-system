@@ -42,6 +42,7 @@ create table billing_cycles
 create table transactions
 (
     id                    bigserial primary key not null,
+    public_id             varchar               not null,
     account_id            bigint                not null references accounts (id),
     billing_cycle_id      bigint                not null references billing_cycles (id),
     type                  varchar               not null,

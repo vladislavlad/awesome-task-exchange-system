@@ -26,7 +26,7 @@ val springCloudVersion = "2022.0.0"
 val platformVersion = "0.1.2"
 
 dependencies {
-    implementation("toughdevschool.ates:schema-registry:0.0.1")
+    implementation("toughdevschool.ates:schema-registry:0.0.2")
     implementation("software.darkmatter:interaction-messaging:$platformVersion")
     implementation("software.darkmatter:interaction-protocol:$platformVersion")
     implementation("software.darkmatter:platform-core:$platformVersion")

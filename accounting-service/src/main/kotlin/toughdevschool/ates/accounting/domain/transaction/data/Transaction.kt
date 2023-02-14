@@ -10,6 +10,7 @@ import java.time.OffsetDateTime
 data class Transaction(
     @Id
     override var id: Long? = null,
+    val publicId: String,
     val type: Type,
     val accountId: Long,
     val billingCycleId: Long,

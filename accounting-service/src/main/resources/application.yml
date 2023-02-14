@@ -23,7 +23,7 @@ spring:
       auto-offset-reset: earliest
   cloud:
     function:
-      definition: accountsStream;tasksStream;tasks
+      definition: accountsStream;tasksStream;tasks;accounting
     stream:
       default-binder: kafka
       kafka:
@@ -55,6 +55,11 @@ spring:
           destination: tasks
           binder: kafka
         # producers
+        accounting-out-0:
+          producer:
+            partition-key-extractor-name: software.darkmatter.platform.event.EventPartitionKeyExtractorStrategy
+          destination: accounting
+          binder: kafka
 
 management:
   health:

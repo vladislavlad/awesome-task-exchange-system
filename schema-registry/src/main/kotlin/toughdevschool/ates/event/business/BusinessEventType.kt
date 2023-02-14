@@ -4,4 +4,5 @@ enum class BusinessEventType {
     TaskAssigned,
     TaskCompleted,
     UserRolesChanged,
+    TransactionCompleted,
 }

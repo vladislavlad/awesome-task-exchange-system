@@ -7,6 +7,8 @@ server:
 
 security:
   client:
+    application:
+      name: task-service
     session:
       enabled: true
     rsa-public-key-spec:
