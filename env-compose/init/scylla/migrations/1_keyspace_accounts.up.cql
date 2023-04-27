@@ -23,4 +23,4 @@ create table accounts.session
     createdAt timestamp,
     updatedAt timestamp,
     primary key ( uuid )
-)
+);

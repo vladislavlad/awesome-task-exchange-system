@@ -1,8 +1,7 @@
 version: "3.9"
 services:
-
   postgres:
-    image: postgres:15.1-alpine
+    image: postgres:15.2-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres2
@@ -12,7 +11,7 @@ services:
       - ./init/postgres:/docker-entrypoint-initdb.d/
 
   scylla:
-    image: scylladb/scylla:5.1.1
+    image: scylladb/scylla:5.1.8
     entrypoint: /docker-entrypoint.d/init-keyspace.sh
     # Note: --skip-wait-for-gossip-to-settle for DEV mode only !!!
     command: ["--skip-wait-for-gossip-to-settle", "0"]
@@ -24,7 +23,7 @@ services:
       - ./init/scylla/keyspace:/docker-entrypoint.d/
 
   scylla-migration:
-    image: migrate/migrate
+    image: migrate/migrate:latest
     command: ["-database", "cassandra://scylla:9042/accounts?x-multi-statement=true", "-path", "/migrations", "up"]
     restart: on-failure
     depends_on:
@@ -32,16 +31,16 @@ services:
     volumes:
       - ./init/scylla/migrations:/migrations/
 
-  kafka0:
-    image: confluentinc/cp-kafka:7.3.1.arm64
-    hostname: kafka0
+  kafka:
+    image: confluentinc/cp-kafka:7.3.3.arm64
+    hostname: kafka
     ports:
       - "9092:9092"
       - "9997:9997"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka0:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
@@ -49,8 +48,8 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_PROCESS_ROLES: 'broker,controller'
       KAFKA_NODE_ID: 1
-      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka0:29093'
-      KAFKA_LISTENERS: 'PLAINTEXT://kafka0:29092,CONTROLLER://kafka0:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
+      KAFKA_LISTENERS: 'PLAINTEXT://kafka:29092,CONTROLLER://kafka:29093,PLAINTEXT_HOST://0.0.0.0:9092'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
       JMX_PORT: 9997
@@ -64,14 +63,42 @@ services:
     ports:
       - "8090:8080"
     depends_on:
-      - kafka0
+      - kafka
     environment:
       KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
       KAFKA_CLUSTERS_0_JMXPORT: 9997
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  #  grafana:
+  #    image: grafana/grafana:9.3.6
+  #    ports:
+  #      - "3000:3000"
+  #    volumes:
+  #      - ./grafana:/var/lib/grafana
+  #    environment:
+  #      - GF_SECURITY_ADMIN_USER=admin
+  #      - GF_SECURITY_ADMIN_PASSWORD=monitoring
+  #
+  #  prometheus:
+  #    image: prom/prometheus:latest
+  #    ports:
+  #      - "9090:9090"
+  #    volumes:
+  #      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+  #      - ./prometheus:/prometheus
+
+  zipkin:
+    image: openzipkin/zipkin:latest-arm64
+    ports:
+      - "9411:9411"
+
   accounts:
-    image: vladislavlad/accounts:0.1.2-aarch64
+    image: vladislavlad/accounts:0.1.5-aarch64
     restart: on-failure
     ports:
       - "8080:8080"
@@ -80,10 +107,10 @@ services:
       spring.cassandra.contact-points: scylla:9042
       spring.r2dbc.url: r2dbc:postgresql://postgres:5432/accounts
       spring.flyway.url: jdbc:postgresql://postgres:5432/accounts
-      spring.cloud.stream.kafka.binder.brokers: kafka0:29092
-      spring.kafka.bootstrap-servers: kafka0:9092
+      spring.cloud.stream.kafka.binder.brokers: kafka:29092
+      spring.kafka.bootstrap-servers: kafka:9092
     depends_on:
       - postgres
       - scylla
       - scylla-migration
-      - kafka0
+      - kafka
