@@ -4,7 +4,7 @@
 ## This project is being implemented as part of the course ["Asynchronous architecture"](https://education.borshev.com/architecture).
 
 ## Project Architecture
-### Domain model and Event Storming result at [Miro Dashboard](https://miro.com/app/board/uXjVPMJI1FE=)
+### Domain model and Event Storming result at [Miro Dashboard](https://miro.com/app/board/uXjVMO_RL2A)
 
 
 ## This repo includes 
