@@ -1,6 +1,7 @@
 package toughdevschool.ates.task.domain.user.data
 
 import kotlinx.coroutines.flow.Flow
+import org.springframework.data.domain.Pageable
 import org.springframework.data.r2dbc.repository.Query
 import software.darkmatter.platform.data.CoroutineCrudSortingRepository
 import java.util.UUID
@@ -20,6 +21,10 @@ interface UserRepository : CoroutineCrudSortingRepository<User, Long> {
     )
     suspend fun countWithRoleIn(roles: List<String>): Long
 
+    fun findAllWithRoleIn(roles: List<String>, pageable: Pageable): Flow<User> =
+        if (pageable.isUnpaged) findAllWithRoleIn(roles)
+        else findAllWithRoleIn(roles, pageable.pageSize, pageable.offset)
+
     @Query(
         """
             select u.*
@@ -29,4 +34,13 @@ interface UserRepository : CoroutineCrudSortingRepository<User, Long> {
         """
     )
     fun findAllWithRoleIn(roles: List<String>, limit: Int, offset: Long): Flow<User>
+
+    @Query(
+        """
+            select u.*
+            from users u 
+                left join user_roles ur on ur.user_id = u.id where ur.role in (:roles)
+        """
+    )
+    fun findAllWithRoleIn(roles: List<String>): Flow<User>
 }

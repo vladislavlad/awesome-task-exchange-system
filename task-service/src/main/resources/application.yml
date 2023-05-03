@@ -40,6 +40,7 @@ spring:
           requiredAcks: 1
           minPartitionCount: 1
           replicationFactor: 1
+          enableObservation: true
       bindings:
         # consumers
         accountsStream-in-0:
@@ -71,3 +72,16 @@ management:
     web:
       exposure:
         include: health, mappings
+  tracing:
+    enabled: true
+    sampling.probability: 1.0 # trace every request - not recommended for production
+#    propagation:
+#      type: b3 # see https://github.com/openzipkin/b3-propagation
+    baggage:
+      correlation:
+        enabled: true
+#        fields: orderId, customerId
+#      remote-fields: orderId, customerId
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans

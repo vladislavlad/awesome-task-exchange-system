@@ -97,20 +97,20 @@ services:
     ports:
       - "9411:9411"
 
-  accounts:
-    image: vladislavlad/accounts:0.1.5-aarch64
-    restart: on-failure
-    ports:
-      - "8080:8080"
-    environment:
-      spring.profiles.active: "$ACCOUNTS_SPRING_PROFILES"
-      spring.cassandra.contact-points: scylla:9042
-      spring.r2dbc.url: r2dbc:postgresql://postgres:5432/accounts
-      spring.flyway.url: jdbc:postgresql://postgres:5432/accounts
-      spring.cloud.stream.kafka.binder.brokers: kafka:29092
-      spring.kafka.bootstrap-servers: kafka:9092
-    depends_on:
-      - postgres
-      - scylla
-      - scylla-migration
-      - kafka
+#  accounts:
+#    image: vladislavlad/accounts:0.1.5-aarch64
+#    restart: on-failure
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      spring.profiles.active: "$ACCOUNTS_SPRING_PROFILES"
+#      spring.cassandra.contact-points: scylla:9042
+#      spring.r2dbc.url: r2dbc:postgresql://postgres:5432/accounts
+#      spring.flyway.url: jdbc:postgresql://postgres:5432/accounts
+#      spring.cloud.stream.kafka.binder.brokers: kafka:29092
+#      spring.kafka.bootstrap-servers: kafka:9092
+#    depends_on:
+#      - postgres
+#      - scylla
+#      - scylla-migration
+#      - kafka

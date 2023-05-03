@@ -2,8 +2,9 @@ package toughdevschool.ates.task.domain.task.crud.api
 
 import arrow.core.Either
 import arrow.core.continuations.either
-import arrow.core.filterOrElse
 import arrow.core.flatMap
+import arrow.core.left
+import arrow.core.right
 import kotlinx.coroutines.flow.first
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Isolation
@@ -36,7 +37,10 @@ class CreateRequestAssembler(
 
     private suspend fun getRandomUser() =
         userService.countWithRoleIn(listOf(RoleNames.WORKER))
-            .filterOrElse({ it > 0 }, { BusinessError.FlowConflict("No Workers found", ErrorType.NotFound) })
+            .flatMap {
+                if (it > 0) it.right()
+                else BusinessError.FlowConflict("No Workers found", ErrorType.NotFound).left()
+            }
             .map { Random.nextLong(0, it) }
             .flatMap { userService.getFlowWithRoleIn(listOf(RoleNames.WORKER), OffsetLimitPage(1, it)) }
             .map { it.first() }

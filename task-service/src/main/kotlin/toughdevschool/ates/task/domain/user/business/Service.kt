@@ -26,7 +26,7 @@ class Service(
     override suspend fun getByUuid(uuid: UUID) = repository.findByUuid(uuid).leftIfNull { notFound }
 
     override suspend fun getFlowWithRoleIn(roles: List<String>, pageable: Pageable) =
-        repository.findAllWithRoleIn(roles, pageable.pageSize, pageable.offset).right()
+        repository.findAllWithRoleIn(roles, pageable).right()
 
     override suspend fun countWithRoleIn(roles: List<String>) =
         repository.countWithRoleIn(roles).right()

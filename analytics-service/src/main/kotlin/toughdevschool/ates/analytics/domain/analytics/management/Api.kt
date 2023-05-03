@@ -6,7 +6,7 @@ import software.darkmatter.platform.assembler.ResponseAssembler
 import toughdevschool.ates.analytics.domain.analytics.ManagementAnalyticsApi
 import toughdevschool.ates.analytics.domain.analytics.ManagementAnalyticsService
 
-@Component
+@Component("managementAnalyticsApi")
 class Api(
     override val requestAssembler: RequestAssembler<Unit, Unit>,
     override val service: ManagementAnalyticsService,

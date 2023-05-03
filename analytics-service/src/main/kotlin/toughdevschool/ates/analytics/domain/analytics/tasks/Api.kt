@@ -6,7 +6,7 @@ import software.darkmatter.platform.assembler.ResponseAssembler
 import toughdevschool.ates.analytics.domain.analytics.TaskAnalyticsApi
 import toughdevschool.ates.analytics.domain.analytics.TaskAnalyticsService
 
-@Component
+@Component("taskAnalyticsApi")
 class Api(
     override val requestAssembler: RequestAssembler<Unit, Unit>,
     override val service: TaskAnalyticsService,

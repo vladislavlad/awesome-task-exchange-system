@@ -4,8 +4,8 @@ import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.info.BuildProperties
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.Message
+import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import software.darkmatter.platform.event.Event
 import software.darkmatter.platform.event.producer.BusinessEventProducer
@@ -14,7 +14,7 @@ import toughdevschool.ates.event.business.BusinessEventType
 import toughdevschool.ates.event.business.transaction.v1.TransactionCompleted
 import java.util.function.Supplier
 
-@Configuration
+@Component
 class AccountingBusinessEventProducer(
     @Value("\${spring.application.name}") applicationName: String,
     buildProperties: BuildProperties

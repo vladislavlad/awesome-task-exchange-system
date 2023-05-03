@@ -4,8 +4,8 @@ import arrow.core.Either
 import com.fasterxml.jackson.databind.ObjectMapper
 import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.Message
+import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import software.darkmatter.platform.error.BusinessError
@@ -13,6 +13,7 @@ import software.darkmatter.platform.event.Event
 import software.darkmatter.platform.event.KeyAware
 import software.darkmatter.platform.event.config.ConsumerProperties
 import software.darkmatter.platform.event.consumer.CudEventConsumer
+import software.darkmatter.platform.event.consumer.extension.EventConsumerObservation
 import software.darkmatter.platform.event.cud.CudEvent
 import software.darkmatter.platform.event.cud.Operation
 import toughdevschool.ates.event.cud.CudEventSchemaRegistry
@@ -25,15 +26,18 @@ import toughdevschool.ates.task.domain.userRole.handler.UserRoleCreateHandler
 import toughdevschool.ates.task.domain.userRole.handler.UserRoleDeleteHandler
 import java.util.function.Function
 
-@Configuration
+@Component
 class AccountsCudEventConsumer(
     private val userCreateHandler: UserCreateHandler,
     private val userUpdateHandler: UserUpdateHandler,
     private val userRoleCreateHandler: UserRoleCreateHandler,
     private val userRoleDeleteHandler: UserRoleDeleteHandler,
-    consumerProperties: ConsumerProperties,
-    objectMapper: ObjectMapper,
-) : CudEventConsumer<CudEventType>(consumerProperties, objectMapper) {
+    override val consumerObservation: EventConsumerObservation,
+    override val consumerProperties: ConsumerProperties,
+    override val objectMapper: ObjectMapper,
+) : CudEventConsumer<CudEventType>() {
+
+    override val consumerName: String = "accounts-cud-consumer"
 
     override val logger = KotlinLogging.logger { }
 
