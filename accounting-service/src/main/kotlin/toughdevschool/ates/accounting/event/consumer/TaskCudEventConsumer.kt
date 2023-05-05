@@ -2,6 +2,7 @@ package toughdevschool.ates.accounting.event.consumer
 
 import arrow.core.Either
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.micrometer.observation.ObservationRegistry
 import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
 import org.springframework.messaging.Message
@@ -13,7 +14,6 @@ import software.darkmatter.platform.event.Event
 import software.darkmatter.platform.event.KeyAware
 import software.darkmatter.platform.event.config.ConsumerProperties
 import software.darkmatter.platform.event.consumer.CudEventConsumer
-import software.darkmatter.platform.event.consumer.extension.EventConsumerObservation
 import software.darkmatter.platform.event.cud.CudEvent
 import software.darkmatter.platform.event.cud.Operation
 import toughdevschool.ates.accounting.domain.task.crud.handler.TaskCreateHandler
@@ -27,7 +27,7 @@ import java.util.function.Function
 class TaskCudEventConsumer(
     private val taskCreateHandler: TaskCreateHandler,
     private val taskUpdateHandler: TaskUpdateHandler,
-    override val consumerObservation: EventConsumerObservation,
+    override val observationRegistry: ObservationRegistry,
     override val consumerProperties: ConsumerProperties,
     override val objectMapper: ObjectMapper,
 ) : CudEventConsumer<CudEventType>() {
