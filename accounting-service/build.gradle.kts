@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.10"
-    kotlin("plugin.spring") version "1.8.10"
-    id("org.springframework.boot") version "3.1.0-RC1"
+    kotlin("jvm") version "1.8.21"
+    kotlin("plugin.spring") version "1.8.21"
+    id("org.springframework.boot") version "3.1.0-RC2"
     id("io.spring.dependency-management") version "1.1.0"
 }
 
@@ -24,7 +24,7 @@ repositories {
 }
 
 val springCloudVersion = "2022.0.1"
-val platformVersion = "0.2.0-RC1"
+val platformVersion = "0.2.0-RC2"
 val micrometerVersion = "1.0.4"
 
 dependencies {
