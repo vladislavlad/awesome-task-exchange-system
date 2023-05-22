@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.22"
-    kotlin("plugin.spring") version "1.7.22"
-    id("org.springframework.boot") version "3.0.2"
+    kotlin("jvm") version "1.8.21"
+    kotlin("plugin.spring") version "1.8.21"
+    id("org.springframework.boot") version "3.1.0"
     id("io.spring.dependency-management") version "1.1.0"
 }
 
 group = "toughdevschool.ates"
-version = "0.0.1"
+version = "0.1.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
@@ -22,8 +22,9 @@ repositories {
     mavenCentral()
 }
 
-val springCloudVersion = "2022.0.0"
-val platformVersion = "0.1.2"
+val springCloudVersion = "2022.0.1"
+val platformVersion = "0.2.0"
+val micrometerVersion = "1.0.4"
 
 dependencies {
     implementation("toughdevschool.ates:schema-registry:0.0.2")
@@ -38,12 +39,30 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
     implementation("org.springframework.kafka:spring-kafka")
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.2")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.4")
+
+    // Micrometer dependencies
+    implementation(platform("io.micrometer:micrometer-tracing-bom:$micrometerVersion"))
+    implementation("io.micrometer:micrometer-observation")
+    implementation("io.micrometer:micrometer-tracing")
+
+//    implementation("io.micrometer:micrometer-tracing-bridge-otel")
+//    implementation("io.opentelemetry:opentelemetry-exporter-zipkin")
+
+    implementation("io.micrometer:micrometer-tracing-bridge-brave")
+    implementation("io.zipkin.reporter2:zipkin-reporter-brave")
+
+    // force proxy version
+    implementation("io.r2dbc:r2dbc-proxy:1.1.0.RELEASE")
+    // R2DBC micrometer auto tracing
+    implementation("org.springframework.experimental:r2dbc-micrometer-spring-boot:1.0.2")
+
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("org.hibernate:hibernate-validator:8.0.0.Final")
-    implementation("io.arrow-kt:arrow-core:1.1.2")
-    implementation("io.github.microutils:kotlin-logging:3.0.4")
+    implementation("io.arrow-kt:arrow-core:1.1.5")
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")

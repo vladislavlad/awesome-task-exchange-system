@@ -29,6 +29,7 @@ class SecurityConfig(
             authorizeExchange {
                 authorize("/tasks/*/complete", hasAuthority(RoleNames.WORKER))
                 authorize("/tasks/reassign", hasAnyAuthority(RoleNames.MANAGER, RoleNames.ADMIN))
+                authorize("/actuator/**", permitAll)
                 authorize(anyExchange, authenticated)
             }
             httpBasic { disable() }

@@ -11,7 +11,7 @@ services:
       - ./init/postgres:/docker-entrypoint-initdb.d/
 
   scylla:
-    image: scylladb/scylla:5.1.8
+    image: scylladb/scylla:5.2.1
     entrypoint: /docker-entrypoint.d/init-keyspace.sh
     # Note: --skip-wait-for-gossip-to-settle for DEV mode only !!!
     command: ["--skip-wait-for-gossip-to-settle", "0"]
@@ -38,6 +38,7 @@ services:
       - "9092:9092"
       - "9997:9997"
     environment:
+      CLUSTER_ID: "kafka-local"
       KAFKA_BROKER_ID: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
@@ -98,7 +99,7 @@ services:
       - "9411:9411"
 
   accounts:
-    image: vladislavlad/accounts:0.1.5-aarch64
+    image: vladislavlad/accounts:0.2.1-aarch64
     restart: on-failure
     ports:
       - "8080:8080"

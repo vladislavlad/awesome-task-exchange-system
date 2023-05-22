@@ -1,5 +1,6 @@
 package toughdevschool.ates.analytics.api.rest
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,7 +12,9 @@ import toughdevschool.ates.analytics.domain.analytics.TaskAnalyticsApi
 @RestController
 @RequestMapping("/analytics")
 class AnalyticsController(
+    @Qualifier("managementAnalyticsApi")
     private val managementAnalyticsApi: ManagementAnalyticsApi,
+    @Qualifier("taskAnalyticsApi")
     private val taskAnalyticsApi: TaskAnalyticsApi,
 ) {
 
