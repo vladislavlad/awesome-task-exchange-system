@@ -20,5 +20,5 @@ object CudEventSchemaRegistry : SchemaRegistry<CudEventType> {
 
     override val eventTypeClass: KClass<CudEventType> = CudEventType::class
 
-    private fun CudEventType.version(version: Int) = Event.Type(this, version)
+    fun CudEventType.version(version: Int) = Event.Type(this, version)
 }

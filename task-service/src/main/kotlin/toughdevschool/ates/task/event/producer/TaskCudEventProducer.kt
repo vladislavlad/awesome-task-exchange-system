@@ -11,6 +11,7 @@ import software.darkmatter.platform.event.Event
 import software.darkmatter.platform.event.cud.Operation
 import software.darkmatter.platform.event.producer.CudEventProducer
 import toughdevschool.ates.event.cud.CudEventSchemaRegistry
+import toughdevschool.ates.event.cud.CudEventSchemaRegistry.version
 import toughdevschool.ates.event.cud.CudEventType
 import java.util.function.Supplier
 import toughdevschool.ates.event.cud.task.v2.TaskData as TaskDataV2
@@ -29,5 +30,5 @@ class TaskCudEventProducer(
     fun tasksStream(): Supplier<Flux<Message<out Event<CudEventType, *>>>> = producerSupplier()
 
     suspend fun sendTaskV2(operation: Operation, data: TaskDataV2) =
-        sendEvent(Event.Type(CudEventType.Task, 2), operation, data)
+        sendEvent(CudEventType.Task.version(2), operation, data)
 }

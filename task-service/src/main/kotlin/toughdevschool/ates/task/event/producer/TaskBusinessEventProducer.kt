@@ -10,6 +10,7 @@ import reactor.core.publisher.Flux
 import software.darkmatter.platform.event.Event
 import software.darkmatter.platform.event.producer.BusinessEventProducer
 import toughdevschool.ates.event.business.BusinessEventSchemaRegistry
+import toughdevschool.ates.event.business.BusinessEventSchemaRegistry.version
 import toughdevschool.ates.event.business.BusinessEventType
 import toughdevschool.ates.event.business.task.v1.TaskAssigned
 import toughdevschool.ates.event.business.task.v1.TaskCompleted
@@ -29,8 +30,8 @@ class TaskBusinessEventProducer(
     fun tasks(): Supplier<Flux<Message<out Event<BusinessEventType, *>>>> = producerSupplier()
 
     suspend fun sendTaskAssignedV1(taskAssigned: TaskAssigned) =
-        sendEvent(Event.Type(BusinessEventType.TaskAssigned, 1), taskAssigned)
+        sendEvent(BusinessEventType.TaskAssigned.version(1), taskAssigned)
 
     suspend fun sendTaskCompletedV1(taskCompleted: TaskCompleted) =
-        sendEvent(Event.Type(BusinessEventType.TaskCompleted, 1), taskCompleted)
+        sendEvent(BusinessEventType.TaskCompleted.version(1), taskCompleted)
 }

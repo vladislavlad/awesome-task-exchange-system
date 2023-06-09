@@ -20,5 +20,5 @@ object BusinessEventSchemaRegistry : SchemaRegistry<BusinessEventType> {
 
     override val eventTypeClass: KClass<BusinessEventType> = BusinessEventType::class
 
-    private fun BusinessEventType.version(version: Int) = Event.Type(this, version)
+    fun BusinessEventType.version(version: Int) = Event.Type(this, version)
 }
