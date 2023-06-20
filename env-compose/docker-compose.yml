@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   postgres:
-    image: postgres:15.2-alpine
+    image: postgres:15.3-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres2
@@ -11,7 +11,7 @@ services:
       - ./init/postgres:/docker-entrypoint-initdb.d/
 
   scylla:
-    image: scylladb/scylla:5.2.1
+    image: scylladb/scylla:5.2.3
     entrypoint: /docker-entrypoint.d/init-keyspace.sh
     # Note: --skip-wait-for-gossip-to-settle for DEV mode only !!!
     command: ["--skip-wait-for-gossip-to-settle", "0"]
