@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.21"
-    kotlin("plugin.spring") version "1.8.21"
-    id("org.springframework.boot") version "3.1.0"
-    id("io.spring.dependency-management") version "1.1.0"
+    kotlin("jvm") version "1.8.22"
+    kotlin("plugin.spring") version "1.8.22"
+    id("org.springframework.boot") version "3.1.3"
+    id("io.spring.dependency-management") version "1.1.3"
 }
 
 group = "toughdevschool.ates"
-version = "0.1.0"
+version = "0.1.1"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
@@ -23,9 +23,9 @@ repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
 }
 
-val springCloudVersion = "2022.0.1"
-val platformVersion = "0.2.0"
-val micrometerVersion = "1.0.4"
+val springCloudVersion = "2022.0.4"
+val platformVersion = "0.2.3"
+val micrometerVersion = "1.1.1"
 
 dependencies {
     implementation("toughdevschool.ates:schema-registry:0.0.2")
@@ -40,7 +40,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.4")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0")
 
     // Micrometer dependencies
     implementation("io.micrometer:micrometer-observation")

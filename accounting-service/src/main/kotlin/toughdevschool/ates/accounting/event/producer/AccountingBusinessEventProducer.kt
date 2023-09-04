@@ -8,7 +8,7 @@ import org.springframework.messaging.Message
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import software.darkmatter.platform.event.Event
-import software.darkmatter.platform.event.producer.BusinessEventProducer
+import software.darkmatter.platform.event.producer.BusinessEventStreamProducer
 import toughdevschool.ates.event.business.BusinessEventSchemaRegistry
 import toughdevschool.ates.event.business.BusinessEventType
 import toughdevschool.ates.event.business.transaction.v1.TransactionCompleted
@@ -18,7 +18,7 @@ import java.util.function.Supplier
 class AccountingBusinessEventProducer(
     @Value("\${spring.application.name}") applicationName: String,
     buildProperties: BuildProperties
-) : BusinessEventProducer<BusinessEventType>(applicationName, buildProperties) {
+) : BusinessEventStreamProducer<BusinessEventType>(applicationName, buildProperties) {
 
     override val logger = KotlinLogging.logger {}
 

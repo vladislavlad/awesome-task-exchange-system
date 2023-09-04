@@ -9,7 +9,7 @@ import org.springframework.messaging.Message
 import reactor.core.publisher.Flux
 import software.darkmatter.platform.event.Event
 import software.darkmatter.platform.event.cud.Operation
-import software.darkmatter.platform.event.producer.CudEventProducer
+import software.darkmatter.platform.event.producer.CudEventStreamProducer
 import toughdevschool.ates.event.cud.CudEventSchemaRegistry
 import toughdevschool.ates.event.cud.CudEventSchemaRegistry.version
 import toughdevschool.ates.event.cud.CudEventType
@@ -20,7 +20,7 @@ import toughdevschool.ates.event.cud.task.v2.TaskData as TaskDataV2
 class TaskCudEventProducer(
     @Value("\${spring.application.name}") applicationName: String,
     buildProperties: BuildProperties
-) : CudEventProducer<CudEventType>(applicationName, buildProperties) {
+) : CudEventStreamProducer<CudEventType>(applicationName, buildProperties) {
 
     override val logger = KotlinLogging.logger { }
 
