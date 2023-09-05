@@ -11,4 +11,5 @@ data class BillingCycleCreate(
 data class BillingCycleUpdate(
     val billingCycle: BillingCycle,
     val endDatetime: OffsetDateTime,
+    val status: BillingCycle.Status,
 )

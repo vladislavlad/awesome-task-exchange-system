@@ -58,7 +58,7 @@ class Service(
         )
     }
 
-    private fun generatePublicId() = RandomStringUtils.randomAlphanumeric(PublicIdLength)
+    private fun generatePublicId() = RandomStringUtils.randomAlphanumeric(PUBLIC_ID_LENGTH)
 
     private suspend fun sendTxCompleted(tx: Transaction, account: Account) =
         businessEventProducer.sendTransactionCompletedV1(
@@ -75,6 +75,6 @@ class Service(
 
     companion object {
 
-        const val PublicIdLength = 16
+        const val PUBLIC_ID_LENGTH = 16
     }
 }
