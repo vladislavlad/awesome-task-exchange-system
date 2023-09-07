@@ -8,8 +8,8 @@ import toughdevschool.ates.accounting.domain.transaction.data.Transaction
 import java.math.BigDecimal
 import java.time.OffsetDateTime
 
-typealias TransferApi = HttpApi<TransferDto.Request>
-typealias TransferService = Service<TransferRequest, TransferResponse>
+interface TransferApi : HttpApi<TransferDto.Request>
+interface TransferService : Service<TransferRequest, TransferResponse>
 
 data class TransferRequest(
     val type: Transaction.Type,
