@@ -1,5 +1,6 @@
 package toughdevschool.ates.analytics.api.rest
 
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -9,6 +10,7 @@ import software.darkmatter.platform.api.handle
 import toughdevschool.ates.analytics.domain.analytics.ManagementAnalyticsApi
 import toughdevschool.ates.analytics.domain.analytics.TaskAnalyticsApi
 
+@Tag(name = "Analytics")
 @RestController
 @RequestMapping("/analytics")
 class AnalyticsController(

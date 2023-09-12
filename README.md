@@ -26,7 +26,7 @@
 * Dockerhub image: [vladislavlad/accounts](https://hub.docker.com/repository/docker/vladislavlad/accounts)
 * [Swagger UI](http://localhost:8080/swagger-ui.html)
 #### Kafka
-* version 3.3 without Zookeeper 
+* version 3.3 KRaft (without Zookeeper) 
 * Schema regestry 
 #### [Kafka UI](http://localhost:8090)
 #### PostgreSQL

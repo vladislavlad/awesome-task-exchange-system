@@ -67,7 +67,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.flywaydb:flyway-core:9.10.1")
+    implementation("org.flywaydb:flyway-core:9.16.0")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

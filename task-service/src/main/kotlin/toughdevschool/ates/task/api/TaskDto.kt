@@ -1,5 +1,6 @@
 package toughdevschool.ates.task.api
 
+import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.domain.Pageable
 import toughdevschool.ates.task.domain.task.data.Task
 import java.util.UUID
@@ -19,6 +20,7 @@ object TaskDto {
         val userUuid: UUID,
     )
 
+    @Schema(name = "TaskCreateRequest")
     data class CreateRequest(
         @field:NotEmpty
         @field:Pattern(regexp = "^(((?!\\[|\\])).)+\$", message = "Use jiraId field")
@@ -33,6 +35,7 @@ object TaskDto {
         val body: Body,
     ) {
 
+        @Schema(name = "TaskUpdateRequest")
         data class Body(
             @field:NotEmpty
             @field:Pattern(regexp = "^(((?!\\[|\\])).)+\$", message = "Use jiraId field")
