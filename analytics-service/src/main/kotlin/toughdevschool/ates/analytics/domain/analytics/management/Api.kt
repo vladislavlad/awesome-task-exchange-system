@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component
 import software.darkmatter.platform.assembler.RequestAssembler
 import software.darkmatter.platform.assembler.ResponseAssembler
 import toughdevschool.ates.analytics.domain.analytics.ManagementAnalyticsApi
-import toughdevschool.ates.analytics.domain.analytics.ManagementAnalyticsService
 
 @Component("managementAnalyticsApi")
 class Api(
