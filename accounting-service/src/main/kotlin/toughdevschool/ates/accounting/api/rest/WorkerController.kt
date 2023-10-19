@@ -23,7 +23,7 @@ class WorkerController(
 
     @GetMapping(path = ["/audit/log"])
     suspend fun auditLog(
-        @RequestParam page: Int,
-        @RequestParam size: Int,
-    ) = transactionsLogApi.handle(TransactionsLogDto.Request(page, size))
+        @RequestParam(defaultValue = "0") page: Int?,
+        @RequestParam(defaultValue = "100") size: Int?,
+    ) = transactionsLogApi.handle(TransactionsLogDto.Request(page!!, size!!))
 }
