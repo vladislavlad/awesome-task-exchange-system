@@ -3,12 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
-    id("org.springframework.boot") version "3.1.4"
+    id("org.springframework.boot") version "3.1.5"
     id("io.spring.dependency-management") version "1.1.3"
 }
 
 group = "toughdevschool.ates"
-version = "0.0.2"
+version = "0.1.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
