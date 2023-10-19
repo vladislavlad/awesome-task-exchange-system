@@ -5,12 +5,12 @@ import software.darkmatter.platform.api.http.ServiceApi
 import software.darkmatter.platform.assembler.RequestAssembler
 import software.darkmatter.platform.assembler.ResponseAssembler
 import software.darkmatter.platform.service.Service
-import toughdevschool.ates.accounting.api.AuditLogDto
+import toughdevschool.ates.accounting.api.TransactionsLogDto
 
 @Component
 class Api(
-    override val requestAssembler: RequestAssembler<AuditLogDto.Request, TransactionLogRequest>,
+    override val requestAssembler: RequestAssembler<TransactionsLogDto.Request, TransactionLogRequest>,
     override val service: Service<TransactionLogRequest, TransactionLogResponse>,
-    override val responseAssembler: ResponseAssembler<TransactionLogResponse, AuditLogDto.Response>,
-) : ServiceApi<AuditLogDto.Request, AuditLogDto.Response, TransactionLogRequest, TransactionLogResponse>(),
-    AuditLogApi
+    override val responseAssembler: ResponseAssembler<TransactionLogResponse, TransactionsLogDto.Response>,
+) : ServiceApi<TransactionsLogDto.Request, TransactionsLogDto.Response, TransactionLogRequest, TransactionLogResponse>(),
+    TransactionsLogApi
