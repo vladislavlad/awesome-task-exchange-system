@@ -15,7 +15,7 @@ import toughdevschool.ates.task.domain.task.assigned.business.TaskAssignedListAp
 import toughdevschool.ates.task.domain.task.complete.business.TaskCompleteApi
 import toughdevschool.ates.task.domain.task.crud.business.TaskCrudApi
 import toughdevschool.ates.task.domain.task.reassign.business.TaskReassignApi
-import javax.validation.Valid
+import jakarta.validation.Valid
 
 @Tag(name = "Tasks")
 @RestController

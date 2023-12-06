@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.Message
 import reactor.core.publisher.Flux
 import software.darkmatter.platform.event.Event
-import software.darkmatter.platform.event.producer.BusinessEventStreamProducer
 import toughdevschool.ates.event.business.BusinessEventSchemaRegistry
 import toughdevschool.ates.event.business.BusinessEventSchemaRegistry.version
 import toughdevschool.ates.event.business.BusinessEventType
 import toughdevschool.ates.event.business.task.v1.TaskAssigned
 import toughdevschool.ates.event.business.task.v1.TaskCompleted
 import java.util.function.Supplier
+import software.darkmatter.platform.event.producer.BusinessEventProducer as BusinessEventStreamProducer
 
 @Configuration
 class TaskBusinessEventProducer(
