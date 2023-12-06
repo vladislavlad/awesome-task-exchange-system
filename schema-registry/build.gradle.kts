@@ -1,21 +1,21 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.22"
+    kotlin("jvm") version "1.9.21"
     `java-library`
     `maven-publish`
 }
 
 group = "toughdevschool.ates"
-version = "0.0.2"
+version = "0.1.0"
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-val platformVersion = "0.1.2"
-val kotestVersion = "5.5.4"
+val platformVersion = "0.3.0"
+val kotestVersion = "5.8.0"
 
 dependencies {
     implementation("software.darkmatter:interaction-protocol:$platformVersion")
