@@ -22,23 +22,26 @@
 
 ### Env Docker Compose:
 #### Auth service
-* Auth method: JWT
+* Authn method: Username + Password
+* Auth type: Bearer JWT
 * Dockerhub image: [vladislavlad/accounts](https://hub.docker.com/repository/docker/vladislavlad/accounts)
 * [Swagger UI](http://localhost:8080/swagger-ui.html)
 #### Kafka
-* version 3.3 KRaft (without Zookeeper) 
-* Schema regestry 
+* version 3.5 KRaft (without Zookeeper) 
 #### [Kafka UI](http://localhost:8090)
+#### [Zipkin](http://localhost:9411)
 #### PostgreSQL
 #### ScyllaDB
+#### Redis
 
 
 ## Stack
-* Kotlin 1.8
-* Spring Boot 3.1.x (WebFlux, R2DBC, Cloud Stream)
+* Kotlin 1.9
+* Spring Boot 3.2.x (WebFlux, R2DBC, Cloud Stream)
 * Kafka
-* PostgreSQL 15
+* PostgreSQL 16
 * ScyllaDB 5
+* Redis 7
 
 ### Stack is fully reactive
 Spring WebFlux is base for reactive Spring RestAPI apps. WebFlux core is [project Reactor](https://github.com/reactor/reactor-core) and async non-blocking [netty server](https://github.com/netty/netty).<br> 
