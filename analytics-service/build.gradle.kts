@@ -1,33 +1,27 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.22"
-    kotlin("plugin.spring") version "1.8.22"
-    id("org.springframework.boot") version "3.1.5"
-    id("io.spring.dependency-management") version "1.1.3"
+    kotlin("jvm") version "1.9.21"
+    kotlin("plugin.spring") version "1.9.21"
+    id("org.springframework.boot") version "3.2.0"
+    id("io.spring.dependency-management") version "1.1.4"
 }
 
 group = "toughdevschool.ates"
-version = "0.1.0"
-java.sourceCompatibility = JavaVersion.VERSION_17
-
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
+version = "0.2.0"
 
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url = uri("https://repo.spring.io/milestone") }
 }
 
-val springCloudVersion = "2022.0.4"
-val platformVersion = "0.2.3"
-val micrometerVersion = "1.1.1"
+val springCloudVersion = "2023.0.0-RC1"
+val platformVersion = "0.3.0"
+val micrometerVersion = "1.2.0"
 
 dependencies {
-    implementation("toughdevschool.ates:schema-registry:0.0.2")
+    implementation("toughdevschool.ates:schema-registry:0.1.0")
     implementation("software.darkmatter:interaction-messaging:$platformVersion")
     implementation("software.darkmatter:interaction-protocol:$platformVersion")
     implementation("software.darkmatter:platform-core:$platformVersion")
@@ -39,7 +33,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.2.0")
 
     // Micrometer dependencies
     implementation(platform("io.micrometer:micrometer-tracing-bom:$micrometerVersion"))
@@ -53,32 +47,30 @@ dependencies {
     implementation("io.zipkin.reporter2:zipkin-reporter-brave")
 
     // force proxy version
-    implementation("io.r2dbc:r2dbc-proxy:1.1.0.RELEASE")
+    implementation("io.r2dbc:r2dbc-proxy:1.1.2.RELEASE")
     // R2DBC micrometer auto tracing
     implementation("org.springframework.experimental:r2dbc-micrometer-spring-boot:1.0.2")
 
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("javax.validation:validation-api:2.0.1.Final")
-    implementation("org.hibernate:hibernate-validator:8.0.0.Final")
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
+    implementation("org.hibernate:hibernate-validator:8.0.1.Final")
+
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.postgresql:r2dbc-postgresql")
+    runtimeOnly("org.postgresql:postgresql")
+
     implementation("io.arrow-kt:arrow-core:1.1.5")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.flywaydb:flyway-core:9.10.2")
-    runtimeOnly("org.postgresql:postgresql")
-    runtimeOnly("org.postgresql:r2dbc-postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.graphql:spring-graphql-test")
     testImplementation("io.projectreactor:reactor-test")
-}
-
-ext {
-    // Remove after Spring Security upgrade
-    set("snakeyaml.version", "1.33")
 }
 
 dependencyManagement {
@@ -86,6 +78,14 @@ dependencyManagement {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
     }
 }
+
+configurations {
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
+    }
+}
+
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {

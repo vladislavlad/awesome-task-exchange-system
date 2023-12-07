@@ -9,13 +9,6 @@ plugins {
 
 group = "toughdevschool.ates"
 version = "0.2.0"
-java.sourceCompatibility = JavaVersion.VERSION_17
-
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
 
 repositories {
     mavenLocal()
@@ -57,20 +50,22 @@ dependencies {
     // R2DBC micrometer auto tracing
     implementation("org.springframework.experimental:r2dbc-micrometer-spring-boot:1.0.2")
 
-    implementation("io.arrow-kt:arrow-core:1.1.5")
-    implementation("io.github.microutils:kotlin-logging:3.0.5")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.0")
 
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
     implementation("org.hibernate:hibernate-validator:8.0.1.Final")
+
+    implementation("org.flywaydb:flyway-core")
+    runtimeOnly("org.postgresql:r2dbc-postgresql")
+    runtimeOnly("org.postgresql:postgresql")
+
+    implementation("io.arrow-kt:arrow-core:1.1.5")
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.0")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.flywaydb:flyway-core")
-    runtimeOnly("org.postgresql:r2dbc-postgresql")
-    runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
@@ -81,6 +76,14 @@ dependencyManagement {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
     }
 }
+
+configurations {
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
+    }
+}
+
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
