@@ -8,16 +8,15 @@ plugins {
 }
 
 group = "toughdevschool.ates"
-version = "0.2.0"
+version = "0.2.1"
 
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url = uri("https://repo.spring.io/milestone") }
 }
 
-val springCloudVersion = "2023.0.0-RC1"
-val platformVersion = "0.3.0"
+val springCloudVersion = "2023.0.0"
+val platformVersion = "0.3.1"
 val micrometerVersion = "1.2.0"
 
 dependencies {
@@ -99,7 +98,7 @@ springBoot {
 tasks.jar { enabled = false }
 
 tasks.bootJar {
-    layered { enabled.set(true) }
+    layered { enabled = true }
 }
 
 tasks.withType<Test> {
