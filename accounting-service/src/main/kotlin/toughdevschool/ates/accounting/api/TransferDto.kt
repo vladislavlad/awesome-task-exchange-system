@@ -19,6 +19,7 @@ object TransferDto {
         )
     }
 
+    @Schema(name = "TransferResponse")
     data class Response(
         val createdAt: OffsetDateTime
     )

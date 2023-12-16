@@ -1,8 +1,6 @@
 package toughdevschool.ates.accounting.api
 
-import toughdevschool.ates.accounting.domain.transaction.data.Transaction
-import java.math.BigDecimal
-import java.time.OffsetDateTime
+import io.swagger.v3.oas.annotations.media.Schema
 import java.util.UUID
 
 object AccountingAuditDto {
@@ -13,21 +11,14 @@ object AccountingAuditDto {
         val size: Int,
     ) {
 
+        @Schema(name = "AccountingAuditRequest")
         data class Body(
             val accountUuid: UUID?,
         )
     }
 
+    @Schema(name = "AccountingAuditResponse")
     data class Response(
         val transactions: List<TransactionDto>,
-    ) {
-
-        data class TransactionDto(
-            val type: Transaction.Type,
-            val billingCycleId: Long,
-            val description: String?,
-            val amount: BigDecimal,
-            val createdAt: OffsetDateTime,
-        )
-    }
+    )
 }
