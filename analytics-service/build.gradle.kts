@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.20"
-    kotlin("plugin.spring") version "1.9.20"
-    id("org.springframework.boot") version "3.2.0"
+    kotlin("jvm") version "1.9.21"
+    kotlin("plugin.spring") version "1.9.21"
+    id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.4"
 }
 
 group = "toughdevschool.ates"
-version = "0.2.1"
+version = "0.3.0"
 
 repositories {
     mavenLocal()
@@ -16,7 +16,7 @@ repositories {
 }
 
 val springCloudVersion = "2023.0.0"
-val platformVersion = "0.3.1"
+val platformVersion = "0.4.0"
 val micrometerVersion = "1.2.0"
 
 dependencies {
@@ -84,12 +84,12 @@ configurations {
     }
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=all")
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 
