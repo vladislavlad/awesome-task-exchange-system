@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "toughdevschool.ates"
-version = "0.3.0"
+version = "0.3.1"
 
 repositories {
     mavenLocal()
@@ -16,7 +16,7 @@ repositories {
 }
 
 val springCloudVersion = "2023.0.0"
-val platformVersion = "0.4.0"
+val platformVersion = "0.4.1"
 val micrometerVersion = "1.2.0"
 
 dependencies {
@@ -84,12 +84,12 @@ configurations {
     }
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=all")
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 

@@ -4,6 +4,7 @@ import arrow.core.right
 import org.springframework.stereotype.Component
 import software.darkmatter.platform.assembler.ResponseAssembler
 import toughdevschool.ates.accounting.api.AccountingAuditDto
+import toughdevschool.ates.accounting.api.TransactionDto
 import toughdevschool.ates.accounting.domain.transaction.log.TransactionLogResponse
 
 @Component
@@ -13,7 +14,7 @@ class ResponseAssembler : ResponseAssembler<TransactionLogResponse, AccountingAu
         AccountingAuditDto.Response(
             transactions = business.transactions
                 .map {
-                    AccountingAuditDto.Response.TransactionDto(
+                    TransactionDto(
                         type = it.type,
                         billingCycleId = it.billingCycleId,
                         description = it.description,
