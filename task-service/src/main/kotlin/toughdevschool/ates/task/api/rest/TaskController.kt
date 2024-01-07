@@ -16,6 +16,7 @@ import toughdevschool.ates.task.domain.task.complete.business.TaskCompleteApi
 import toughdevschool.ates.task.domain.task.crud.business.TaskCrudApi
 import toughdevschool.ates.task.domain.task.reassign.business.TaskReassignApi
 import jakarta.validation.Valid
+import toughdevschool.ates.task.api.TaskAssignedListDto
 
 @Tag(name = "Tasks")
 @RestController
@@ -35,7 +36,7 @@ class TaskController(
 
     @GetMapping(path = ["/assigned"])
     suspend fun assignedList(@PageableDefault(size = 20, page = 0) pageable: Pageable) =
-        assignedListApi.handle(TaskDto.TaskAssignedList(pageable))
+        assignedListApi.handle(TaskAssignedListDto.Request(pageable))
 
     @GetMapping
     suspend fun list(@PageableDefault(size = 20, page = 0) pageable: Pageable) = crudApi.list(pageable)

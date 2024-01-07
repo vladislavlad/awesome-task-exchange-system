@@ -1,10 +1,9 @@
 package toughdevschool.ates.task.domain.task.reassign.business
 
-import software.darkmatter.platform.api.http.ServiceApi
+import software.darkmatter.platform.api.http.HttpApi
 import software.darkmatter.platform.service.Service
-import toughdevschool.ates.task.api.TaskDto
 
-typealias TaskReassignApi = ServiceApi<Unit, TaskDto.TasksReassignedResponse, Unit, TasksReassigned>
+typealias TaskReassignApi = HttpApi<Unit>
 
 interface TaskReassignService : Service<Unit, TasksReassigned>
 

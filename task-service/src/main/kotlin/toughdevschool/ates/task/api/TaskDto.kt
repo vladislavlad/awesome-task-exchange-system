@@ -1,12 +1,11 @@
 package toughdevschool.ates.task.api
 
 import io.swagger.v3.oas.annotations.media.Schema
-import org.springframework.data.domain.Pageable
-import toughdevschool.ates.task.domain.task.data.Task
-import java.util.UUID
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
+import toughdevschool.ates.task.domain.task.data.Task
+import java.util.UUID
 
 object TaskDto {
 
@@ -52,9 +51,5 @@ object TaskDto {
 
     data class TaskCompleteRequest(
         val taskId: Long,
-    )
-
-    data class TaskAssignedList(
-        val pageable: Pageable,
     )
 }

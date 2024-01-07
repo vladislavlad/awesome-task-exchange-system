@@ -1,6 +1,7 @@
 package toughdevschool.ates.task.domain.task.complete.api
 
 import org.springframework.stereotype.Component
+import software.darkmatter.platform.api.http.ServiceApi
 import software.darkmatter.platform.assembler.RequestAssembler
 import software.darkmatter.platform.assembler.ResponseAssembler
 import toughdevschool.ates.task.api.TaskDto
@@ -13,4 +14,5 @@ class Api(
     override val requestAssembler: RequestAssembler<TaskDto.TaskCompleteRequest, TaskComplete>,
     override val service: TaskCompleteService,
     override val responseAssembler: ResponseAssembler<Unit, Unit>,
-) : TaskCompleteApi()
+) : ServiceApi<TaskDto.TaskCompleteRequest, Unit, TaskComplete, Unit>(),
+    TaskCompleteApi
