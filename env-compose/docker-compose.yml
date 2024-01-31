@@ -71,7 +71,7 @@ services:
       KAFKA_CLUSTERS_0_JMXPORT: 9997
 
   redis:
-    image: redis:7-alpine
+    image: redis:7.2-alpine
     ports:
       - "6379:6379"
 
@@ -99,7 +99,7 @@ services:
       - "9411:9411"
 
   accounts:
-    image: vladislavlad/accounts:0.3.2-aarch64
+    image: vladislavlad/accounts:0.3.5-aarch64
     restart: on-failure
     ports:
       - "8080:8080"
