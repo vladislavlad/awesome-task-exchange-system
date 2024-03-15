@@ -1,6 +1,6 @@
 package toughdevschool.ates.accounting.event.producer
 
-import mu.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.info.BuildProperties
 import org.springframework.context.annotation.Bean

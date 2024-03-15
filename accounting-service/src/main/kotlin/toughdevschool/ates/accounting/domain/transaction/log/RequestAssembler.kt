@@ -1,6 +1,6 @@
 package toughdevschool.ates.accounting.domain.transaction.log
 
-import arrow.core.continuations.either
+import arrow.core.raise.either
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 import software.darkmatter.platform.assembler.RequestAssembler

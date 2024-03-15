@@ -1,8 +1,8 @@
 package toughdevschool.ates.accounting.job
 
+import io.github.oshai.kotlinlogging.KLogger
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.runBlocking
-import mu.KLogger
-import mu.KotlinLogging
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import toughdevschool.ates.accounting.domain.billingCycle.business.BillingCycleService

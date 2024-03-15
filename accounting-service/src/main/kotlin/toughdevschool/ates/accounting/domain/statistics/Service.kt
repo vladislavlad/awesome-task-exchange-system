@@ -1,6 +1,6 @@
 package toughdevschool.ates.accounting.domain.statistics
 
-import arrow.core.continuations.either
+import arrow.core.raise.either
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import toughdevschool.ates.accounting.domain.account.CompanyAccountUuid

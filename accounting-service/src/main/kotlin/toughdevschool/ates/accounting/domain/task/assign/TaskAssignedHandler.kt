@@ -1,6 +1,6 @@
 package toughdevschool.ates.accounting.domain.task.assign
 
-import arrow.core.continuations.either
+import arrow.core.raise.either
 import io.micrometer.observation.ObservationRegistry
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

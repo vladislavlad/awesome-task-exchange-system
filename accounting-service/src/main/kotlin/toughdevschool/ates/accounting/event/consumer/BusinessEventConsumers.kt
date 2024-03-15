@@ -2,8 +2,8 @@ package toughdevschool.ates.accounting.event.consumer
 
 import arrow.core.Either
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.observation.ObservationRegistry
-import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
 import org.springframework.messaging.Message
 import org.springframework.stereotype.Component

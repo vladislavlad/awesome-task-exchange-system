@@ -1,6 +1,6 @@
 package toughdevschool.ates.task.domain.task.complete.api
 
-import arrow.core.continuations.either
+import arrow.core.raise.either
 import org.springframework.stereotype.Component
 import software.darkmatter.platform.assembler.RequestAssembler
 import software.darkmatter.platform.error.BusinessError

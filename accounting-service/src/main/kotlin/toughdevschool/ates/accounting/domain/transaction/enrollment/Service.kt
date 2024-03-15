@@ -1,6 +1,6 @@
 package toughdevschool.ates.accounting.domain.transaction.enrollment
 
-import arrow.core.continuations.either
+import arrow.core.raise.either
 import org.springframework.stereotype.Service
 import toughdevschool.ates.accounting.domain.account.CashOperationsAccountUuid
 import toughdevschool.ates.accounting.domain.account.business.AccountService

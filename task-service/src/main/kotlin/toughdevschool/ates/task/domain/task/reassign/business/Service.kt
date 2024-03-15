@@ -1,7 +1,7 @@
 package toughdevschool.ates.task.domain.task.reassign.business
 
 import arrow.core.Either
-import arrow.core.continuations.either
+import arrow.core.raise.either
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList

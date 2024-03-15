@@ -1,6 +1,6 @@
 package toughdevschool.ates.task.domain.task.assigned.business
 
-import arrow.core.continuations.either
+import arrow.core.raise.either
 import org.springframework.data.relational.core.query.Criteria
 import org.springframework.data.relational.core.query.Query
 import org.springframework.stereotype.Service
