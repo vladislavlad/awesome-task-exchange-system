@@ -40,3 +40,15 @@ create table tasks
     reward      int                   not null,
     user_uuid   uuid references users (uuid)
 );
+
+create table transactions
+(
+    id           bigserial primary key not null,
+    public_id    varchar               not null,
+    type         varchar               not null,
+    account_uuid uuid                  not null,
+    debit        numeric               not null,
+    credit       numeric               not null,
+    completed_at timestamp             not null,
+    created_at   timestamp             not null
+);

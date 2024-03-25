@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.22"
-    kotlin("plugin.spring") version "1.9.22"
-    id("org.springframework.boot") version "3.2.3"
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.spring") version "1.9.23"
+    id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
 }
 
 group = "toughdevschool.ates"
-version = "0.3.2"
+version = "0.3.3"
 
 repositories {
     mavenLocal()
@@ -16,7 +16,7 @@ repositories {
 }
 
 val springCloudVersion = "2023.0.0"
-val platformVersion = "0.5.0"
+val platformVersion = "0.5.1"
 val micrometerVersion = "1.2.4"
 
 dependencies {
