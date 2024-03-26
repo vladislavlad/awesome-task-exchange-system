@@ -99,7 +99,7 @@ services:
       - "9411:9411"
 
   accounts:
-    image: vladislavlad/accounts:0.3.6-aarch64
+    image: vladislavlad/accounts:0.3.7-aarch64
     restart: on-failure
     ports:
       - "8080:8080"

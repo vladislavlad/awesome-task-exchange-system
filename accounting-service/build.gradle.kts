@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
-    id("org.springframework.boot") version "3.2.4"
+    id("org.springframework.boot") version "3.2.3"
     id("io.spring.dependency-management") version "1.1.4"
 }
 
@@ -20,7 +20,7 @@ val platformVersion = "0.5.1"
 val micrometerVersion = "1.2.4"
 
 dependencies {
-    implementation("toughdevschool.ates:schema-registry:0.1.0")
+    implementation("toughdevschool.ates:schema-registry:0.1.3")
     implementation("software.darkmatter:interaction-messaging:$platformVersion")
     implementation("software.darkmatter:interaction-protocol:$platformVersion")
     implementation("software.darkmatter:platform-core:$platformVersion")

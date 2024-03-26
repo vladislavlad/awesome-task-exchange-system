@@ -1,11 +1,11 @@
-package toughdevschool.ates.event.business.user.v1
+package toughdevschool.ates.event.cud.userApplication.v1
 
 import software.darkmatter.platform.event.KeyAware
 import java.util.UUID
 
-data class UserRolesChanged(
+data class UserApplicationData(
     val userUuid: UUID,
-    val roles: List<String>,
+    val application: String,
 ) : KeyAware {
 
     override val key = userUuid.toString()

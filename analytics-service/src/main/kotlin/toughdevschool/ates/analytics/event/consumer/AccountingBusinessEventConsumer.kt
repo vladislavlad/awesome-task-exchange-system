@@ -22,21 +22,21 @@ import toughdevschool.ates.event.business.transaction.v1.TransactionCompleted
 import java.util.function.Function
 
 @Component
-class BusinessEventConsumer(
+class AccountingBusinessEventConsumer(
     private val txCompletedHandler: TransactionCompletedHandler,
     override val observationRegistry: ObservationRegistry,
     override val consumerProperties: ConsumerProperties,
     override val objectMapper: ObjectMapper,
 ) : BusinessEventConsumer<BusinessEventType>() {
 
-    override val consumerName = "business-event-consumer"
+    override val consumerName = "accounting-business-event-consumer"
 
     override val logger = KotlinLogging.logger { }
 
     override val schemaRegistry = BusinessEventSchemaRegistry
 
     @Bean
-    fun tasks(): Function<Flux<Message<ByteArray>>, Mono<Void>> = consumerFunction(::handlingStrategy)
+    fun accounting(): Function<Flux<Message<ByteArray>>, Mono<Void>> = consumerFunction(::handlingStrategy)
 
     suspend fun <D : KeyAware> handlingStrategy(event: BusinessEvent<BusinessEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {

@@ -23,7 +23,7 @@ spring:
       auto-offset-reset: earliest
   cloud:
     function:
-      definition: accountsStream;tasksStream;tasks
+      definition: accountsStream;tasksStream;accounting
     stream:
       default-binder: kafka
       kafka:
@@ -51,9 +51,9 @@ spring:
           group: analytics-service
           destination: tasks-stream
           binder: kafka
-        tasks-in-0:
+        accounting-in-0:
           group: analytics-service
-          destination: tasks
+          destination: accounting
           binder: kafka
         # producers
 

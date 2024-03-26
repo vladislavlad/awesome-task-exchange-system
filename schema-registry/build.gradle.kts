@@ -1,20 +1,20 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.22"
+    kotlin("jvm") version "1.9.23"
     `java-library`
     `maven-publish`
 }
 
 group = "toughdevschool.ates"
-version = "0.1.2"
+version = "0.1.3"
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-val platformVersion = "0.4.2"
+val platformVersion = "0.5.1"
 val kotestVersion = "5.8.0"
 
 dependencies {

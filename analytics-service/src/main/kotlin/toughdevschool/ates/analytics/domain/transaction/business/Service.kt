@@ -11,7 +11,7 @@ import java.time.OffsetDateTime
 
 @Service
 class Service(
-    private val repository: TransactionRepository,
+    repository: TransactionRepository,
     pagingRepository: TransactionPagingRepository,
 ) : AuthCrudService<Transaction, Long, TransactionCreate, Unit>(repository, pagingRepository),
     TransactionService {
