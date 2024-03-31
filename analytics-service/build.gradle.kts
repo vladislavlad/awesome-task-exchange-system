@@ -16,7 +16,7 @@ repositories {
 }
 
 val springCloudVersion = "2023.0.0"
-val platformVersion = "0.5.1"
+val platformVersion = "0.5.2"
 val micrometerVersion = "1.2.4"
 
 dependencies {

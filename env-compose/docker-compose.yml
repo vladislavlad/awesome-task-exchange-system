@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   postgres:
-    image: postgres:16.1-alpine
+    image: postgres:16.2-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres2
@@ -11,7 +11,7 @@ services:
       - ./init/postgres:/docker-entrypoint-initdb.d/
 
   scylla:
-    image: scylladb/scylla:5.2.11
+    image: scylladb/scylla:5.2.16
     entrypoint: /docker-entrypoint.d/init-keyspace.sh
     # Note: --skip-wait-for-gossip-to-settle for DEV mode only !!!
     command: ["--skip-wait-for-gossip-to-settle", "0"]
@@ -23,7 +23,7 @@ services:
       - ./init/scylla/keyspace:/docker-entrypoint.d/
 
   scylla-migration:
-    image: migrate/migrate:latest
+    image: migrate/migrate:4
     command: ["-database", "cassandra://scylla:9042/accounts?x-multi-statement=true", "-path", "/migrations", "up"]
     restart: on-failure
     depends_on:
@@ -32,7 +32,8 @@ services:
       - ./init/scylla/migrations:/migrations/
 
   kafka:
-    image: confluentinc/cp-kafka:7.3.5.arm64
+    image: confluentinc/cp-kafka:7.3.7.arm64
+#    image: confluentinc/cp-kafka:7.3.7   for x86
     hostname: kafka
     ports:
       - "9092:9092"
@@ -95,11 +96,13 @@ services:
 
   zipkin:
     image: openzipkin/zipkin:latest-arm64
+#    image: openzipkin/zipkin:latest   for x86
     ports:
       - "9411:9411"
 
   accounts:
-    image: vladislavlad/accounts:0.3.7-aarch64
+    image: vladislavlad/accounts:0.3.8-aarch64
+#    image: vladislavlad/accounts:0.3.8   for x86
     restart: on-failure
     ports:
       - "8080:8080"

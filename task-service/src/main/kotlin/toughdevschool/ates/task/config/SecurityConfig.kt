@@ -37,7 +37,7 @@ class SecurityConfig(
             httpBasic { disable() }
             formLogin { disable() }
             csrf { disable() }
-            cors { disable() }
+            cors { }
         }
     }
 
