@@ -21,7 +21,7 @@ class SecurityConfig(
 ) {
 
     @Bean
-    fun springWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
+    fun securityWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
         val authenticationWebFilter = AuthenticationWebFilter(authenticationManager)
         authenticationWebFilter.setServerAuthenticationConverter(authenticationConverter)
 

@@ -6,4 +6,6 @@ import java.util.UUID
 interface TaskRepository : CoroutineCrudSortingRepository<Task, Long> {
 
     suspend fun findByUuid(uuid: UUID): Task?
+
+    suspend fun findFirstByOrderByRewardDesc(): Task?
 }
