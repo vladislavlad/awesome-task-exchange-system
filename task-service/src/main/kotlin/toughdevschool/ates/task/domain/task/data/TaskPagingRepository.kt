@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository
 import software.darkmatter.platform.data.PagingRepository
 
 @Repository
-
 class TaskPagingRepository(
     override val r2dbcOperations: R2dbcEntityOperations
 ) : PagingRepository<Task, Long> {

@@ -3,10 +3,10 @@ package toughdevschool.ates.task.domain.user.data
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.domain.Pageable
 import org.springframework.data.r2dbc.repository.Query
-import software.darkmatter.platform.data.CoroutineCrudSortingRepository
+import software.darkmatter.platform.data.CoroutineUndeletableCrudSortingRepository
 import java.util.UUID
 
-interface UserRepository : CoroutineCrudSortingRepository<User, Long> {
+interface UserRepository : CoroutineUndeletableCrudSortingRepository<User, Long> {
 
     suspend fun findByUsername(username: String): User?
 

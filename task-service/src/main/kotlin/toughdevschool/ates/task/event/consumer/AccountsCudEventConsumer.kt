@@ -21,6 +21,7 @@ import toughdevschool.ates.event.cud.CudEventType
 import toughdevschool.ates.event.cud.user.v1.UserData
 import toughdevschool.ates.event.cud.userRole.v1.UserRoleData
 import toughdevschool.ates.task.domain.user.handler.UserCreateHandler
+import toughdevschool.ates.task.domain.user.handler.UserDeleteHandler
 import toughdevschool.ates.task.domain.user.handler.UserUpdateHandler
 import toughdevschool.ates.task.domain.userRole.handler.UserRoleCreateHandler
 import toughdevschool.ates.task.domain.userRole.handler.UserRoleDeleteHandler
@@ -30,6 +31,7 @@ import java.util.function.Function
 class AccountsCudEventConsumer(
     private val userCreateHandler: UserCreateHandler,
     private val userUpdateHandler: UserUpdateHandler,
+    private val userDeleteHandler: UserDeleteHandler,
     private val userRoleCreateHandler: UserRoleCreateHandler,
     private val userRoleDeleteHandler: UserRoleDeleteHandler,
     override val observationRegistry: ObservationRegistry,
@@ -58,13 +60,13 @@ class AccountsCudEventConsumer(
         when (event.operation) {
             Operation.Create -> userCreateHandler.handle(event.data)
             Operation.Update -> userUpdateHandler.handle(event.data)
-            Operation.Delete -> TODO()
+            Operation.Delete -> userDeleteHandler.handle(event.data)
         }
 
     private suspend fun handleUserRole(event: CudEvent<CudEventType, UserRoleData>) =
         when (event.operation) {
             Operation.Create -> userRoleCreateHandler.handle(event.data)
-            Operation.Update -> TODO()
+            Operation.Update -> Either.Right(Unit)
             Operation.Delete -> userRoleDeleteHandler.handle(event.data)
         }
 }

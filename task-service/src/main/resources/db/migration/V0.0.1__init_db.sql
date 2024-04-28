@@ -5,7 +5,9 @@ create table users
     username    varchar unique        not null,
     first_name  varchar,
     last_name   varchar,
-    middle_name varchar
+    middle_name varchar,
+    deleted_at  timestamptz default null,
+    deleted_by  uuid        default null
 );
 
 create table user_roles
