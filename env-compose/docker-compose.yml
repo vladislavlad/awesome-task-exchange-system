@@ -101,8 +101,8 @@ services:
       - "9411:9411"
 
   accounts:
-    image: vladislavlad/accounts:0.3.8-aarch64
-#    image: vladislavlad/accounts:0.3.8   for x86
+    image: vladislavlad/accounts:0.3.12-aarch64
+#    image: vladislavlad/accounts:0.3.12   for x86
     restart: on-failure
     ports:
       - "8080:8080"

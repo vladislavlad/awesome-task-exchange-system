@@ -3,20 +3,20 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
-    id("org.springframework.boot") version "3.3.1"
-    id("io.spring.dependency-management") version "1.1.5"
+    id("org.springframework.boot") version "3.3.2"
+    id("io.spring.dependency-management") version "1.1.6"
 }
 
 group = "toughdevschool.ates"
-version = "0.3.5"
+version = "0.3.6"
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-val springCloudVersion = "2023.0.2"
-val platformVersion = "0.5.7"
+val springCloudVersion = "2023.0.3"
+val platformVersion = "0.5.8"
 val micrometerVersion = "1.3.2"
 
 dependencies {
@@ -55,6 +55,7 @@ dependencies {
     implementation("org.hibernate:hibernate-validator:8.0.1.Final")
 
     implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
     implementation("org.postgresql:r2dbc-postgresql")
     runtimeOnly("org.postgresql:postgresql")
 

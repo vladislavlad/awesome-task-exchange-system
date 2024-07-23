@@ -34,10 +34,13 @@
 #### ScyllaDB
 #### Redis
 
+### UI
+* TODO
+
 
 ## Stack
 * Kotlin 1.9
-* Spring Boot 3.2.x (WebFlux, R2DBC, Cloud Stream)
+* Spring Boot 3.3.x (WebFlux, R2DBC, Cloud Stream)
 * Kafka
 * PostgreSQL 16
 * ScyllaDB 5
