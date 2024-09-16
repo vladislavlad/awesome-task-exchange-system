@@ -38,13 +38,17 @@ class TaskCudEventConsumer(
 
     override val schemaRegistry = CudEventSchemaRegistry
 
+    companion object {
+        val TaskV2 = Event.Type(CudEventType.Task, 2)
+    }
+
     @Bean
     fun tasksStream(): Function<Flux<Message<ByteArray>>, Mono<Void>> = consumerFunction(::tasksHandlingStrategy)
 
     @Suppress("UNCHECKED_CAST")
     suspend fun <D : KeyAware> tasksHandlingStrategy(event: CudEvent<CudEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {
-            Event.Type(CudEventType.Task, 2) -> handleTask(event as CudEvent<CudEventType, TaskData>)
+            TaskV2 -> handleTask(event as CudEvent<CudEventType, TaskData>)
             else -> Either.Right(Unit)
         }
 

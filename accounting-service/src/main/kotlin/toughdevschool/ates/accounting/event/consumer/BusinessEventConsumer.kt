@@ -38,13 +38,18 @@ class BusinessEventConsumer(
 
     override val schemaRegistry = BusinessEventSchemaRegistry
 
+    companion object {
+        val TaskAssignedV1 = Event.Type(BusinessEventType.TaskAssigned, 1)
+        val TransactionCompletedV1 = Event.Type(BusinessEventType.TransactionCompleted, 1)
+    }
+
     @Bean
     fun tasks(): Function<Flux<Message<ByteArray>>, Mono<Void>> = consumerFunction(::handlingStrategy)
 
     suspend fun <D : KeyAware> handlingStrategy(event: BusinessEvent<BusinessEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {
-            Event.Type(BusinessEventType.TaskAssigned, 1) -> taskAssignedHandler.handle(event.data as TaskAssigned)
-            Event.Type(BusinessEventType.TaskCompleted, 1) -> taskCompletedHandler.handle(event.data as TaskCompleted)
+            TaskAssignedV1 -> taskAssignedHandler.handle(event.data as TaskAssigned)
+            TransactionCompletedV1 -> taskCompletedHandler.handle(event.data as TaskCompleted)
             else -> Either.Right(Unit)
         }
 }

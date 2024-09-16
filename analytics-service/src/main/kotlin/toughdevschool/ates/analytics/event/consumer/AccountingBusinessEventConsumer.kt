@@ -35,12 +35,16 @@ class AccountingBusinessEventConsumer(
 
     override val schemaRegistry = BusinessEventSchemaRegistry
 
+    companion object {
+        val TransactionCompletedV1 = Event.Type(BusinessEventType.TransactionCompleted, 1)
+    }
+
     @Bean
     fun accounting(): Function<Flux<Message<ByteArray>>, Mono<Void>> = consumerFunction(::handlingStrategy)
 
     suspend fun <D : KeyAware> handlingStrategy(event: BusinessEvent<BusinessEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {
-            Event.Type(BusinessEventType.TransactionCompleted, 1) -> txCompletedHandler.handle(event.data as TransactionCompleted)
+            TransactionCompletedV1 -> txCompletedHandler.handle(event.data as TransactionCompleted)
             else -> Either.Right(Unit)
         }
 }

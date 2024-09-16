@@ -1,8 +1,8 @@
 package toughdevschool.ates.task.domain.task.complete.business
 
 import arrow.core.Either
-import arrow.core.raise.either
 import arrow.core.left
+import arrow.core.raise.either
 import org.springframework.stereotype.Service
 import software.darkmatter.platform.error.BusinessError
 import software.darkmatter.platform.error.ErrorType

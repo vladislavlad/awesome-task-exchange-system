@@ -45,14 +45,19 @@ class AccountsCudEventConsumer(
 
     override val schemaRegistry = CudEventSchemaRegistry
 
+    companion object {
+        val UserV1 = Event.Type(CudEventType.User, 1)
+        val UserRoleV1 = Event.Type(CudEventType.UserRole, 1)
+    }
+
     @Bean
     fun accountsStream(): Function<Flux<Message<ByteArray>>, Mono<Void>> = consumerFunction(::handlingStrategy)
 
     @Suppress("UNCHECKED_CAST")
     suspend fun <D : KeyAware> handlingStrategy(event: CudEvent<CudEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {
-            Event.Type(CudEventType.User, 1) -> handleUser(event as CudEvent<CudEventType, UserData>)
-            Event.Type(CudEventType.UserRole, 1) -> handleUserRole(event as CudEvent<CudEventType, UserRoleData>)
+            UserV1 -> handleUser(event as CudEvent<CudEventType, UserData>)
+            UserRoleV1 -> handleUserRole(event as CudEvent<CudEventType, UserRoleData>)
             else -> Either.Right(Unit)
         }
 
