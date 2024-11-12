@@ -3,7 +3,7 @@ package toughdevschool.ates.accounting.domain.billingCycle.business
 import arrow.core.Either
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import software.darkmatter.platform.business.BusinessChecks
+import software.darkmatter.platform.business.BusinessCheck
 import software.darkmatter.platform.error.BusinessError
 import software.darkmatter.platform.security.service.AuthCrudService
 import software.darkmatter.platform.syntax.leftIfNull
@@ -51,9 +51,9 @@ class Service(
             this
         }
 
-    override val checksOnCreate: BusinessChecks<BillingCycleCreate> = emptyList()
+    override val checksOnCreate: List<BusinessCheck<BillingCycleCreate>> = emptyList()
 
-    override val checksOnUpdate: BusinessChecks<BillingCycleUpdate> = emptyList()
+    override val checksOnUpdate: List<BusinessCheck<BillingCycleUpdate>> = emptyList()
 
     override fun entityClass() = BillingCycle::class
 }

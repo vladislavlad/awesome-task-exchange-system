@@ -2,7 +2,6 @@ package toughdevschool.ates.accounting.domain.account.business
 
 import org.springframework.stereotype.Service
 import software.darkmatter.platform.business.BusinessCheck
-import software.darkmatter.platform.business.BusinessChecks
 import software.darkmatter.platform.business.businessChecks
 import software.darkmatter.platform.business.onRight
 import software.darkmatter.platform.data.PagingRepository
@@ -41,7 +40,7 @@ class Service(
             this
         }
 
-    override val checksOnCreate: BusinessChecks<AccountCreate> = businessChecks(
+    override val checksOnCreate: List<BusinessCheck<AccountCreate>> = businessChecks(
         onRight(
             check = ::getByUser,
             accessor = AccountCreate::user,

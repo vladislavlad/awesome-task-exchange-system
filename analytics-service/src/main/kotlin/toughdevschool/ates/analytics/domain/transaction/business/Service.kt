@@ -1,7 +1,7 @@
 package toughdevschool.ates.analytics.domain.transaction.business
 
 import org.springframework.stereotype.Service
-import software.darkmatter.platform.business.BusinessChecks
+import software.darkmatter.platform.business.BusinessCheck
 import software.darkmatter.platform.business.businessChecks
 import software.darkmatter.platform.security.service.AuthCrudService
 import toughdevschool.ates.analytics.domain.transaction.data.Transaction
@@ -27,11 +27,11 @@ class Service(
             createdAt = OffsetDateTime.now(),
         )
 
-    override val checksOnCreate: BusinessChecks<TransactionCreate> = businessChecks()
+    override val checksOnCreate: List<BusinessCheck<TransactionCreate>> = businessChecks()
 
     override suspend fun updateEntity(businessUpdate: Unit): Transaction = throw UnsupportedOperationException()
 
-    override val checksOnUpdate: BusinessChecks<Unit> = businessChecks()
+    override val checksOnUpdate: List<BusinessCheck<Unit>> = businessChecks()
 
     override fun entityClass() = Transaction::class
 }

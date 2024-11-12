@@ -3,12 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
-    id("org.springframework.boot") version "3.3.3"
+    id("org.springframework.boot") version "3.3.5"
     id("io.spring.dependency-management") version "1.1.6"
 }
 
 group = "toughdevschool.ates"
-version = "0.3.6"
+version = "0.3.7"
 
 repositories {
     mavenLocal()
@@ -16,8 +16,10 @@ repositories {
 }
 
 val springCloudVersion = "2023.0.3"
-val platformVersion = "0.5.9"
+val platformVersion = "0.5.11"
 val micrometerVersion = "1.3.2"
+val kotestVersion = "5.9.1"
+val mockkVersion = "1.13.13"
 
 dependencies {
     implementation("toughdevschool.ates:schema-registry:0.1.3")
@@ -32,24 +34,20 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
     implementation("org.springframework.kafka:spring-kafka")
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.5.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0")
 
     // Micrometer dependencies
     implementation(platform("io.micrometer:micrometer-tracing-bom:$micrometerVersion"))
     implementation("io.micrometer:micrometer-observation")
     implementation("io.micrometer:micrometer-tracing")
-
-//    implementation("io.micrometer:micrometer-tracing-bridge-otel")
-//    implementation("io.opentelemetry:opentelemetry-exporter-zipkin")
-
     implementation("io.micrometer:micrometer-tracing-bridge-brave")
     implementation("io.zipkin.reporter2:zipkin-reporter-brave")
 
-    // force proxy version
+    // for R2DBC query tracing
     implementation("io.r2dbc:r2dbc-proxy:1.1.5.RELEASE")
-    // R2DBC micrometer auto tracing
-    implementation("org.springframework.experimental:r2dbc-micrometer-spring-boot:1.0.2")
 
+//    implementation("io.micrometer:micrometer-tracing-bridge-otel")
+//    implementation("io.opentelemetry:opentelemetry-exporter-zipkin")
 
     implementation("jakarta.validation:jakarta.validation-api:3.1.0")
     implementation("org.hibernate:hibernate-validator:8.0.1.Final")
@@ -67,10 +65,16 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.graphql:spring-graphql-test")
     testImplementation("io.projectreactor:reactor-test")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("io.micrometer:micrometer-observation-test")
+    testImplementation("io.kotest.extensions:kotest-assertions-arrow:1.4.0")
 }
 
 dependencyManagement {
