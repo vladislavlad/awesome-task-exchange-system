@@ -9,6 +9,8 @@ server:
 
 platform:
   security:
+    authentication:
+      source: header
     client:
       application:
         name: accounting-service

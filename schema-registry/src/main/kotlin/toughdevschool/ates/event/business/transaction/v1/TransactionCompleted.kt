@@ -15,5 +15,5 @@ data class TransactionCompleted(
     val createdAt: OffsetDateTime,
 ) : KeyAware {
 
-    override val key = publicId
+    override fun eventKey(): String = publicId
 }

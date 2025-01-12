@@ -8,5 +8,5 @@ data class UserRolesChanged(
     val roles: List<String>,
 ) : KeyAware {
 
-    override val key = userUuid.toString()
+    override fun eventKey(): String = userUuid.toString()
 }

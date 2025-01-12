@@ -11,5 +11,5 @@ data class UserData(
     val middleName: String?,
 ) : KeyAware {
 
-    override val key = uuid.toString()
+    override fun eventKey(): String = uuid.toString()
 }

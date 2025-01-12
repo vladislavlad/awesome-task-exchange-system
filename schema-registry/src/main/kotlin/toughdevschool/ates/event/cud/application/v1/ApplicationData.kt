@@ -9,5 +9,5 @@ data class ApplicationData(
     var title: String,
 ) : KeyAware {
 
-    override val key = uuid.toString()
+    override fun eventKey(): String = uuid.toString()
 }

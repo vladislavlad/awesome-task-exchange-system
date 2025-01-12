@@ -40,7 +40,7 @@ class BusinessEventConsumer(
 
     companion object {
         val TaskAssignedV1 = Event.Type(BusinessEventType.TaskAssigned, 1)
-        val TransactionCompletedV1 = Event.Type(BusinessEventType.TransactionCompleted, 1)
+        val TaskCompletedV1 = Event.Type(BusinessEventType.TaskCompleted, 1)
     }
 
     @Bean
@@ -49,7 +49,7 @@ class BusinessEventConsumer(
     suspend fun <D : KeyAware> handlingStrategy(event: BusinessEvent<BusinessEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {
             TaskAssignedV1 -> taskAssignedHandler.handle(event.data as TaskAssigned)
-            TransactionCompletedV1 -> taskCompletedHandler.handle(event.data as TaskCompleted)
+            TaskCompletedV1 -> taskCompletedHandler.handle(event.data as TaskCompleted)
             else -> Either.Right(Unit)
         }
 }

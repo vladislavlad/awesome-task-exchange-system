@@ -21,6 +21,8 @@ class Service(
     private val businessEventProducer: AccountingBusinessEventProducer,
 ) : TransferService {
 
+    private val secureRandom = RandomStringUtils.secure()
+
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     override suspend fun perform(request: TransferRequest) = either {
         val billingCycle = billingCycleService.getActive().bind()
@@ -58,7 +60,7 @@ class Service(
         )
     }
 
-    private fun generatePublicId() = RandomStringUtils.randomAlphanumeric(PUBLIC_ID_LENGTH)
+    private fun generatePublicId(): String = secureRandom.nextAlphanumeric(PUBLIC_ID_LENGTH)
 
     private suspend fun sendTxCompleted(tx: Transaction, account: Account) =
         businessEventProducer.sendTransactionCompletedV1(

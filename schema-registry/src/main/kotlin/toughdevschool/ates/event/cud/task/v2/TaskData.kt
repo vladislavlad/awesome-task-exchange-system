@@ -12,5 +12,5 @@ data class TaskData(
     var userUuid: UUID,
 ) : KeyAware {
 
-    override val key = uuid.toString()
+    override fun eventKey(): String = uuid.toString()
 }

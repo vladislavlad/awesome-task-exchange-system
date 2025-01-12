@@ -1,31 +1,30 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"
-    id("org.springframework.boot") version "3.3.5"
-    id("io.spring.dependency-management") version "1.1.6"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.spring") version "2.1.0"
+    id("org.springframework.boot") version "3.4.1"
+    id("io.spring.dependency-management") version "1.1.7"
 }
 
 group = "toughdevschool.ates"
-version = "0.3.7"
+version = "0.4.0"
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-val springCloudVersion = "2023.0.3"
-val platformVersion = "0.5.11"
-val micrometerVersion = "1.3.2"
+val springCloudVersion = "2024.0.0"
+val platformVersion = "0.7.1"
+val schemaRegistryVersion = "0.2.0"
 val kotestVersion = "5.9.1"
 val mockkVersion = "1.13.13"
 
 dependencies {
-    implementation("toughdevschool.ates:schema-registry:0.1.3")
+    implementation("toughdevschool.ates:schema-registry:$schemaRegistryVersion")
     implementation("software.darkmatter:interaction-messaging:$platformVersion")
     implementation("software.darkmatter:interaction-protocol:$platformVersion")
     implementation("software.darkmatter:platform-core:$platformVersion")
+    implementation("software.darkmatter:platform-data:$platformVersion")
     implementation("software.darkmatter:security-core:$platformVersion")
     implementation("software.darkmatter:security-jwt-client-starter:$platformVersion")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -34,10 +33,9 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
     implementation("org.springframework.kafka:spring-kafka")
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.7.0")
 
     // Micrometer dependencies
-    implementation(platform("io.micrometer:micrometer-tracing-bom:$micrometerVersion"))
     implementation("io.micrometer:micrometer-observation")
     implementation("io.micrometer:micrometer-tracing")
     implementation("io.micrometer:micrometer-tracing-bridge-brave")
@@ -57,9 +55,9 @@ dependencies {
     implementation("org.postgresql:r2dbc-postgresql")
     runtimeOnly("org.postgresql:postgresql")
 
-    implementation("io.arrow-kt:arrow-core:1.2.4")
-    implementation("io.github.oshai:kotlin-logging:7.0.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.arrow-kt:arrow-core:2.0.0")
+    implementation("io.github.oshai:kotlin-logging:7.0.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -74,7 +72,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("io.micrometer:micrometer-observation-test")
-    testImplementation("io.kotest.extensions:kotest-assertions-arrow:1.4.0")
+    testImplementation("io.kotest.extensions:kotest-assertions-arrow:2.0.0")
 }
 
 dependencyManagement {
@@ -89,12 +87,14 @@ configurations {
     }
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_21
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+}
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=all")
-        jvmTarget = "21"
+kotlin {
+    compilerOptions.freeCompilerArgs.addAll("-Xjsr305=strict", "-Xjvm-default=all")
+    target {
+        java.targetCompatibility = JavaVersion.VERSION_21
     }
 }
 

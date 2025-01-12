@@ -1,28 +1,28 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.1.0"
     `java-library`
     `maven-publish`
 }
 
 group = "toughdevschool.ates"
-version = "0.1.3"
+version = "0.2.0"
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-val platformVersion = "0.5.1"
-val kotestVersion = "5.8.0"
+val platformVersion = "0.7.1"
+val kotestVersion = "5.9.2"
 
 dependencies {
     implementation("software.darkmatter:interaction-protocol:$platformVersion")
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 java {

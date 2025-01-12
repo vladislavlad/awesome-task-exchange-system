@@ -8,5 +8,5 @@ data class TaskAssigned(
     val userUuid: UUID,
 ) : KeyAware {
 
-    override val key = taskUuid.toString()
+    override fun eventKey(): String = taskUuid.toString()
 }

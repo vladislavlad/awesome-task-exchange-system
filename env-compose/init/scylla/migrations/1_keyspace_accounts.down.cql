@@ -1,3 +1,3 @@
-drop table accounts.authentication;
-drop table accounts.refreshTokenAction;
+drop table accounts.authentication_action;
+drop table accounts.refresh_token_action;
 drop table accounts.session

@@ -1,26 +1,26 @@
-create table accounts.authentication
+create table accounts.authentication_action
 (
-    userUuid    uuid,
-    loginType   text,
-    loginAt     timestamp,
-    sessionUuid uuid,
-    primary key ( userUuid, loginAt )
-) with clustering order by (loginAt desc);
+    user_uuid    uuid,
+    login_type   text,
+    login_at     timestamp,
+    session_uuid uuid,
+    primary key ( user_uuid, login_at )
+) with clustering order by (login_at desc);
 
-create table accounts.refreshTokenAction
+create table accounts.refresh_token_action
 (
-    jwtId       uuid,
-    userUuid    uuid,
-    refreshedAt timestamp,
-    primary key ( userUuid, refreshedAt )
-) with clustering order by (refreshedAt desc);
+    jwt_id       uuid,
+    user_uuid    uuid,
+    refreshed_at timestamp,
+    primary key ( user_uuid, refreshed_at )
+) with clustering order by (refreshed_at desc);
 
 create table accounts.session
 (
-    uuid      uuid,
-    userUuid  uuid,
-    active    boolean,
-    createdAt timestamp,
-    updatedAt timestamp,
+    uuid       uuid,
+    user_uuid  uuid,
+    active     boolean,
+    created_at timestamp,
+    updated_at timestamp,
     primary key ( uuid )
 );
