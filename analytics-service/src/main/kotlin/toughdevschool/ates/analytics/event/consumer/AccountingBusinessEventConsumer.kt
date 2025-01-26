@@ -15,14 +15,17 @@ import software.darkmatter.platform.event.KeyAware
 import software.darkmatter.platform.event.business.BusinessEvent
 import software.darkmatter.platform.event.config.ConsumerProperties
 import software.darkmatter.platform.event.consumer.BusinessEventConsumer
+import toughdevschool.ates.analytics.domain.task.cost.handler.TaskCostAssignedHandler
 import toughdevschool.ates.analytics.domain.transaction.handler.TransactionCompletedHandler
 import toughdevschool.ates.event.business.BusinessEventSchemaRegistry
 import toughdevschool.ates.event.business.BusinessEventType
+import toughdevschool.ates.event.business.task.v1.TaskCostAssigned
 import toughdevschool.ates.event.business.transaction.v1.TransactionCompleted
 import java.util.function.Function
 
 @Component
 class AccountingBusinessEventConsumer(
+    private val taskCostAssignedHandler: TaskCostAssignedHandler,
     private val txCompletedHandler: TransactionCompletedHandler,
     override val observationRegistry: ObservationRegistry,
     override val consumerProperties: ConsumerProperties,
@@ -36,6 +39,7 @@ class AccountingBusinessEventConsumer(
     override val schemaRegistry = BusinessEventSchemaRegistry
 
     companion object {
+        val TaskCostAssignedV1 = Event.Type(BusinessEventType.TaskCostAssigned, 1)
         val TransactionCompletedV1 = Event.Type(BusinessEventType.TransactionCompleted, 1)
     }
 
@@ -44,6 +48,7 @@ class AccountingBusinessEventConsumer(
 
     suspend fun <D : KeyAware> handlingStrategy(event: BusinessEvent<BusinessEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {
+            TaskCostAssignedV1 -> taskCostAssignedHandler.handle(event.data as TaskCostAssigned)
             TransactionCompletedV1 -> txCompletedHandler.handle(event.data as TransactionCompleted)
             else -> Either.Right(Unit)
         }

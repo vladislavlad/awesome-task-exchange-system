@@ -1,10 +1,11 @@
 package toughdevschool.ates.analytics.domain.analytics
 
 import software.darkmatter.platform.api.http.ServiceApi
+import toughdevschool.ates.analytics.api.ManagementAnalyticsDto
 import toughdevschool.ates.analytics.api.TaskAnalyticsDto
 import java.util.UUID
 
-typealias ManagementAnalyticsApi = ServiceApi<Unit, Unit, Unit, Unit>
+typealias ManagementAnalyticsApi = ServiceApi<Unit, ManagementAnalyticsDto.Response, Unit, Unit>
 typealias TaskAnalyticsApi = ServiceApi<Unit, TaskAnalyticsDto.Response, Unit, TaskAnalytics>
 
 data class TaskAnalytics(

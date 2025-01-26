@@ -14,8 +14,6 @@ data class Task(
     var userUuid: UUID?,
     var title: String,
     var status: Status,
-    val assignCost: Int,
-    val reward: Int,
     val createdAt: OffsetDateTime,
     var completedAt: OffsetDateTime?,
 ) : Model<Long> {

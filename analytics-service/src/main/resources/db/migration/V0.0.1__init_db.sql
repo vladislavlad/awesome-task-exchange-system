@@ -38,8 +38,6 @@ create table tasks
     user_uuid    uuid references users (uuid),
     title        varchar               not null,
     status       varchar               not null,
-    assign_cost  int                   not null,
-    reward       int                   not null,
     created_at   timestamptz             not null,
     completed_at timestamptz
 );

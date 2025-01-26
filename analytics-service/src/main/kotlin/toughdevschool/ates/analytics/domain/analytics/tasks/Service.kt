@@ -7,7 +7,7 @@ import software.darkmatter.platform.error.BusinessError
 import toughdevschool.ates.analytics.domain.analytics.TaskAnalytics
 import toughdevschool.ates.analytics.domain.task.crud.business.Scale
 import toughdevschool.ates.analytics.domain.task.crud.business.TaskService
-import toughdevschool.ates.analytics.domain.task.crud.data.Task
+import toughdevschool.ates.analytics.domain.task.crud.data.withCost.TaskWithCosts
 
 @Component
 class Service(
@@ -28,12 +28,12 @@ class Service(
         )
     }
 
-    private fun Task.toBusinessModel(): TaskAnalytics.CompletedTask =
+    private fun TaskWithCosts.toBusinessModel(): TaskAnalytics.CompletedTask =
         TaskAnalytics.CompletedTask(
-            uuid = uuid,
+            uuid = taskUuid,
+            userUuid = userUuid,
             title = title,
             assignCost = assignCost,
             reward = reward,
-            userUuid = userUuid,
         )
 }

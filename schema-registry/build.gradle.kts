@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm") version "2.1.0"
     `java-library`
@@ -7,7 +5,7 @@ plugins {
 }
 
 group = "toughdevschool.ates"
-version = "0.2.1"
+version = "0.2.2"
 
 repositories {
     mavenLocal()
@@ -25,20 +23,20 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    withSourcesJar()
-}
-
 tasks.jar {
     enabled = true
     archiveClassifier.set("")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=all")
-        jvmTarget = "21"
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    withSourcesJar()
+}
+
+kotlin {
+    compilerOptions.freeCompilerArgs.addAll("-Xjsr305=strict", "-Xjvm-default=all")
+    target {
+        java.targetCompatibility = JavaVersion.VERSION_21
     }
 }
 

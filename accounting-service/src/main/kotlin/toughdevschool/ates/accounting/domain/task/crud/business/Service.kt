@@ -14,7 +14,8 @@ import kotlin.random.Random
 class Service(
     private val repository: TaskRepository,
     pagingRepository: PagingRepository<Task, Long>,
-) : AuthCrudService<Task, Long, TaskCreate, TaskUpdate>(repository, pagingRepository),
+    businessEventsExtension: BusinessEventsExtension,
+) : AuthCrudService<Task, Long, TaskCreate, TaskUpdate>(repository, pagingRepository, businessEventsExtension),
     TaskService {
 
     override suspend fun getByUuid(uuid: UUID) = repository.findByUuid(uuid).leftIfNull { notFound }

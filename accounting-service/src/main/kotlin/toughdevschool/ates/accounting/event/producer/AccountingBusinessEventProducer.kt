@@ -11,6 +11,7 @@ import software.darkmatter.platform.event.Event
 import software.darkmatter.platform.event.producer.BusinessEventStreamProducer
 import toughdevschool.ates.event.business.BusinessEventSchemaRegistry
 import toughdevschool.ates.event.business.BusinessEventType
+import toughdevschool.ates.event.business.task.v1.TaskCostAssigned
 import toughdevschool.ates.event.business.transaction.v1.TransactionCompleted
 import java.util.function.Supplier
 
@@ -29,4 +30,7 @@ class AccountingBusinessEventProducer(
 
     suspend fun sendTransactionCompletedV1(transactionCompleted: TransactionCompleted) =
         sendEvent(Event.Type(BusinessEventType.TransactionCompleted, 1), transactionCompleted)
+
+    suspend fun sendTaskCostAssignedV1(taskCostAssigned: TaskCostAssigned) =
+        sendEvent(Event.Type(BusinessEventType.TaskCostAssigned, 1), taskCostAssigned)
 }
