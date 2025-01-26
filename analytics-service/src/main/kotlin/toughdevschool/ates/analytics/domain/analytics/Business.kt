@@ -8,8 +8,14 @@ typealias ManagementAnalyticsApi = ServiceApi<Unit, Unit, Unit, Unit>
 typealias TaskAnalyticsApi = ServiceApi<Unit, TaskAnalyticsDto.Response, Unit, TaskAnalytics>
 
 data class TaskAnalytics(
-    val mostExpensiveTask: CompletedTask,
+    val mostExpensiveTasks: MostExpensiveTasks,
 ) {
+
+    data class MostExpensiveTasks(
+        val forDay: CompletedTask?,
+        val forWeek: CompletedTask?,
+        val forMonth: CompletedTask?,
+    )
 
     data class CompletedTask(
         val uuid: UUID,

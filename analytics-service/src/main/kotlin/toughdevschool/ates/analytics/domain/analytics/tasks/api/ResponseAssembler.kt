@@ -14,15 +14,21 @@ class ResponseAssembler : ResponseAssembler<TaskAnalytics, TaskAnalyticsDto.Resp
 
     override suspend fun assemble(business: TaskAnalytics): Either<BusinessError, TaskAnalyticsDto.Response> =
         TaskAnalyticsDto.Response(
-            mostExpensiveTask = business.mostExpensiveTask
-                .let {
-                    CompletedTaskDto(
-                        uuid = it.uuid,
-                        title = it.title,
-                        assignCost = it.assignCost,
-                        reward = it.reward,
-                        userUuid = it.userUuid,
-                    )
-                }
+            mostExpensiveTasks = with(business.mostExpensiveTasks) {
+                TaskAnalyticsDto.Response.MostExpensiveTasksDto(
+                    forDay = forDay?.toDto(),
+                    forWeek = forWeek?.toDto(),
+                    forMonth = forMonth?.toDto(),
+                )
+            }
         ).right()
+
+    private fun TaskAnalytics.CompletedTask.toDto() =
+        CompletedTaskDto(
+            uuid = uuid,
+            title = title,
+            assignCost = assignCost,
+            reward = reward,
+            userUuid = userUuid,
+        )
 }

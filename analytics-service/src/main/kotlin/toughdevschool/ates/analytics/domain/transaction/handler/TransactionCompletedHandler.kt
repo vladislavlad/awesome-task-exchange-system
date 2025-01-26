@@ -23,7 +23,7 @@ class TransactionCompletedHandler(
                     accountUuid = transactionCompleted.accountUuid,
                     debit = transactionCompleted.debit,
                     credit = transactionCompleted.credit,
-                    completedAt = transactionCompleted.createdAt,
+                    createdAt = transactionCompleted.createdAt,
                 )
             ).map { }
         }

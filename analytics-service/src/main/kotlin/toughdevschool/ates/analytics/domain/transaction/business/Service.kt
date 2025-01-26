@@ -7,7 +7,6 @@ import software.darkmatter.platform.security.service.AuthCrudService
 import toughdevschool.ates.analytics.domain.transaction.data.Transaction
 import toughdevschool.ates.analytics.domain.transaction.data.TransactionPagingRepository
 import toughdevschool.ates.analytics.domain.transaction.data.TransactionRepository
-import java.time.OffsetDateTime
 
 @Service
 class Service(
@@ -23,8 +22,7 @@ class Service(
             accountUuid = businessCreate.accountUuid,
             debit = businessCreate.debit,
             credit = businessCreate.credit,
-            completedAt = businessCreate.completedAt,
-            createdAt = OffsetDateTime.now(),
+            createdAt = businessCreate.createdAt,
         )
 
     override val checksOnCreate: List<BusinessCheck<TransactionCreate>> = businessChecks()

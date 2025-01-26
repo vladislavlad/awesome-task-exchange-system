@@ -14,7 +14,7 @@ import toughdevschool.ates.event.cud.CudEventSchemaRegistry
 import toughdevschool.ates.event.cud.CudEventSchemaRegistry.version
 import toughdevschool.ates.event.cud.CudEventType
 import java.util.function.Supplier
-import toughdevschool.ates.event.cud.task.v2.TaskData as TaskDataV2
+import toughdevschool.ates.event.cud.task.v3.TaskData as TaskDataV3
 
 @Configuration
 class TaskCudEventStreamProducer(
@@ -30,6 +30,6 @@ class TaskCudEventStreamProducer(
     @Bean
     fun tasksStream(): Supplier<Flux<Message<out Event<CudEventType, *>>>> = producerSupplier()
 
-    override suspend fun sendTaskV2(operation: Operation, data: TaskDataV2) =
-        sendEvent(CudEventType.Task.version(2), operation, data)
+    override suspend fun sendTaskV3(operation: Operation, data: TaskDataV3) =
+        sendEvent(CudEventType.Task.version(3), operation, data)
 }

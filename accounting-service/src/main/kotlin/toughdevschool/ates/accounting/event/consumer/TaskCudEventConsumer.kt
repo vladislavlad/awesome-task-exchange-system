@@ -20,7 +20,7 @@ import toughdevschool.ates.accounting.domain.task.crud.handler.TaskCreateHandler
 import toughdevschool.ates.accounting.domain.task.crud.handler.TaskUpdateHandler
 import toughdevschool.ates.event.cud.CudEventSchemaRegistry
 import toughdevschool.ates.event.cud.CudEventType
-import toughdevschool.ates.event.cud.task.v2.TaskData
+import toughdevschool.ates.event.cud.task.v3.TaskData
 import java.util.function.Function
 
 @Component
@@ -39,7 +39,7 @@ class TaskCudEventConsumer(
     override val schemaRegistry = CudEventSchemaRegistry
 
     companion object {
-        val TaskV2 = Event.Type(CudEventType.Task, 2)
+        val TaskV3 = Event.Type(CudEventType.Task, 3)
     }
 
     @Bean
@@ -48,7 +48,7 @@ class TaskCudEventConsumer(
     @Suppress("UNCHECKED_CAST")
     suspend fun <D : KeyAware> tasksHandlingStrategy(event: CudEvent<CudEventType, D>): Either<BusinessError, Unit> =
         when (event.type) {
-            TaskV2 -> handleTask(event as CudEvent<CudEventType, TaskData>)
+            TaskV3 -> handleTask(event as CudEvent<CudEventType, TaskData>)
             else -> Either.Right(Unit)
         }
 

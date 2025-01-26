@@ -3,7 +3,7 @@ package toughdevschool.ates.accounting.domain.task.crud.handler
 import org.springframework.stereotype.Component
 import toughdevschool.ates.accounting.domain.task.crud.business.TaskCreate
 import toughdevschool.ates.accounting.domain.task.crud.business.TaskService
-import toughdevschool.ates.event.cud.task.v2.TaskData
+import toughdevschool.ates.event.cud.task.v3.TaskData
 
 @Component
 class TaskCreateHandler(

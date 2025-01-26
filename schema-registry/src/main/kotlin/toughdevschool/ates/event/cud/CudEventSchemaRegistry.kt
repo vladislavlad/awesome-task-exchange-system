@@ -10,6 +10,7 @@ import toughdevschool.ates.event.cud.userRole.v1.UserRoleData
 import kotlin.reflect.KClass
 import toughdevschool.ates.event.cud.task.v1.TaskData as TaskDataV1
 import toughdevschool.ates.event.cud.task.v2.TaskData as TaskDataV2
+import toughdevschool.ates.event.cud.task.v3.TaskData as TaskDataV3
 
 object CudEventSchemaRegistry : SchemaRegistry<CudEventType> {
 
@@ -20,6 +21,7 @@ object CudEventSchemaRegistry : SchemaRegistry<CudEventType> {
         CudEventType.UserApplication.version(1) to UserApplicationData::class,
         CudEventType.Task.version(1) to TaskDataV1::class,
         CudEventType.Task.version(2) to TaskDataV2::class,
+        CudEventType.Task.version(3) to TaskDataV3::class,
     )
 
     override val eventTypeClass: KClass<CudEventType> = CudEventType::class

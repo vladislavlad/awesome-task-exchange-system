@@ -30,6 +30,7 @@ spring:
         # check and note
         default:
           consumer:
+#            resetOffsets: true
             startOffset: earliest
             useNativeDecoding: true
             enable-dlq: true

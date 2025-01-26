@@ -7,8 +7,14 @@ object TaskAnalyticsDto {
 
     @Schema(name = "TaskAnalyticsResponse")
     data class Response(
-        val mostExpensiveTask: CompletedTaskDto,
+        val mostExpensiveTasks: MostExpensiveTasksDto,
     ) {
+
+        data class MostExpensiveTasksDto(
+            val forDay: CompletedTaskDto?,
+            val forWeek: CompletedTaskDto?,
+            val forMonth: CompletedTaskDto?,
+        )
 
         data class CompletedTaskDto(
             val uuid: UUID,

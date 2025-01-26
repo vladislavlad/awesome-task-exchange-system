@@ -21,10 +21,15 @@ create unique index uq__user_roles__user_id__role on user_roles (user_id, role);
 
 create table tasks
 (
-    id          bigserial primary key not null,
-    uuid        uuid unique           not null,
-    title       varchar               not null,
-    description varchar               not null,
-    status      varchar               not null,
-    user_uuid   uuid                  not null references users (uuid)
+    id           bigserial primary key not null,
+    uuid         uuid unique           not null,
+    user_uuid    uuid                  not null references users (uuid),
+    title        varchar               not null,
+    description  varchar               not null,
+    status       varchar               not null,
+    completed_at timestamptz,
+    created_at   timestamptz           not null,
+    created_by   uuid                  not null,
+    updated_at   timestamptz           not null,
+    updated_by   uuid                  not null
 );

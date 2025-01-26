@@ -13,6 +13,7 @@ import toughdevschool.ates.task.domain.task.crud.business.TaskUpdate
 import toughdevschool.ates.task.domain.task.data.Task
 import toughdevschool.ates.task.domain.user.data.User
 import toughdevschool.ates.task.event.producer.TaskBusinessEventProducer
+import java.time.OffsetDateTime
 
 @Service
 class Service(
@@ -20,13 +21,15 @@ class Service(
     private val businessEventProducer: TaskBusinessEventProducer,
 ) : TaskCompleteService {
 
-    override suspend fun perform(request: TaskComplete) = either<BusinessError, Unit> {
+    override suspend fun perform(request: TaskComplete) = either {
         checkStatusTransition(request.task).bind()
         checkUserAssignment(request.task, request.user).bind()
         taskService.update(
             TaskUpdate(
                 task = request.task,
-                status = Task.Status.Completed
+                status = Task.Status.Completed,
+                completedAt = OffsetDateTime.now(),
+                updatedBy = request.updatedBy
             )
         ).bind()
         businessEventProducer.sendTaskCompletedV1(

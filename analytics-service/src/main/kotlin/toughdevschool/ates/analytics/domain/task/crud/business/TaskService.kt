@@ -10,5 +10,5 @@ interface TaskService : CrudService<Task, Long, TaskCreate, TaskUpdate> {
 
     suspend fun getByUuid(uuid: UUID): Either<BusinessError, Task>
 
-    suspend fun getMostExpensiveTask(): Either<BusinessError, Task>
+    suspend fun getMostExpensiveTask(scale: Scale): Either<BusinessError, Task?>
 }

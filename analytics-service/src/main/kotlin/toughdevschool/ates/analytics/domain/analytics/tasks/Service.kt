@@ -5,7 +5,9 @@ import arrow.core.raise.either
 import org.springframework.stereotype.Component
 import software.darkmatter.platform.error.BusinessError
 import toughdevschool.ates.analytics.domain.analytics.TaskAnalytics
+import toughdevschool.ates.analytics.domain.task.crud.business.Scale
 import toughdevschool.ates.analytics.domain.task.crud.business.TaskService
+import toughdevschool.ates.analytics.domain.task.crud.data.Task
 
 @Component
 class Service(
@@ -13,19 +15,25 @@ class Service(
 ) : TaskAnalyticsService {
 
     override suspend fun perform(request: Unit): Either<BusinessError, TaskAnalytics> = either {
-        val mostExpensiveTask = taskService.getMostExpensiveTask()
-            .map {
-                TaskAnalytics.CompletedTask(
-                    uuid = it.uuid,
-                    title = it.title,
-                    assignCost = it.assignCost,
-                    reward = it.reward,
-                    userUuid = it.userUuid,
-                )
-            }.bind()
+        val mostExpensiveTaskForDay = taskService.getMostExpensiveTask(Scale.Day).bind()
+        val mostExpensiveTaskForWeek = taskService.getMostExpensiveTask(Scale.Week).bind()
+        val mostExpensiveTaskForMonth = taskService.getMostExpensiveTask(Scale.Month).bind()
 
         TaskAnalytics(
-            mostExpensiveTask = mostExpensiveTask,
+            mostExpensiveTasks = TaskAnalytics.MostExpensiveTasks(
+                forDay = mostExpensiveTaskForDay?.toBusinessModel(),
+                forWeek = mostExpensiveTaskForWeek?.toBusinessModel(),
+                forMonth = mostExpensiveTaskForMonth?.toBusinessModel(),
+            ),
         )
     }
+
+    private fun Task.toBusinessModel(): TaskAnalytics.CompletedTask =
+        TaskAnalytics.CompletedTask(
+            uuid = uuid,
+            title = title,
+            assignCost = assignCost,
+            reward = reward,
+            userUuid = userUuid,
+        )
 }

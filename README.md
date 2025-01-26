@@ -39,16 +39,16 @@
 
 
 ## Stack
-* Kotlin 1.9
-* Spring Boot 3.3.x (WebFlux, R2DBC, Cloud Stream)
+* Kotlin 2.1
+* Spring Boot 3.4.x (WebFlux, R2DBC, Cloud Stream)
 * Kafka
-* PostgreSQL 16
+* PostgreSQL 17
 * ScyllaDB 5
 * Redis 7
 
 ### Stack is fully reactive
 Spring WebFlux is base for reactive Spring RestAPI apps. WebFlux core is [project Reactor](https://github.com/reactor/reactor-core) and async non-blocking [netty server](https://github.com/netty/netty).<br> 
 [Spring Data R2DBC](https://github.com/spring-projects/spring-data-r2dbc) is reactive connection to relational databases. In this project I use PostgreSQL DB and [R2DBC driver](https://github.com/pgjdbc/r2dbc-postgresql).<br>
-Next part is Spring Cloud Stream with Kafka Binder. Spring Cloud Stream allows to define [reactive functions](https://cloud.spring.io/spring-cloud-stream/spring-cloud-stream.html#_reactive_functions_support) connected with Kafka consumers and producers.<br> 
+For connection to Kafka I use Spring Cloud Stream with Kafka Binder. Spring Cloud Stream allows to define [reactive functions](https://cloud.spring.io/spring-cloud-stream/spring-cloud-stream.html#_reactive_functions_support) connected with Kafka consumers and producers.<br> 
 [Spring Reactive Cassandra](https://github.com/spring-projects/spring-data-cassandra/blob/main/src/main/asciidoc/reference/reactive-cassandra.adoc) is using for interaction with ScyllaDB.<br> 
 And, finally, [Kotlin coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/reactive/kotlinx-coroutines-reactor/README.md) allows us to perfectly connect everything together.

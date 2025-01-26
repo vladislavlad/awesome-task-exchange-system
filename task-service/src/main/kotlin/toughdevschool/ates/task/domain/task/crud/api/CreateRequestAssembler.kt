@@ -1,9 +1,9 @@
 package toughdevschool.ates.task.domain.task.crud.api
 
 import arrow.core.Either
-import arrow.core.raise.either
 import arrow.core.flatMap
 import arrow.core.left
+import arrow.core.raise.either
 import arrow.core.right
 import kotlinx.coroutines.flow.first
 import org.springframework.stereotype.Component
@@ -13,6 +13,7 @@ import software.darkmatter.platform.assembler.RequestAssembler
 import software.darkmatter.platform.data.OffsetLimitPage
 import software.darkmatter.platform.error.BusinessError
 import software.darkmatter.platform.error.ErrorType
+import software.darkmatter.platform.security.context.jwtAuthenticationFromSecurityContext
 import toughdevschool.ates.task.api.TaskDto
 import toughdevschool.ates.task.domain.task.crud.business.TaskCreate
 import toughdevschool.ates.task.domain.user.business.UserService
@@ -28,10 +29,11 @@ class CreateRequestAssembler(
     override suspend fun assemble(request: TaskDto.CreateRequest): Either<BusinessError, TaskCreate> =
         either {
             TaskCreate(
+                user = getRandomUser().bind(),
                 title = request.title!!,
                 jiraId = request.jiraId,
                 description = request.description!!,
-                user = getRandomUser().bind()
+                createdBy = jwtAuthenticationFromSecurityContext().bind().jwt.subject
             )
         }
 

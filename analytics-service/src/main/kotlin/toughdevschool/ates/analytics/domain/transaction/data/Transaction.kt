@@ -16,7 +16,6 @@ data class Transaction(
     val accountUuid: UUID,
     val debit: BigDecimal,
     val credit: BigDecimal,
-    val completedAt: OffsetDateTime,
     val createdAt: OffsetDateTime,
 ) : Model<Long> {
 

@@ -33,12 +33,15 @@ create unique index uq__accounts__user_id on accounts (user_id);
 
 create table tasks
 (
-    id          bigserial primary key not null,
-    uuid        uuid unique           not null,
-    title       varchar               not null,
-    assign_cost int                   not null,
-    reward      int                   not null,
-    user_uuid   uuid references users (uuid)
+    id           bigserial primary key not null,
+    uuid         uuid unique           not null,
+    user_uuid    uuid references users (uuid),
+    title        varchar               not null,
+    status       varchar               not null,
+    assign_cost  int                   not null,
+    reward       int                   not null,
+    created_at   timestamptz             not null,
+    completed_at timestamptz
 );
 
 create table transactions
@@ -49,6 +52,5 @@ create table transactions
     account_uuid uuid                  not null,
     debit        numeric               not null,
     credit       numeric               not null,
-    completed_at timestamp             not null,
-    created_at   timestamp             not null
+    created_at   timestamptz             not null
 );

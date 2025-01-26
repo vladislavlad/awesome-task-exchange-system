@@ -28,7 +28,7 @@ class Service(
     private val rolesForTaskAssign = listOf(RoleNames.WORKER)
 
     @Transactional
-    override suspend fun perform(request: Unit): Either<BusinessError, TasksReassigned> = either {
+    override suspend fun perform(request: TasksReassignRequest): Either<BusinessError, TasksReassigned> = either {
         val userList = userService.getFlowWithRoleIn(rolesForTaskAssign).bind()
             .buffer(100)
             .toList()
@@ -37,7 +37,7 @@ class Service(
             val taskFlow = taskService.getFlowWithStatus(Task.Status.New).bind()
 
             val taskListSize = taskFlow.buffer(100)
-                .map { TaskUpdate(task = it, user = userList.takeRandomUser()) }
+                .map { TaskUpdate(task = it, user = userList.takeRandomUser(), updatedBy = request.requestedBy.uuid) }
                 .let { flow ->
                     taskService.updateBatch(flow.toList()).bind()
                         .onEach { sendTaskReassigned(it) }

@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "toughdevschool.ates"
-version = "0.4.0"
+version = "0.4.1"
 
 repositories {
     mavenLocal()
@@ -14,8 +14,8 @@ repositories {
 }
 
 val springCloudVersion = "2024.0.0"
-val platformVersion = "0.7.1"
-val schemaRegistryVersion = "0.2.0"
+val platformVersion = "0.7.2"
+val schemaRegistryVersion = "0.2.1"
 val kotestVersion = "5.9.1"
 val mockkVersion = "1.13.13"
 
