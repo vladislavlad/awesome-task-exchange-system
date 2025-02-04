@@ -11,7 +11,7 @@
 - task-service
 
 5. Связать сервис авторизации и логику таск трекера, а так же реализовать все события которые должны быть отправлены и прочитаны в каждом из двух сервисов
-- kafka topics: accounts-stream, accounts, tasks-stream tasks
+- kafka topics: accounts-stream, accounts, tasks-stream, tasks
 
 6. Отправить первое событие в систему и прочитать его в другом сервисе
 - Done

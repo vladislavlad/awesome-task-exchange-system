@@ -5,7 +5,6 @@ import arrow.core.raise.either
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import software.darkmatter.platform.error.BusinessError
-import software.darkmatter.platform.syntax.UnitRight
 import toughdevschool.ates.analytics.domain.task.cost.business.TaskCostCreate
 import toughdevschool.ates.analytics.domain.task.cost.business.TaskCostService
 import toughdevschool.ates.event.business.task.v1.TaskCostAssigned
@@ -24,7 +23,6 @@ class TaskCostAssignedHandler(
                 reward = data.reward,
             )
         ).bind()
-
-        UnitRight
+        Unit
     }
 }

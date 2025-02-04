@@ -35,7 +35,7 @@
 #### Redis
 
 ### UI
-* TODO
+* In progress
 
 
 ## Stack
@@ -46,9 +46,11 @@
 * ScyllaDB 5
 * Redis 7
 
-### Stack is fully reactive
-Spring WebFlux is base for reactive Spring RestAPI apps. WebFlux core is [project Reactor](https://github.com/reactor/reactor-core) and async non-blocking [netty server](https://github.com/netty/netty).<br> 
-[Spring Data R2DBC](https://github.com/spring-projects/spring-data-r2dbc) is reactive connection to relational databases. In this project I use PostgreSQL DB and [R2DBC driver](https://github.com/pgjdbc/r2dbc-postgresql).<br>
-For connection to Kafka I use Spring Cloud Stream with Kafka Binder. Spring Cloud Stream allows to define [reactive functions](https://cloud.spring.io/spring-cloud-stream/spring-cloud-stream.html#_reactive_functions_support) connected with Kafka consumers and producers.<br> 
-[Spring Reactive Cassandra](https://github.com/spring-projects/spring-data-cassandra/blob/main/src/main/asciidoc/reference/reactive-cassandra.adoc) is using for interaction with ScyllaDB.<br> 
-And, finally, [Kotlin coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/reactive/kotlinx-coroutines-reactor/README.md) allows us to perfectly connect everything together.
+### Reactive Stack
+
+Tech stack is fully reactive, leveraging the following key components:
+* Spring WebFlux: The foundation for building reactive Spring RestAPI applications, powered by [Project Reactor](https://github.com/reactor/reactor-core) and async, non-blocking [Netty server](https://github.com/netty/netty).
+* [Spring Data R2DBC](https://github.com/spring-projects/spring-data-r2dbc): Allows reactive connections to relational databases. This project uses PostgreSQL DB with the [R2DBC driver](https://github.com/pgjdbc/r2dbc-postgresql).
+* Spring Cloud Stream with Kafka Binder: Facilitates connection to Kafka, allowing definition of [reactive functions](https://cloud.spring.io/spring-cloud-stream/spring-cloud-stream.html#_reactive_functions_support) to perfome fluent integration with Kafka consumers and producers.
+* [Spring Reactive Cassandra](https://github.com/spring-projects/spring-data-cassandra/blob/main/src/main/asciidoc/reference/reactive-cassandra.adoc): Handles interactions with [ScyllaDB](https://github.com/scylladb/scylladb).
+* [Kotlin coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/reactive/kotlinx-coroutines-reactor/README.md): Seamlessly ties everything together, enabling efficient and pretty connections between components.

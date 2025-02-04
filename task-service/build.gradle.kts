@@ -90,7 +90,9 @@ java {
 }
 
 kotlin {
-    compilerOptions.freeCompilerArgs.addAll("-Xjsr305=strict", "-Xjvm-default=all")
+    compilerOptions{
+        freeCompilerArgs.addAll("-Xjsr305=strict", "-Xjvm-default=all")
+    }
     target {
         java.targetCompatibility = JavaVersion.VERSION_21
     }

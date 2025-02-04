@@ -1,1 +1,30 @@
 06_communications
+
+Async communication build on kafka messages.
+You can find event schemas in ../schema-registry/src/main/kotlin/toughdevschool/ates/event:
+- cud
+- business
+
+
+Event communication:
+
+Auth service 
+CUD Events (topic "accounts-stream") -> (User, UserRole)
+- Tasks service
+- Accounting service
+- Analytics service
+
+
+Tasks service 
+CUD Events (topic "tasks-stream") -> (Task)
+- Accounting service
+- Analytics service
+
+Business Events (topic "tasks") -> (TaskAssigned, TaskCompleted)
+- Accounting service
+- Analytics service
+
+
+Accounting service 
+Business Events (topic "accounting") -> (TaskCostAssigned, TransactionCompleted)
+- Analytics service
