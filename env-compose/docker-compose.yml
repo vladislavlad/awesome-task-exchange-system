@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   postgres:
     image: postgres:17-alpine
@@ -11,7 +10,7 @@ services:
       - ./init/postgres:/docker-entrypoint-initdb.d/
 
   scylla:
-    image: scylladb/scylla:5.2.19
+    image: scylladb/scylla:5.4.9
     entrypoint: /docker-entrypoint.d/init-keyspace.sh
     # Note: --skip-wait-for-gossip-to-settle for DEV mode only !!!
     command: ["--skip-wait-for-gossip-to-settle", "0"]

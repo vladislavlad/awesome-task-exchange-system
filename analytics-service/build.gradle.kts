@@ -1,21 +1,22 @@
 plugins {
     kotlin("jvm") version "2.1.0"
     kotlin("plugin.spring") version "2.1.0"
-    id("org.springframework.boot") version "3.4.1"
+    id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
 group = "toughdevschool.ates"
-version = "0.4.2"
+version = "0.5.0"
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-val springCloudVersion = "2024.0.0"
-val platformVersion = "0.7.2"
-val schemaRegistryVersion = "0.2.2"
+val springCloudVersion = "2024.0.1"
+val springdocUiVersion = "2.8.6"
+val platformVersion = "0.7.3"
+val schemaRegistryVersion = "0.2.3"
 val kotestVersion = "5.9.1"
 val mockkVersion = "1.13.13"
 
@@ -27,13 +28,14 @@ dependencies {
     implementation("software.darkmatter:platform-data:$platformVersion")
     implementation("software.darkmatter:security-core:$platformVersion")
     implementation("software.darkmatter:security-jwt-client-starter:$platformVersion")
+
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 //    implementation("org.springframework.boot:spring-boot-starter-graphql")
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.7.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:$springdocUiVersion")
 
     // Micrometer dependencies
     implementation("io.micrometer:micrometer-observation")
@@ -47,17 +49,17 @@ dependencies {
 //    implementation("io.micrometer:micrometer-tracing-bridge-otel")
 //    implementation("io.opentelemetry:opentelemetry-exporter-zipkin")
 
-    implementation("jakarta.validation:jakarta.validation-api:3.1.0")
-    implementation("org.hibernate:hibernate-validator:8.0.1.Final")
+    implementation("jakarta.validation:jakarta.validation-api:3.1.1")
+    implementation("org.hibernate:hibernate-validator:8.0.2.Final")
 
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
     implementation("org.postgresql:r2dbc-postgresql")
     runtimeOnly("org.postgresql:postgresql")
 
-    implementation("io.arrow-kt:arrow-core:2.0.0")
-    implementation("io.github.oshai:kotlin-logging:7.0.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
+    implementation("io.arrow-kt:arrow-core:2.0.1")
+    implementation("io.github.oshai:kotlin-logging:7.0.5")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.3")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
