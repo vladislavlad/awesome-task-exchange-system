@@ -5,14 +5,14 @@ plugins {
 }
 
 group = "toughdevschool.ates"
-version = "0.2.2"
+version = "0.2.3"
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-val platformVersion = "0.7.1"
+val platformVersion = "0.7.3"
 val kotestVersion = "5.9.2"
 
 dependencies {
